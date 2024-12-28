@@ -14,11 +14,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-grandstander flex flex-col min-h-screen">
+<body class="font-grandstander flex flex-col min-h-screen bg-gray-600 text-gray-100">
 <!-- Header -->
+
 <header
     id="header"
-    class="fixed top-0 w-full bg-white transition-shadow duration-300"
+    class="fixed top-0 w-full bg-zinc-800 transition-shadow duration-300"
 >
     <div class="container mx-auto px-4 py-4">
         <h1 class="text-lg font-bold font-telescope">Sticky Header</h1>
