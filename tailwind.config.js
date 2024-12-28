@@ -12,7 +12,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                grandstander: ['Grandstander', 'cursive'], // Define Grandstander as a font-family
+                telescope: ['"Annie Use Your Telescope"', 'cursive'], // Add font-family here
             },
         },
     },
