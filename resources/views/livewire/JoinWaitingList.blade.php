@@ -11,29 +11,33 @@ state([
 form(JoinWaitingListForm::class);
 
 $save = function () {
-    $this->form->validate();
+
     $this->form->store();
-    $this->showForm = false;
 };
 
 ?>
 <div
-    class="fixed bg-gray-800 z-50 bottom-16 left-1/2 transform -translate-x-1/2 shadow-md p-4 w-full max-w-lg rounded-lg border border-gray-200">
+    class="fixed bg-gray-900 z-50 bottom-16 left-1/2 transform -translate-x-1/2 shadow-md p-4 w-full max-w-lg rounded-lg border border-gray-500">
     <div>
         <div>
             @if ($this->showForm)
-                <flux:input.group>
-                    <flux:input
-                        placeholder="Please enter your email address"
-                        wire:model="email"
-                        type="email"
+                <form action="">
+                    <flux:input.group>
+                        <flux:input
+                            placeholder="Please enter your email address"
+                            wire:model="form.email"
+                            class:input="!bg-zinc-800 !text-gray-300 border-gray-200 focus:border-gray-300 focus:bg-gray-700 focus:ring-0"
+                            class="!bg-zinc-800  border-gray-200 focus:border-gray-300 focus:bg-white focus:ring-0"
+                            type="email"
                         />
-                    <flux:button
-                        icon="envelope"
-                        wire:click="save">I want to get Laraveled
-                    </flux:button>
-                </flux:input.group>
-                <flux:error name="form.email"/>
+                        <flux:button
+                            icon="envelope"
+                            class="!bg-zinc-800 !text-gray-300 border-gray-200 focus:border-gray-300 focus:bg-gray-700 focus:ring-0"
+                            wire:click="save">I want to be Laraveled
+                        </flux:button>
+                    </flux:input.group>
+                </form>
+
             @else
                 <div class="text-center p-2 ease-in-out duration-300">
                     We will let you know when we launch!

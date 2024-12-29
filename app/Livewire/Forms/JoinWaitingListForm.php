@@ -13,8 +13,7 @@ class JoinWaitingListForm extends Form
 
     public function store(): void
     {
-        JoinWaitingList::updateOrCreate([
-            'email' => $this->email,
-        ]);
+        $this->validate();
+        JoinWaitingList::updateOrCreate($this->pull());
     }
 }
