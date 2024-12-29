@@ -1,75 +1,53 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laraveled</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laraveled!</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.bunny.net/css?family=annie-use-your-telescope:400&display=swap" rel="stylesheet" />
-    <link href="https://fonts.bunny.net/css?family=grandstander:300,400,500,600,700&display=swap" rel="stylesheet" />
-    <!-- Styles -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+    <link href="https://fonts.bunny.net/css?family=abel:300,400,500,600,700&display=swap" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])</head>
+<body
+    class="relative text-gray-300 font-sans font-light bg-gradient-to-br from-black via-gray-900 to-black min-h-screen  overflow-hidden flex items-center justify-center">
 
-<body class="font-grandstander flex flex-col min-h-screen bg-gray-600 text-gray-100">
+<!-- Blurred Circles -->
+<div class="absolute inset-0 flex items-center justify-center">
+    <!-- First Circle -->
+    <div class="w-[400px] h-[400px] bg-purple-800 rounded-full opacity-50 blur-3xl"></div>
+    <!-- Second Circle -->
+    <div class="w-[300px] h-[300px] bg-blue-700 rounded-full opacity-40 blur-3xl absolute"></div>
+</div>
+
+
 <!-- Header -->
-
-<header
-    id="header"
-    class="fixed top-0 w-full bg-zinc-800 transition-shadow duration-300"
->
-    <div class="container mx-auto px-4 py-4">
-        <h1 class="text-lg font-bold font-telescope">Sticky Header</h1>
-    </div>
+<header class="fixed top-0 left-0 right-0 bg-gray-900  flex items-center justify-end px-4 py-2 shadow-md z-20">
+    <nav class="flex items-center space-x-4">
+        <a href="{{ route('login') }}" wire:navigate class=" hover:text-orange-600 transition">Login</a>
+<span>|</span>
+        <a href="{{ route('register') }}" wire:navigate class=" hover:text-orange-600 transition">Register</a>
+    </nav>
 </header>
-
-<!-- Sentinel Element -->
-<div id="header-sentinel" class="w-full h-1 bg-transparent"></div>
-
-<!-- Main Content -->
-<main class="flex-grow mt-[64px]"> <!-- Account for header height -->
-    <div class="container mx-auto px-4 py-6">
-        Use this for quotes etc: https://fonts.bunny.net/family/annie-use-your-telescope
-        <p class="text-gray-700">Welcome to the main content area! Feel free to add any content here.</p>
-        <p class="mt-4">Scroll down to see how the header gets a shadow when you've scrolled past this section.</p>
-        <!-- Add additional content to allow scrolling -->
-        @for ($i = 0; $i < 50; $i++)
-            <p class="mt-2 text-gray-700">Content line {{ $i + 1 }}</p>
-        @endfor
+<!-- Content -->
+<div class="relative z-10 text-center">
+    <!-- Logo -->
+    <div class="mb-8 flex justify-center">
+            <x-application-logo class="w-64 h-64 text-[#f05441]"/>
     </div>
-</main>
-
+    <h1 class="text-5xl font-black mb-6">Showcase Your Laravel Creations to the World</h1>
+    <p class="text-lg text-gray-300 mb-8">Join the community of passionate developers sharing innovative projects, all
+        built with Laravel.</p>
+    <a href="{{ route('register') }}" wire:navigate
+       class="px-8 py-3 bg-[#f05441] hover:bg-orange-700 text-white font-semibold rounded-lg shadow-lg transition duration-300">
+        Get Laraveled!
+    </a>
+</div>
+<livewire:JoinWaitingList />
 <!-- Footer -->
-<footer class="bg-gray-800 text-white text-center py-4">
-    <div class="container mx-auto">
-        <p>&copy; 2024 Your Website. All rights reserved.</p>
-    </div>
+<footer class="fixed bottom-0 left-0 right-0 bg-gray-900 text-gray-500 text-center py-3 text-sm z-20">
+    &copy; {{ date('Y') }} Laraveled Showcase. All Rights Reserved.
 </footer>
-
-<script>
-    const header = document.getElementById("header");
-    const sentinel = document.getElementById("header-sentinel");
-
-    // Create an IntersectionObserver to watch the sentinel element
-    const observer = new IntersectionObserver(
-        ([entry]) => {
-            if (!entry.isIntersecting) {
-                header.classList.add('border-b'); // Add shadow on scroll
-            } else {
-                header.classList.remove('border-b'); // Remove shadow at the top
-            }
-        },
-        {
-            rootMargin: "0px 0px 0px 0px", // No offset margin
-            threshold: 0 // Trigger when the sentinel fully leaves/enters the viewport
-        }
-    );
-
-    // Observe the sentinel element
-    observer.observe(sentinel);
-</script>
 </body>
 </html>
