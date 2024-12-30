@@ -11,9 +11,17 @@ class JoinWaitingListForm extends Form
     #[Validate(['required', 'email', 'max:254'])]
     public $email = '';
 
-    public function store(): void
+    public function store()
     {
         $this->validate();
-        JoinWaitingList::updateOrCreate($this->pull());
+
+        $existing = JoinWaitingList::where('email', $this->email)->first();
+
+        if ($existing) {
+            return 'already_subscribed';
+        } else {
+            JoinWaitingList::create($this->pull()); // Use $this->form here
+            return true;
+        }
     }
 }
