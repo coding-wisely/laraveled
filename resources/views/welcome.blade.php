@@ -21,9 +21,9 @@
 <body class="relative text-gray-300 font-sans font-light bg-gradient-to-br from-black via-gray-900 to-black min-h-screen overflow-auto">
 
 <!-- Blurred Circles -->
-<div class="absolute inset-0 pointer-events-none flex items-center justify-center">
-    <div class="w-[400px] h-[400px] bg-purple-800 rounded-full opacity-50 blur-3xl"></div>
-    <div class="w-[300px] h-[300px] bg-red-800 rounded-full opacity-40 blur-3xl absolute"></div>
+<div class="absolute inset-0 pointer-events-none flex items-center justify-center blend-multiply">
+    <div class="w-[400px] h-[400px] bg-purple-900 rounded-full opacity-50 blur-3xl "></div>
+    <div class="w-[300px] h-[300px] bg-red-900 rounded-full opacity-40 blur-3xl absolute"></div>
 </div>
 
 <!-- Header -->
