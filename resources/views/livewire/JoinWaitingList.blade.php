@@ -42,7 +42,7 @@ $save = function () {
                     type="email"
                 />
                 <flux:button
-                    icon="envelope"
+                    icon="wink"
                     size="sm"
                     class="!bg-zinc-800 !text-gray-300 border-gray-200 focus:border-gray-300 focus:bg-gray-700 focus:ring-0"
                     wire:click="save">I want to be Laraveled
