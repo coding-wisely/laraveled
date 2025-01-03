@@ -27,7 +27,7 @@
 </div>
 
 <!-- Header -->
-<div class="max-w-7xl px-3 py-4 md:px-6 mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="max-w-7xl px-3 py-4 md:px-6 mx-auto my-auto grid h-screen grid-cols-1 md:grid-cols-2 gap-8 items-center">
     <!-- Left Side: Title and Description -->
     <div>
         <h2 class="text-5xl font-black mb-6">What is Laraveled and Why Should You Join?</h2>
@@ -66,7 +66,7 @@
 </div>
 
 <!-- Footer -->
-<footer class="absolute bottom-0 left-0 right-0 bg-gray-900 text-gray-500 text-center py-3 text-xs z-20">
+<footer class="fixed bottom-0 left-0 right-0 bg-gray-900 text-gray-500 text-center py-3 text-xs z-20">
     &copy; {{ date('Y') }} Laraveled Showcase. All Rights Reserved.
 </footer>
 
