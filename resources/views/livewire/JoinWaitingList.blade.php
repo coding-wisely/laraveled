@@ -29,7 +29,7 @@ $save = function () {
 
 ?>
 
-<div class="fixed bg-gray-900 z-50 bottom-16 shadow-md p-4 w-full max-w-lg rounded-lg border border-gray-500">
+<div class="fixed bg-gray-900 z-50 bottom-16 shadow-md p-4 w-full max-w-lg md:rounded-lg border border-gray-500">
     <div>
         @if ($showForm)
             <flux:input.group>
