@@ -52,7 +52,7 @@
 {{--        </flux:menu>--}}
 {{--    </flux:dropdown>--}}
 {{--</header>--}}
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <div class="max-w-7xl px-2 md:px-6 mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <!-- Left Side: Title and Description -->
         <div>
             <h2 class="text-5xl font-black mb-6">What is Laraveled and Why Should You Join?</h2>
