@@ -20,6 +20,7 @@ $save = function () {
     } elseif ($subscribed) {
         $this->message = 'We will let you know when we launch!';
         $this->showForm = false;
+
     } else {
         // Handle other potential outcomes, like validation errors
         $this->message = 'An error occurred. Please try again later.';

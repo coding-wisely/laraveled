@@ -13,18 +13,12 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @fluxStyles()
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/" wire:navigate>
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
-
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+    <body class="font-sans min-h-screen antialiased">
+        <div class="flex-col min-h-screen mx-auto flex sm:justify-center items-center bg-gray-700 dark:bg-gray-900 antialiased text-gray-300 font-sans font-light dark:bg-gradient-to-l from-black via-gray-800 to-black overflow-auto">
                 {{ $slot }}
-            </div>
         </div>
+    @fluxScripts()
     </body>
 </html>

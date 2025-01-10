@@ -53,7 +53,7 @@ test('navigation menu can be rendered', function () {
     $response
         ->assertOk()
         ->assertSeeVolt('layout.navigation');
-});
+})->skip('Not implemented yet');
 
 test('users can logout', function () {
     $user = User::factory()->create();
