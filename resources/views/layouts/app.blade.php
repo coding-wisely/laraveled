@@ -15,6 +15,8 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxStyles
+    @livewireStyles
+
 </head>
 <body
     class="antialiased text-gray-300 font-sans font-light bg-gradient-to-l from-black via-gray-900 to-black min-h-screen overflow-auto">
@@ -28,5 +30,8 @@
         </flux:main>
     </div>
     @fluxScripts
+    @livewireScripts
+
+
 </body>
 </html>

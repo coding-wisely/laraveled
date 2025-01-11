@@ -14,11 +14,14 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @fluxStyles()
+        @livewireStyles
     </head>
     <body class="font-sans min-h-screen antialiased">
         <div class="flex-col min-h-screen mx-auto flex sm:justify-center items-center bg-gray-700 dark:bg-gray-900 antialiased text-gray-300 font-sans font-light dark:bg-gradient-to-l from-black via-gray-800 to-black overflow-auto">
                 {{ $slot }}
         </div>
     @fluxScripts()
+    @livewireScripts
+    
     </body>
 </html>
