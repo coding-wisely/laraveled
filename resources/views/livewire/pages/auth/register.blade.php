@@ -44,7 +44,7 @@ new #[Layout('layouts.guest')] class extends Component
     }
 };
 ?>
-<div class="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg px-8 py-6 space-y-6">
+<div class="w-full max-w-md bg-gray-800 shadow-md rounded-lg px-8 py-6 space-y-6">
     <!-- Heading -->
     <div class="text-center">
         <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Create an Account</h1>

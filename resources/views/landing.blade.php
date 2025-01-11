@@ -74,4 +74,4 @@
         </a>
     </div>
 </section>
-</x-guest-layout>
+</x-app-layout>
