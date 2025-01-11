@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
 {{-- Hero Section --}}
 <section class="relative overflow-hidden">
     <div class="absolute inset-0  z-0"></div>
