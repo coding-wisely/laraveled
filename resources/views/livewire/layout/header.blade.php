@@ -8,8 +8,8 @@ $logout = function (Logout $logout) {
     $this->redirect('/', navigate: true);
 };
 ?>
-<flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
-    <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left"/>
+<flux:header container class="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-700 uppercase">
+<flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />    
     <flux:brand href="#" logo="{{ asset('laraveled.svg') }}" name="Laraveled.com"
                 class="max-lg:hidden dark:hidden"/>
     <flux:brand href="#" logo="{{ asset('laraveled.svg') }}" name="Laraveled.com"

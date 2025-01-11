@@ -24,7 +24,7 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div class="w-full max-w-md bg-white shadow-md rounded-lg px-8 py-6 space-y-6">
+<div class="w-full max-w-md bg-gray-800 shadow-md rounded-lg px-8 py-6 space-y-6">
     <!-- Application Logo -->
     <div class="flex justify-center mb-4">
         <x-application-logo class="w-20 h-20" />
