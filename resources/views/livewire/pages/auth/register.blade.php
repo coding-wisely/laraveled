@@ -55,36 +55,29 @@ new #[Layout('layouts.guest')] class extends Component
     <form wire:submit.prevent="register" class="space-y-4">
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <flux:input 
+            <flux:input
                 wire:model.defer="name"
                 id="name"
                 type="text"
                 placeholder="Enter your name"
-                required
                 class="block w-full mt-1"
-            />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                required="true"/>
         </div>
 
         <!-- Email -->
         <div>
-            <x-input-label for="email" :value="__('Email Address')" />
-            <flux:input 
+            <flux:input
                 wire:model.defer="email"
                 id="email"
                 type="email"
                 placeholder="Enter your email address"
-                required
                 class="block w-full mt-1"
-            />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                :required="true"/>
         </div>
 
         <!-- Password -->
         <div>
-            <x-input-label for="password" :value="__('Password')" />
-            <flux:input 
+            <flux:input
                 wire:model.defer="password"
                 id="password"
                 type="password"
@@ -93,13 +86,11 @@ new #[Layout('layouts.guest')] class extends Component
                 class="block w-full mt-1"
                 viewable
             />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div>
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-            <flux:input 
+            <flux:input
                 wire:model.defer="password_confirmation"
                 id="password_confirmation"
                 type="password"
@@ -111,7 +102,6 @@ new #[Layout('layouts.guest')] class extends Component
             @if ($password !== $password_confirmation)
                 <p class="text-sm text-red-500 mt-2">Passwords do not match.</p>
             @endif
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
         <!-- Submit Button -->

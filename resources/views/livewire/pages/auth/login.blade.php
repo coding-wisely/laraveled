@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
-new #[Layout('layouts.guest')] class extends Component
-{
+new #[Layout('layouts.guest')] class extends Component {
     public LoginForm $form;
 
     /**
@@ -20,92 +19,37 @@ new #[Layout('layouts.guest')] class extends Component
 
         Session::regenerate();
 
-        $this->redirectIntended(default: route('home', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
     }
 }; ?>
 
-<div class="w-full max-w-md bg-gray-800 shadow-md rounded-lg px-8 py-6 space-y-6">
-    <!-- Application Logo -->
-    <div class="flex justify-center mb-4">
-        <x-application-logo class="w-20 h-20" />
-    </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form wire:submit.prevent="login" class="space-y-4">
-        <!-- Email Address -->
+<form wire:submit="login" class="space-y-4">
+    <flux:card class="space-y-6">
         <div>
-            <x-input-label for="email" :value="__('Email Address')" />
-            <x-text-input 
-                wire:model.defer="form.email"
-                id="email" 
-                class="block w-full mt-1 text-black"
-                type="email" 
-                name="email"
-                placeholder="Enter your email" 
-                required 
-                autofocus 
-            />
-            <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
+            <flux:heading size="lg">Log in to your account</flux:heading>
+            <flux:subheading>Welcome back!</flux:subheading>
         </div>
 
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
-            <div class="relative">
-                <flux:input 
-                    type="password" 
-                    wire:model.defer="form.password" 
-                    id="password" 
-                    class="block w-full mt-1"
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                    viewable
-                >
-                </flux:input>
-            </div>
-            <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
+        <div class="space-y-6">
+            <flux:input wire:model="form.email" label="Email" type="email" placeholder="Your email address"/>
+
+            <flux:field>
+                <div class="mb-3 flex justify-between">
+                    <flux:label>Password</flux:label>
+
+                    <flux:link href="#" variant="subtle" class="text-sm">Forgot password?</flux:link>
+                </div>
+
+                <flux:input wire:model="form.password" type="password" placeholder="Your password"/>
+            </flux:field>
         </div>
 
-        <!-- Remember Me -->
-        <div class="flex items-center">
-            <input 
-                wire:model="form.remember" 
-                id="remember" 
-                type="checkbox" 
-                class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-red-600 !focus:ring-none"
-            />
-            <label for="remember" class="ml-2 text-sm hover:cursor-pointer hover:text-gray-700 dark:hover:text-gray-200">
-                {{ __('Remember me') }}
-            </label>
-        </div>
+        <div class="space-y-2">
+            <flux:button type="submit" variant="primary" class="w-full">Log in</flux:button>
 
-        <!-- Actions -->
-        <div class="flex items-center justify-between mt-4">
-            @if (Route::has('password.request'))
-                <a 
-                    href="{{ route('password.request') }}" 
-                    class="text-sm text-red-500 font-medium"
-                >
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            <flux:button href="{{ route('register') }}" variant="ghost" class="w-full">Sign up for a new account</flux:button>
         </div>
-    </form>
-
-    <!-- Register Link -->
-    <div class="text-center mt-4">
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Don\'t have an account?') }}
-            <a href="{{ route('register') }}" class="text-red-500 font-medium">
-                {{ __('Register') }}
-            </a>
-        </p>
-    </div>
-</div>
+    </flux:card>
+</form>
 
 

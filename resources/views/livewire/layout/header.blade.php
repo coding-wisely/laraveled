@@ -9,70 +9,53 @@ $logout = function (Logout $logout) {
 };
 ?>
 <flux:header container class="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-700 uppercase">
-<flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />    
+<flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
     <flux:brand href="#" logo="{{ asset('laraveled.svg') }}" name="Laraveled.com"
                 class="max-lg:hidden dark:hidden"/>
     <flux:brand href="#" logo="{{ asset('laraveled.svg') }}" name="Laraveled.com"
                 class="max-lg:!hidden hidden dark:flex"/>
 
     <flux:navbar class="-mb-px max-lg:hidden">
-        <flux:navbar.item 
-            icon="home" 
-            href="/" 
+        <flux:navbar.item
+            icon="home"
+            href="/"
             :current="request()->is('/')"
         >
             Home
         </flux:navbar.item>
-        <flux:navbar.item 
-            icon="home" 
-            href="/dashboard" 
+        <flux:navbar.item
+            icon="home"
+            href="/dashboard"
             :current="request()->is('dashboard')"
         >
             Dashboard
         </flux:navbar.item>
-        <flux:navbar.item 
-            icon="inbox" 
-            badge="12" 
-            href="#" 
+        <flux:navbar.item
+            icon="inbox"
+            badge="12"
+            href="#"
             :current="request()->is('inbox')"
         >
             Inbox
         </flux:navbar.item>
-        <flux:navbar.item 
-            icon="document-text" 
-            href="#" 
+        <flux:navbar.item
+            icon="document-text"
+            href="#"
             :current="request()->is('documents')"
         >
             Documents
         </flux:navbar.item>
-        <flux:navbar.item 
-            icon="calendar" 
-            href="#" 
+        <flux:navbar.item
+            icon="calendar"
+            href="#"
             :current="request()->is('calendar')"
         >
             Calendar
         </flux:navbar.item>
 
-        <flux:separator vertical variant="subtle" class="my-2"/>
-
-        <flux:dropdown class="max-lg:hidden">
-            <flux:navbar.item icon-trailing="chevron-down">Favorites</flux:navbar.item>
-
-            <flux:navmenu>
-                <flux:navmenu.item href="#">Marketing site</flux:navmenu.item>
-                <flux:navmenu.item href="#">Android app</flux:navmenu.item>
-                <flux:navmenu.item href="#">Brand guidelines</flux:navmenu.item>
-            </flux:navmenu>
-        </flux:dropdown>
     </flux:navbar>
 
     <flux:spacer/>
-
-    <flux:navbar class="mr-4">
-        <flux:navbar.item icon="magnifying-glass" href="#" label="Search"/>
-        <flux:navbar.item class="max-lg:hidden" icon="cog-6-tooth" href="#" label="Settings"/>
-        <flux:navbar.item class="max-lg:hidden" icon="information-circle" href="#" label="Help"/>
-    </flux:navbar>
 
     @if (auth()->user())
         <flux:dropdown position="bottom" align="end" class="max-lg:hidden">
@@ -105,5 +88,19 @@ $logout = function (Logout $logout) {
         </flux:navbar>
     @endif
     <flux:spacer/>
+    <flux:dropdown x-data align="end">
+        <flux:button variant="subtle" square class="group" aria-label="Preferred color scheme">
+            <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini" class="text-zinc-500 dark:text-white" />
+            <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini" class="text-zinc-500 dark:text-white" />
+            <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini" />
+            <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" variant="mini" />
+        </flux:button>
+
+        <flux:menu>
+            <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">Light</flux:menu.item>
+            <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">Dark</flux:menu.item>
+            <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">System</flux:menu.item>
+        </flux:menu>
+    </flux:dropdown>
 </flux:header>
 
