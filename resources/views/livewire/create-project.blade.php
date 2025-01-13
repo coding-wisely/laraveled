@@ -5,7 +5,6 @@
         <flux:input
             wire:model="title"
             placeholder="Enter the project title"
-            required
         />
 
         <!-- Description -->
@@ -30,16 +29,13 @@
         </flux:input.group>
 
         <!-- Technologies -->
-        <flux:select variant="listbox" multiple placeholder="Choose industries...">
-            <flux:option>Photography</flux:option>
-            <flux:option>Design services</flux:option>
-            <flux:option>Web development</flux:option>
-            <flux:option>Accounting</flux:option>
-            <flux:option>Legal services</flux:option>
-            <flux:option>Consulting</flux:option>
-            <flux:option>Other</flux:option>
-        </flux:select>
-        <flux:select variant="listbox" multiple placeholder="Choose technologies...">
+        <flux:select
+            wire:model="technologies"
+            label="Technologies"
+            variant="listbox"
+            :multiple="true"
+            :filter="false"
+            placeholder="Choose technologies...">
 
         @foreach($allTechnologies as $technology)
                 <flux:option value="{{ $technology->id }}">
@@ -54,7 +50,6 @@
             label="Categories"
             multiple
             variant="listbox"
-            multiple
             placeholder="Choose categories..."
         >
             @foreach($allCategories as $category)
@@ -69,6 +64,8 @@
             wire:model="tags"
             label="Tags"
             multiple
+            variant="listbox"
+            placeholder="Choose tags..."
         >
             @foreach($allTags as $tag)
                 <flux:option value="{{ $tag->id }}">
