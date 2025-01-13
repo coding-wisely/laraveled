@@ -31,16 +31,24 @@ new #[Layout('layouts.guest')] class extends Component {
         </div>
 
         <div class="space-y-6">
-            <flux:input wire:model="form.email" label="Email" type="email" placeholder="Your email address"/>
-
+            <flux:input
+                wire:model="form.email"
+                label="Email"
+                type="email"
+                badge="Required"
+                description-trailing="Please provide a valid email."/>
+            <flux:input wire:model="form.password"
+                        type="password"
+                        label="Password"
+                        badge="Required"
+                        description-trailing="It was at least 8 characters long, include an uppercase letter, a number, and a special character."
+                        viewable/>
             <flux:field>
                 <div class="mb-3 flex justify-between">
-                    <flux:label>Password</flux:label>
-
-                    <flux:link href="#" variant="subtle" class="text-sm">Forgot password?</flux:link>
+                    <!-- Remember Me -->
+                    <flux:checkbox wire:model="form.remember" id="remember" label="Remember me"/>
+                    <flux:link href="{{ route('password.request') }}" variant="subtle" class="text-sm">Forgot password?</flux:link>
                 </div>
-
-                <flux:input wire:model="form.password" type="password" placeholder="Your password"/>
             </flux:field>
         </div>
 

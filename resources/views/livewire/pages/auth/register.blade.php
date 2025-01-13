@@ -5,11 +5,12 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
-new #[Layout('layouts.guest')] class extends Component
-{
+new #[Layout('layouts.guest')]
+class extends Component {
     public string $name = '';
 
     public string $email = '';
@@ -26,8 +27,12 @@ new #[Layout('layouts.guest')] class extends Component
         // Validate the form
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            // Must be at least 8 characters long, include an uppercase letter, a number, and a special character
+            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults(), Password::min(8)
+                ->mixedCase() // Requires both uppercase and lowercase characters
+                ->numbers()   // Requires at least one number
+                ->symbols(),],
         ]);
 
         // Hash the password
@@ -40,76 +45,67 @@ new #[Layout('layouts.guest')] class extends Component
         Auth::login($user);
 
         // Redirect to the dashboard
-        $this->redirect(route('home', absolute: false), navigate: true);
+        $this->redirect(route('dashboard', absolute: false), navigate: true);
     }
 };
 ?>
-<div class="w-full max-w-md bg-gray-800 shadow-md rounded-lg px-8 py-6 space-y-6">
-    <!-- Heading -->
-    <div class="text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Create an Account</h1>
-        <p class="text-sm text-gray-600 dark:text-gray-400">We're excited to have you on board!</p>
-    </div>
 
     <!-- Registration Form -->
-    <form wire:submit.prevent="register" class="space-y-4">
-        <!-- Name -->
-        <div>
-            <flux:input
-                wire:model.defer="name"
-                id="name"
-                type="text"
-                placeholder="Enter your name"
-                class="block w-full mt-1"
-                required="true"/>
+<form wire:submit="register" class="space-y-4">
+    <flux:card class="space-y-6">
+        <!-- Heading -->
+        <div class="text-center">
+            <flux:heading size="lg" level="4">Create an Account</flux:heading>
+            <flux:subheading>We're excited to have you on board!</flux:subheading>
         </div>
+
+        <!-- Name -->
+        <flux:input
+            wire:model="name"
+            type="name"
+            label="Name"
+            badge="Required"
+            description-trailing="This will be your public name, visible to all visitors."
+        />
 
         <!-- Email -->
-        <div>
-            <flux:input
-                wire:model.defer="email"
-                id="email"
-                type="email"
-                placeholder="Enter your email address"
-                class="block w-full mt-1"
-                :required="true"/>
-        </div>
+        <flux:input
+            wire:model="email"
+            type="email"
+            label="Email"
+            badge="Required"
+            description-trailing="Please provide a valid email. We will sent you verification email to that address."
+        />
 
         <!-- Password -->
-        <div>
-            <flux:input
-                wire:model.defer="password"
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                required
-                class="block w-full mt-1"
-                viewable
-            />
-        </div>
+
+        <flux:input
+            wire:model="password"
+            type="password"
+            label="Password"
+            badge="Required"
+            description-trailing="Must be at least 8 characters long, include an uppercase letter, a number, and a special character."
+            viewable
+        />
+
 
         <!-- Confirm Password -->
-        <div>
-            <flux:input
-                wire:model.defer="password_confirmation"
-                id="password_confirmation"
-                type="password"
-                placeholder="Confirm your password"
-                required
-                class="block w-full mt-1"
-                viewable
-            />
-            @if ($password !== $password_confirmation)
-                <p class="text-sm text-red-500 mt-2">Passwords do not match.</p>
-            @endif
-        </div>
+
+        <flux:input
+            wire:model="password_confirmation"
+            type="password"
+            label="Confirm your password"
+            badge="Required"
+            description-trailing="Please confirm your password."
+            viewable
+        />
 
         <!-- Submit Button -->
         <div class="flex justify-between items-center">
-            <a href="{{ route('login') }}" class="text-sm text-red-500 hover:underline">Already have an account?</a>
+            <a wire:navigate.hover href="{{ route('login') }}" class="text-sm text-red-500 hover:underline">
+                Already have an account?
+            </a>
             <flux:button type="submit" class="ml-3">Create Account</flux:button>
         </div>
-    </form>
-</div>
-
-
+    </flux:card>
+</form>
