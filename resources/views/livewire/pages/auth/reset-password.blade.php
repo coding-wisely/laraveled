@@ -71,6 +71,9 @@ new #[Layout('layouts.guest')] class extends Component
 
 <div>
     <form wire:submit="resetPassword">
+        <div class="flex w-full items-center justify-center text-center">
+            <x-application-logo class="w-32"/>
+        </div>
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />

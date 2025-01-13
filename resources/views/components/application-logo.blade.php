@@ -1,3 +1,4 @@
+<a href="{{ route('home') }}" wire:navigate.hover>
 <svg
     xmlns:xlink="http://www.w3.org/1999/xlink"
     aria-hidden="true"
@@ -52,3 +53,4 @@
         </g>
     </g>
 </svg>
+</a>
