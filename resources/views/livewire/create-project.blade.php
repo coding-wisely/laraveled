@@ -12,7 +12,6 @@
         <flux:editor wire:model="description" placeholder="Describe your wonderful project"/>
 
         <!-- Website URL -->
-
         <flux:input.group label="Enter the project website URL">
             <flux:input.group.prefix>https://</flux:input.group.prefix>
             <flux:input
@@ -31,12 +30,21 @@
         </flux:input.group>
 
         <!-- Technologies -->
+        <flux:select variant="listbox" multiple placeholder="Choose industries...">
+            <flux:option>Photography</flux:option>
+            <flux:option>Design services</flux:option>
+            <flux:option>Web development</flux:option>
+            <flux:option>Accounting</flux:option>
+            <flux:option>Legal services</flux:option>
+            <flux:option>Consulting</flux:option>
+            <flux:option>Other</flux:option>
+        </flux:select>
         <flux:select variant="listbox" multiple placeholder="Choose technologies...">
 
         @foreach($allTechnologies as $technology)
-                <flux:autocomplete.item value="{{ $technology->id }}">
+                <flux:option value="{{ $technology->id }}">
                     {{ $technology->name }}
-                </flux:autocomplete.item>
+                </flux:option>
             @endforeach
         </flux:select>
 
@@ -45,6 +53,9 @@
             wire:model="categories"
             label="Categories"
             multiple
+            variant="listbox"
+            multiple
+            placeholder="Choose categories..."
         >
             @foreach($allCategories as $category)
                 <flux:option value="{{ $category->id }}">

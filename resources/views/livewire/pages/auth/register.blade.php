@@ -53,6 +53,9 @@ class extends Component {
     <!-- Registration Form -->
 <form wire:submit="register" class="space-y-4">
     <flux:card class="space-y-6">
+        <div class="flex w-full items-center justify-center text-center">
+            <x-application-logo class="w-32"/>
+        </div>
         <!-- Heading -->
         <div class="text-center">
             <flux:heading size="lg" level="4">Create an Account</flux:heading>

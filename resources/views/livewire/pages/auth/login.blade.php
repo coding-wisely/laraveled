@@ -25,7 +25,10 @@ new #[Layout('layouts.guest')] class extends Component {
 
 <form wire:submit="login" class="space-y-4">
     <flux:card class="space-y-6">
-        <div>
+        <div class="flex w-full items-center justify-center text-center">
+            <x-application-logo class="w-32"/>
+        </div>
+        <div class="text-center">
             <flux:heading size="lg">Log in to your account</flux:heading>
             <flux:subheading>Welcome back!</flux:subheading>
         </div>
