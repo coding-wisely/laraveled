@@ -19,7 +19,7 @@
 
 </head>
 <body
-    class="antialiased text-gray-300 font-sans font-light bg-gradient-to-l from-black via-gray-900 to-black min-h-screen overflow-auto">
+    class="antialiased font-sans min-h-screen">
     <div class="min-h-screen">
         <livewire:layout.header />
 
@@ -31,7 +31,5 @@
     </div>
     @fluxScripts
     @livewireScripts
-
-
 </body>
 </html>

@@ -3,12 +3,12 @@
     'title',
     'description'
 ])
-<div class="rounded-lg border bg-card p-6 bg-gray-800 shadow-sm hover:shadow-lg transition-shadow">
+<flux:card>
     <div class="space-y-4 text-center">
         <div class="mx-auto w-fit">
             <x-dynamic-icon :name="$icon" class="h-12 w-12 text-primary" />
         </div>
-        <h3 class="text-xl font-semibold">{{ $title }}</h3>
-        <p class="text-muted-foreground">{{ $description }}</p>
+        <flux:heading size="lg" class="!font-semibold uppercase"> {{ $title  }}</flux:heading>
+        <flux:subheading>{{ $description }}</flux:subheading>
     </div>
-</div>
+</flux:card>
