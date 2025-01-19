@@ -8,9 +8,9 @@ $logout = function (Logout $logout) {
     $this->redirect('/', navigate: true);
 };
 ?>
-<flux:header container="true" class="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-700 uppercase">
+<flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
     <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left"/>
-    <x-application-logo class="h-14 stroke-2 fill-current"/>
+    <x-application-logo class="h-10 stroke-2 fill-current"/>
     <flux:navbar class="-mb-px max-lg:hidden flex w-full">
         @if (auth()->user())
             <flux:navbar.item
@@ -45,42 +45,29 @@ $logout = function (Logout $logout) {
             <flux:spacer/>
             <flux:dropdown position="bottom" align="end" class="max-lg:hidden">
                 <flux:profile avatar="/img/demo/user.png" name="{{ auth()->user()->name }}"/>
-                @if (request()->routeIs('dashboard'))
-                    <flux:navmenu>
-                        <flux:navmenu.item href="#" icon="user">
-                            Account
-                        </flux:navmenu.item>
-                        <flux:navmenu.item href="#" icon="building-storefront">
-                            Profile
-                        </flux:navmenu.item>
-                        <flux:navmenu.item href="#" icon="credit-card">
-                            Billing
-                        </flux:navmenu.item>
-                        <flux:navmenu.item wire:click="logout()" icon="arrow-right-start-on-rectangle" class="!uppercase">
-                            Logout
-                        </flux:navmenu.item>
-                        <flux:navmenu.item href="#" icon="trash" variant="danger">
-                            Delete
-                        </flux:navmenu.item>
-                    </flux:navmenu>
-                @elseif (!request()->routeIs('dashboard'))
-                    <flux:menu>
-                        <flux:menu.radio.group>
-                            <flux:menu.radio checked>{{ auth()->user()->name }}</flux:menu.radio>
-                            <flux:menu.radio>Truly Delta</flux:menu.radio>
-                        </flux:menu.radio.group>
-                        <flux:menu.separator/>
-                        <flux:menu.item wire:click="logout()" icon="arrow-right-start-on-rectangle">Logout
-                        </flux:menu.item>
-                    </flux:menu>
-                @endif
+                <flux:navmenu>
+                    <flux:navmenu.item href="#" icon="user">
+                        Account
+                    </flux:navmenu.item>
+                    <flux:navmenu.item href="#" icon="building-storefront">
+                        Profile
+                    </flux:navmenu.item>
+                    <flux:navmenu.item href="#" icon="credit-card">
+                        Billing
+                    </flux:navmenu.item>
+                    <flux:navmenu.item wire:click="logout()"
+                                       icon="arrow-right-start-on-rectangle">
+                        Logout
+                    </flux:navmenu.item>
+                    <flux:navmenu.item href="#" icon="trash" variant="danger">
+                        Delete
+                    </flux:navmenu.item>
+                </flux:navmenu>
             </flux:dropdown>
         @else
             <flux:spacer/>
-            <flux:navbar.item align="end">
-                <flux:button href="{{ route('login') }}" size="sm">Login</flux:button>
-                <flux:button href="{{ route('register') }}" size="sm">Register</flux:button>
-            </flux:navbar.item>
+            <flux:button href="{{ route('login') }}" size="sm">Login</flux:button>
+            <flux:button href="{{ route('register') }}" size="sm">Register</flux:button>
         @endif
         <flux:dropdown x-data align="end">
             <flux:button variant="subtle" square class="group" aria-label="Preferred color scheme">
@@ -91,7 +78,6 @@ $logout = function (Logout $logout) {
                 <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini"/>
                 <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" variant="mini"/>
             </flux:button>
-
             <flux:menu>
                 <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">Light</flux:menu.item>
                 <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">Dark</flux:menu.item>

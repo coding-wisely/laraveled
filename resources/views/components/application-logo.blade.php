@@ -2,7 +2,7 @@
     <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg"
          xmlns:xlink="http://www.w3.org/1999/xlink"
          viewBox="0 0 273.49 316.87"
-    class="h-16 w-16 stroke-red-600"
+         {{ $attributes->merge(['class' => 'h-11 w-11 stroke-red-600']) }}
     >
         <defs>
             <style>
