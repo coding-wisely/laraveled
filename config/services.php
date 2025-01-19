@@ -34,5 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'discord' => [
+        'notifications' => [
+            'webhook_url' => env('DISCORD_WEBHOOK_URL'),
+        ],
+    ],
 
 ];

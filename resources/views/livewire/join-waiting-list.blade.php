@@ -1,5 +1,6 @@
 <?php
 
+use App\Notifications\DiscordNotification;
 use Flux\Flux;
 use function Livewire\Volt\{form, on, state};
 
@@ -16,6 +17,7 @@ form(JoinWaitingListForm::class);
 
 // Save function
 $save = function () {
+    $email = $this->form->email;
     $subscribed = $this->form->store();
 
     if ($subscribed === 'already_subscribed') {
@@ -35,6 +37,7 @@ $save = function () {
             variant: 'success',
         );
         $this->showForm = false;
+        $this->sendNotification($email);
     } else {
         Flux::toast(
             heading: 'Whooops!',
@@ -42,6 +45,16 @@ $save = function () {
             variant: 'danger',
         );
     }
+};
+$sendNotification = function ($email) {
+    $webhookUrl = config('services.discord.notifications.webhook_url');
+
+    $notification = new DiscordNotification(
+        '🎉 A user ' . $email . ' has joined the waiting list! 🎉',
+        $webhookUrl
+    );
+
+    $notification->send();
 };
 
 ?>
@@ -51,27 +64,27 @@ $save = function () {
     <div @click.away="isFocused = true; $nextTick(() => $refs.email.focus())"
          class="fixed top-24 bg-gray-600 z-50 shadow-md p-2 w-full max-w-lg md:rounded-lg">
         <div>
-                <form wire:submit="save">
-                    <flux:input.group>
-                        <flux:input
-                            autocomplete="off"
-                            x-ref="email"
-                            placeholder="Email to notify you when we launch"
-                            size="sm"
-                            autofocus
-                            wire:model="form.email"
-                            class:input="!text-white !bg-laravel-800 !pl-3 !border-gray-50 !overflow-hidden placeholder:!text-white placeholder:pl-1 placeholder:text-sm focus:placeholder:!text-gray-50 border focus:!border-gray-300 focus:!bg-gray-700 focus:ring-0"
-                            type="email"
-                        />
-                        <flux:button
-                            icon="envelope"
-                            size="sm"
-                            class="!bg-laravel-600 !text-gray-100 !border-gray-50 focus:border-gray-300 focus:bg-gray-700 focus:!ring-0"
-                            wire:click="save">
-                            I want to be Laraveled
-                        </flux:button>
-                    </flux:input.group>
-                </form>
+            <form wire:submit="save">
+                <flux:input.group>
+                    <flux:input
+                        autocomplete="off"
+                        x-ref="email"
+                        placeholder="Email to notify you when we launch"
+                        size="sm"
+                        autofocus
+                        wire:model="form.email"
+                        class:input="!text-white !bg-laravel-800 !pl-3 !border-gray-50 !overflow-hidden placeholder:!text-white placeholder:pl-1 placeholder:text-sm focus:placeholder:!text-gray-50 border focus:!border-gray-300 focus:!bg-gray-700 focus:ring-0"
+                        type="email"
+                    />
+                    <flux:button
+                        icon="envelope"
+                        size="sm"
+                        class="!bg-laravel-600 !text-gray-100 !border-gray-50 focus:border-gray-300 focus:bg-gray-700 focus:!ring-0"
+                        wire:click="save">
+                        I want to be Laraveled
+                    </flux:button>
+                </flux:input.group>
+            </form>
 
         </div>
     </div>

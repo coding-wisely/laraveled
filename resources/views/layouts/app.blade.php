@@ -20,7 +20,20 @@
 <body
     class="antialiased font-sans min-h-screen">
 <div class="min-h-screen">
+    @if(app()->isProduction())
     <livewire:join-waiting-list/>
+    @endif
+        <!-- Sidebar (Desktop Only) -->
+        <aside class="hidden md:flex flex-col w-64 bg-gray-100 dark:bg-gray-800 py-8 px-6 space-y-6">
+            <h2 class="text-3xl font-extrabold text-laravel-500 dark:text-laravel-600 mb-8">Laraveled</h2>
+            <nav class="space-y-4">
+                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Dashboard</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">My Projects</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Favorites</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Settings</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-700">Logout</a>
+            </nav>
+        </aside>
     <livewire:layout.header/>
 
     <livewire:layout.mobile-slide-in-navigation/>
