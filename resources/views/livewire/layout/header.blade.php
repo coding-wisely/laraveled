@@ -11,7 +11,8 @@ $logout = function (Logout $logout) {
 <flux:header container class="bg-zinc-50 relative dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
     <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left"/>
     <x-application-logo class="h-10 stroke-2 fill-current"/>
-    <flux:navbar class="-mb-px max-lg:hidden flex w-full">
+    <flux:spacer />
+    <flux:navbar class="ml-3 -mb-px max-lg:hidden flex w-full">
         @if (auth()->user())
             <flux:navbar.item
                 icon="home"
