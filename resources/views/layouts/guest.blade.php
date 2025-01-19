@@ -18,6 +18,8 @@
 <body class="font-sans min-h-screen antialiased">
 <div
     class="flex-col min-h-screen mx-auto flex sm:justify-center items-center">
+    <livewire:join-waiting-list/>
+
     {{ $slot }}
 </div>
 @fluxScripts

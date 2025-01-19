@@ -1,58 +1,77 @@
 <?php
 
-use function Livewire\Volt\{form, state};
+use Flux\Flux;
+use function Livewire\Volt\{form, on, state};
 
 use App\Livewire\Forms\JoinWaitingListForm;
 
+// Define state variables
 state([
     'showForm' => true,
     'message' => '',
 ]);
 
+// Attach the form
 form(JoinWaitingListForm::class);
 
+// Save function
 $save = function () {
-    $subscribed = $this->form->store(); // Assuming store returns true if successful, false otherwise or if already subscribed
+    $subscribed = $this->form->store();
 
     if ($subscribed === 'already_subscribed') {
-        $this->message = 'You are already subscribed. We will notify you when we launch!';
+
+        Flux::toast(
+            heading: 'You are already subscribed',
+            text: 'Dont worry! We will notify you when we launch!',
+            variant: 'warning',
+        );
         $this->showForm = false;
+
+        // Schedule clearing the message
     } elseif ($subscribed) {
-        $this->message = 'We will let you know when we launch!';
+        Flux::toast(
+            heading: 'Thank you',
+            text: 'We will notify you when we launch!',
+            variant: 'success',
+        );
         $this->showForm = false;
-
     } else {
-        // Handle other potential outcomes, like validation errors
-        $this->message = 'An error occurred. Please try again later.';
+        Flux::toast(
+            heading: 'Whooops!',
+            text: 'We broke something! Sorry! Please try again later.',
+            variant: 'danger',
+        );
     }
-
 };
 
 ?>
 
-<div class="fixed bg-gray-900 z-50 bottom-16 shadow-md p-4 w-full max-w-lg md:rounded-lg border border-gray-500">
-    <div>
-        @if ($showForm)
-            <flux:input.group>
-                <flux:input
-                    placeholder="Please enter your email address"
-                    size="sm"
-                    wire:model="form.email"
-                    class:input="!bg-zinc-800 !text-gray-300 !placeholder:text-xs border-gray-200 focus:border-gray-300 focus:bg-gray-700 focus:ring-0"
-                    class="!bg-zinc-800  border-gray-200 focus:border-gray-300 focus:bg-white focus:ring-0"
-                    type="email"
-                />
-                <flux:button
-                    icon="envelope"
-                    size="sm"
-                    class="!bg-zinc-800 !text-gray-300 border-gray-200 focus:border-gray-300 focus:bg-gray-700 focus:ring-0"
-                    wire:click="save">I want to be Laraveled
-                </flux:button>
-            </flux:input.group>
-        @else
-            <div class="text-center p-2 ease-in-out duration-300">
-                {{ $message }}
-            </div>
-        @endif
+
+<div class="absolute flex !w-screen border-gray-50 bg-transparent top-0 justify-center !z-50" style="height: 2100px">
+    <div @click.away="isFocused = true; $nextTick(() => $refs.email.focus())"
+         class="fixed top-24 bg-gray-600 z-50 shadow-md p-2 w-full max-w-lg md:rounded-lg">
+        <div>
+                <form wire:submit="save">
+                    <flux:input.group>
+                        <flux:input
+                            autocomplete="off"
+                            x-ref="email"
+                            placeholder="Please enter your email address"
+                            size="sm"
+                            autofocus
+                            wire:model="form.email"
+                            class:input="!text-white !bg-laravel-800 !pl-3 !border-gray-50 !overflow-hidden placeholder:!text-white placeholder:pl-1 placeholder:text-sm focus:placeholder:!text-gray-50 border focus:!border-gray-300 focus:!bg-gray-700 focus:ring-0"
+                            type="email"
+                        />
+                        <flux:button
+                            icon="envelope"
+                            size="sm"
+                            class="!bg-laravel-600 !text-gray-100 !border-gray-50 focus:border-gray-300 focus:bg-gray-700 focus:!ring-0"
+                            wire:click="save">I want to be Laraveled
+                        </flux:button>
+                    </flux:input.group>
+                </form>
+
+        </div>
     </div>
 </div>

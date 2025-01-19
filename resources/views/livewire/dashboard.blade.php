@@ -2,13 +2,13 @@
     <div class="flex">
         <!-- Sidebar (Desktop Only) -->
         <aside class="hidden md:flex flex-col w-64 bg-gray-100 dark:bg-gray-800 py-8 px-6 space-y-6">
-            <h2 class="text-3xl font-extrabold text-orange-500 mb-8">Laraveled</h2>
+            <h2 class="text-3xl font-extrabold text-laravel-500 dark:text-laravel-600 mb-8">Laraveled</h2>
             <nav class="space-y-4">
-                <a href="#" class="block text-lg font-bold hover:text-orange-500">Dashboard</a>
-                <a href="#" class="block text-lg font-bold hover:text-orange-500">My Projects</a>
-                <a href="#" class="block text-lg font-bold hover:text-orange-500">Favorites</a>
-                <a href="#" class="block text-lg font-bold hover:text-orange-500">Settings</a>
-                <a href="#" class="block text-lg font-bold hover:text-red-500">Logout</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Dashboard</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">My Projects</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Favorites</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Settings</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-700">Logout</a>
             </nav>
         </aside>
 
@@ -16,7 +16,7 @@
         <div class="flex-1 flex flex-col">
             <!-- Mobile Header -->
             <header class="bg-gray-100 dark:bg-gray-800 px-6 py-4 flex justify-between items-center md:hidden">
-                <h1 class="text-2xl font-bold text-orange-500">Laraveled</h1>
+                <h1 class="text-2xl font-bold text-laravel-500 dark:text-laravel-600">Laraveled</h1>
                 <button id="mobile-menu-toggle" class="text-2xl">
                     &#9776; <!-- Hamburger Icon -->
                 </button>
@@ -24,24 +24,24 @@
 
             <!-- Mobile Menu -->
             <nav id="mobile-menu" class="hidden bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white px-6 py-4 md:hidden space-y-4">
-                <a href="#" class="block py-2 font-bold hover:text-orange-500">Dashboard</a>
-                <a href="#" class="block py-2 font-bold hover:text-orange-500">My Projects</a>
-                <a href="#" class="block py-2 font-bold hover:text-orange-500">Favorites</a>
-                <a href="#" class="block py-2 font-bold hover:text-orange-500">Settings</a>
-                <a href="#" class="block py-2 font-bold hover:text-red-500">Logout</a>
+                <a href="#" class="block py-2 font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Dashboard</a>
+                <a href="#" class="block py-2 font-bold hover:text-laravel-800 dark:hover:text-laravel-500">My Projects</a>
+                <a href="#" class="block py-2 font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Favorites</a>
+                <a href="#" class="block py-2 font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Settings</a>
+                <a href="#" class="block py-2 font-bold hover:text-laravel-700">Logout</a>
             </nav>
 
             <!-- Page Content -->
             <main class="px-6 py-10">
                 <header class="text-center">
-                    <h1 class="text-5xl font-extrabold text-orange-500">Welcome Back, Artisan!</h1>
+                    <h1 class="text-5xl font-extrabold text-laravel-500 dark:text-laravel-600">Welcome Back, Artisan!</h1>
                     <p class="text-xl text-gray-700 dark:text-gray-300 mt-4">Your creative journey starts here.</p>
                 </header>
 
                 <!-- Statistics and Notifications -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
                     <!-- Projects Submitted -->
-                    <div class="bg-gradient-to-br from-orange-300 to-orange-500 dark:from-orange-600 dark:to-red-600 p-8 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
+                    <div class="bg-gradient-to-br from-gray-400 to-gray-500 dark:from-gray-800 dark:to-gray-600 p-8 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
                         <h3 class="text-3xl font-bold">Projects Submitted</h3>
                         <p class="text-6xl font-extrabold mt-4">12</p>
                         <p class="text-gray-700 dark:text-gray-300 mt-4">Showcase your amazing work to the community!</p>

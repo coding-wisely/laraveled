@@ -18,6 +18,18 @@ export default {
                 abel: ['Abel', 'cursive'],
             },
             colors: {
+                laravel: {
+                    50: '#FFE5E3',  // Lightest shade
+                    100: '#FFC9C5', // Very light shade
+                    200: '#FFAFA9', // Lighter shade
+                    300: '#FF9389', // Light-mid shade
+                    400: '#FF776B', // Slightly darker
+                    500: '#FF2D20', // Default primary color
+                    600: '#E6291D', // Darker shade
+                    700: '#CC2519', // Even darker
+                    800: '#B32216', // Darker still
+                    900: '#991D12', // Darkest shade
+                },
                 // Accent variables are defined in resources/css/app.css...
                 accent: {
                     DEFAULT: 'var(--color-accent)',

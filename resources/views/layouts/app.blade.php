@@ -16,20 +16,23 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxStyles
     @livewireStyles
-
 </head>
 <body
     class="antialiased font-sans min-h-screen">
-    <div class="min-h-screen">
-        <livewire:layout.header />
+<div class="min-h-screen">
+    <livewire:join-waiting-list/>
+    <livewire:layout.header/>
 
-        <livewire:layout.mobile-slide-in-navigation />
+    <livewire:layout.mobile-slide-in-navigation/>
 
-        <flux:main container>
-            {{ $slot }}
-        </flux:main>
-    </div>
-    @fluxScripts
-    @livewireScripts
+    <flux:main container>
+        {{ $slot }}
+    </flux:main>
+</div>
+@fluxScripts
+@livewireScripts
+@persist('toast')
+<flux:toast position="top right" class="pt-20"/>
+@endpersist
 </body>
 </html>
