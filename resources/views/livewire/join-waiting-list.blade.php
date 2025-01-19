@@ -56,7 +56,7 @@ $save = function () {
                         <flux:input
                             autocomplete="off"
                             x-ref="email"
-                            placeholder="Please enter your email address"
+                            placeholder="Email to notify you when we launch"
                             size="sm"
                             autofocus
                             wire:model="form.email"
@@ -67,7 +67,8 @@ $save = function () {
                             icon="envelope"
                             size="sm"
                             class="!bg-laravel-600 !text-gray-100 !border-gray-50 focus:border-gray-300 focus:bg-gray-700 focus:!ring-0"
-                            wire:click="save">I want to be Laraveled
+                            wire:click="save">
+                            I want to be Laraveled
                         </flux:button>
                     </flux:input.group>
                 </form>
