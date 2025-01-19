@@ -59,10 +59,11 @@
                         <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">Submit Your Next Project</h3>
                         <p class="text-gray-600 dark:text-gray-300 mt-4">Showcase your amazing work to the
                             community.</p>
-                        <button
-                            class="mt-6 bg-laravel-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-laravel-600 transition-colors">
+                        <flux:button
+                            href="{{ route('projects.create') }}"
+                            class="mt-6 bg-laravel-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-laravel-600 transition-colors" wire:navigate="true">
                             Submit Now
-                        </button>
+                        </flux:button>
                     </div>
                 </div>
                 <div class="px-6 py-10" x-data="{ selectedProject: 1 }">

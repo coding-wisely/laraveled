@@ -1,6 +1,8 @@
 <div class="max-w-5xl mx-auto p-6 bg-white dark:bg-gray-700 shadow rounded">
     <form wire:submit.prevent="submit" class="space-y-5">
 
+        <x-filepond::upload wire:model="file" max-files="5" multiple />
+
         <!-- Title -->
         <flux:input
             wire:model="title"
@@ -88,4 +90,6 @@
             {{ session('success') }}
         </flux:toast>
     @endif
+
+    @filepondScripts
 </div>

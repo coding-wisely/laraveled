@@ -16,6 +16,34 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxStyles
     @livewireStyles
+    <style>
+        /**
+* FilePond Custom Styles
+*/
+        .filepond--drop-label {
+            color: #4c4e53;
+        }
+
+        .filepond--label-action {
+            text-decoration-color: #babdc0;
+        }
+
+        .filepond--panel-root {
+            border-radius: 2em;
+            background-color: #edf0f4;
+            height: 1em;
+        }
+
+        .filepond--item-panel {
+            background-color: #595e68;
+        }
+
+        .filepond--drip-blob {
+            background-color: #7f8a9a;
+        }
+    </style>
+    <!-- Filepond stylesheet -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
 </head>
 <body
     class="antialiased font-sans min-h-screen">
@@ -49,5 +77,7 @@
 @persist('toast')
 <flux:toast position="top right" class="pt-20"/>
 @endpersist
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
 </body>
 </html>

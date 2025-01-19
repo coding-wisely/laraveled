@@ -8,9 +8,14 @@ use App\Models\Category;
 use App\Models\Tag;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Spatie\LivewireFilepond\WithFilePond;
+
 #[Layout('layouts.app')]
 class CreateProject extends Component
 {
+    use WithFilePond;
+
+    public $file;
     public $user_id;
     public $title;
     public $description;
@@ -30,6 +35,7 @@ class CreateProject extends Component
         'technologies' => 'array',
         'categories' => 'array',
         'tags' => 'array',
+        'file' => 'required|mimetypes:image/jpg,image/jpeg,image/png|max:3000',
     ];
 
     public function submit()
