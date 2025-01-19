@@ -65,59 +65,38 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="px-6 py-10" x-data="{ selectedProject: 1 }">
                     <!-- Section Header -->
                     <header class="text-center mb-10">
                         <h2 class="text-4xl font-extrabold text-laravel-500 dark:text-laravel-600">Your Showcases</h2>
-                        <p class="text-lg text-gray-700 dark:text-gray-300 mt-2">Browse your projects and see how
-                            they're performing.</p>
+                        <p class="text-lg text-gray-700 dark:text-gray-300 mt-2">Browse your projects and see how they're performing.</p>
                     </header>
 
                     <!-- Showcases Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Showcase Item -->
+                        <!-- Showcase Item 1 -->
                         <div
                             class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-transform duration-300"
                             :class="selectedProject === 1 ? 'scale-105 shadow-xl' : ''"
                             @click="selectedProject = selectedProject === 1 ? null : 1"
                         >
-                            <img src="{{ asset('img.png') }}" alt="Project Screenshot" class="rounded-lg mb-4">
+                            <img src="{{ asset('img.png') }}" alt="Project Screenshot" class="rounded-lg mb-4 w-full h-48 object-cover">
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Taskavel</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Missing task manager!</p>
-                            <!-- Stats -->
                             <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
-                                <div>
-                                    <span class="font-bold">Views:</span> 123
-                                </div>
-                                <div>
-                                    <span class="font-bold">Comments:</span> 8
-                                </div>
-                                <div>
-                                    <span class="font-bold">Rating:</span> 8.5
-                                </div>
-                            </div>
-                            <!-- User Ratings -->
-                            <div class="mt-4">
-                                <p class="text-sm font-bold mb-2">Rate this project:</p>
-                                <div class="flex">
-                                    <!-- Star Ratings -->
-                                    <button class="text-yellow-400 text-lg">&#9733;</button>
-                                    <button class="text-yellow-400 text-lg">&#9733;</button>
-                                    <button class="text-yellow-400 text-lg">&#9733;</button>
-                                    <button class="text-yellow-400 text-lg">&#9733;</button>
-                                    <button class="text-gray-400 text-lg">&#9733;</button>
-                                </div>
+                                <div><span class="font-bold">Views:</span> 123</div>
+                                <div><span class="font-bold">Comments:</span> 8</div>
+                                <div><span class="font-bold">Rating:</span> 8.5</div>
                             </div>
                         </div>
 
-                        <!-- Additional Showcase Items -->
+                        <!-- Showcase Item 2 -->
                         <div
                             class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-transform duration-300"
-                            :class="selectedProject === 2 ? 'scale-105' : ''"
+                            :class="selectedProject === 2 ? 'scale-105 shadow-xl' : ''"
                             @click="selectedProject = selectedProject === 2 ? null : 2"
                         >
-                            <img src="{{ asset('img_1.png') }}" alt="Project Screenshot" class="rounded-lg mb-4">
+                            <img src="{{ asset('img_1.png') }}" alt="Project Screenshot" class="rounded-lg mb-4 w-full h-48 object-cover">
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">MyApp</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Best app for collaboration!</p>
                             <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
@@ -127,12 +106,13 @@
                             </div>
                         </div>
 
+                        <!-- Showcase Item 3 -->
                         <div
                             class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-transform duration-300"
-                            :class="selectedProject === 3 ? 'scale-105' : ''"
+                            :class="selectedProject === 3 ? 'scale-105 shadow-xl' : ''"
                             @click="selectedProject = selectedProject === 3 ? null : 3"
                         >
-                            <img src="{{ asset('img_2.png') }}" alt="Project Screenshot" class="rounded-lg mb-4">
+                            <img src="{{ asset('img_2.png') }}" alt="Project Screenshot" class="rounded-lg mb-4 w-full h-48 object-cover">
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">E-Shop</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">The future of e-commerce!</p>
                             <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
@@ -144,28 +124,66 @@
                     </div>
 
                     <!-- Comments Section -->
-                    <div class="mt-10" x-show="selectedProject !== null">
+                    <div class="mt-10" x-show="selectedProject !== null" x-cloak>
                         <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Comments & Replies</h3>
                         <div class="space-y-4">
+                            <!-- Comments for Project 1 -->
                             <template x-if="selectedProject === 1">
-                                <!-- Comments for Project 1 -->
-                                <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-bold text-gray-900 dark:text-white">John Doe</p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">2 hours ago</p>
+                                <div>
+                                    <!-- Comment 1 -->
+                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-2">
+                                        <div class="flex justify-between items-center">
+                                            <p class="font-bold text-gray-900 dark:text-white">John Doe</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">2 hours ago</p>
+                                        </div>
+                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Amazing project! Great work!</p>
+                                        <!-- Replies -->
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Totally agree!</div>
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Very well done.</div>
                                     </div>
-                                    <p class="mt-2 text-gray-700 dark:text-gray-300">This is an amazing project! Great
-                                        work!</p>
+
+                                    <!-- Comment 2 -->
+                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-2">
+                                        <div class="flex justify-between items-center">
+                                            <p class="font-bold text-gray-900 dark:text-white">Jane Smith</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">5 hours ago</p>
+                                        </div>
+                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Loved the UI design!</p>
+                                        <!-- Replies -->
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Same thoughts!</div>
+                                    </div>
                                 </div>
                             </template>
+
+                            <!-- Comments for Project 2 -->
                             <template x-if="selectedProject === 2">
-                                <!-- Comments for Project 2 -->
-                                <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-bold text-gray-900 dark:text-white">Jane Smith</p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">1 day ago</p>
+                                <div>
+                                    <!-- Comment 1 -->
+                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-2">
+                                        <div class="flex justify-between items-center">
+                                            <p class="font-bold text-gray-900 dark:text-white">Emily White</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">1 day ago</p>
+                                        </div>
+                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Collaborative features are a lifesaver!</p>
+                                        <!-- Replies -->
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Couldn’t agree more.</div>
                                     </div>
-                                    <p class="mt-2 text-gray-700 dark:text-gray-300">Absolutely love this app!</p>
+                                </div>
+                            </template>
+
+                            <!-- Comments for Project 3 -->
+                            <template x-if="selectedProject === 3">
+                                <div>
+                                    <!-- Comment 1 -->
+                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-2">
+                                        <div class="flex justify-between items-center">
+                                            <p class="font-bold text-gray-900 dark:text-white">Chris Brown</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">2 hours ago</p>
+                                        </div>
+                                        <p class="mt-2 text-gray-700 dark:text-gray-300">E-shop transformed my online store!</p>
+                                        <!-- Replies -->
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Phenomenal app!</div>
+                                    </div>
                                 </div>
                             </template>
                         </div>
