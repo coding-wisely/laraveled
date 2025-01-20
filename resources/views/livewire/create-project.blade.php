@@ -1,45 +1,48 @@
 <div class="max-w-5xl mx-auto p-6 bg-white dark:bg-gray-700 shadow rounded">
     <form wire:submit.prevent="submit" class="space-y-5">
-
-        <x-filepond::upload wire:model="file" max-files="5" multiple />
-
+        <!-- Files -->
+        <x-filepond wire:model="form.files" multiple/>
+        <!-- Display Validation Errors -->
+        @error('form.files') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
+        @foreach ($errors->get('form.files.*') as $fileErrors)
+            @foreach ($fileErrors as $error)
+                <p class="text-red-500 text-sm">{{ $error }}</p>
+            @endforeach
+        @endforeach
         <!-- Title -->
         <flux:input
-            wire:model="title"
+            wire:model="form.title"
             placeholder="Enter the project title"
         />
 
         <!-- Description -->
-        <flux:editor wire:model="description" placeholder="Describe your wonderful project"/>
-
+        <flux:editor
+            wire:model="form.description"
+            placeholder="Tell us about your wonderful project"/>
+        <div>
+            @error('form.title') <span class="error">{{ $message }}</span> @enderror
+        </div>
         <!-- Website URL -->
-        <flux:input.group label="Enter the project website URL">
-            <flux:input.group.prefix>https://</flux:input.group.prefix>
-            <flux:input
-                wire:model="website_url"
-                placeholder="Enter the project website URL"
-            />
-        </flux:input.group>
-        <!-- GitHub URL -->
-        <flux:input.group label="Enter the GitHub repository URL">
-            <flux:input.group.prefix>https://</flux:input.group.prefix>
         <flux:input
-            wire:model="github_url"
-            placeholder="Enter the GitHub repository URL"
-            type="url"
+            wire:model="form.website_url"
+            placeholder="Enter the project website URL"
         />
-        </flux:input.group>
+        <!-- GitHub URL -->
+        <flux:input
+            wire:model="form.github_url"
+            placeholder="Enter the GitHub repository URL"
+        />
 
         <!-- Technologies -->
         <flux:select
-            wire:model="technologies"
+            wire:model="form.technologies"
             label="Technologies"
             variant="listbox"
             :multiple="true"
             :filter="false"
             placeholder="Choose technologies...">
 
-        @foreach($allTechnologies as $technology)
+            @foreach($allTechnologies as $technology)
                 <flux:option value="{{ $technology->id }}">
                     {{ $technology->name }}
                 </flux:option>
@@ -48,7 +51,7 @@
 
         <!-- Categories -->
         <flux:select
-            wire:model="categories"
+            wire:model="form.categories"
             label="Categories"
             multiple
             variant="listbox"
@@ -63,7 +66,7 @@
 
         <!-- Tags -->
         <flux:select
-            wire:model="tags"
+            wire:model="form.tags"
             label="Tags"
             multiple
             variant="listbox"
@@ -91,5 +94,4 @@
         </flux:toast>
     @endif
 
-    @filepondScripts
 </div>

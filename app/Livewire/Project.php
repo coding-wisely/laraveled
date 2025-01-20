@@ -2,12 +2,10 @@
 
 namespace App\Livewire;
 
-use CodingWisely\SlugGenerator\SlugGenerator;
 use Livewire\Component;
 
 class Project extends Component
 {
-    use SlugGenerator;
 
     public ?Project $project = null;
 

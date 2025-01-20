@@ -16,34 +16,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxStyles
     @livewireStyles
-    <style>
-        /**
-* FilePond Custom Styles
-*/
-        .filepond--drop-label {
-            color: #4c4e53;
-        }
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link
+        href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet"
+    />
 
-        .filepond--label-action {
-            text-decoration-color: #babdc0;
-        }
-
-        .filepond--panel-root {
-            border-radius: 2em;
-            background-color: #edf0f4;
-            height: 1em;
-        }
-
-        .filepond--item-panel {
-            background-color: #595e68;
-        }
-
-        .filepond--drip-blob {
-            background-color: #7f8a9a;
-        }
-    </style>
-    <!-- Filepond stylesheet -->
-    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
 </head>
 <body
     class="antialiased font-sans min-h-screen">
@@ -57,7 +35,7 @@
             <h2 class="text-3xl font-semibold text-laravel-500 dark:text-laravel-600 mb-8">Laraveled</h2>
             <nav class="space-y-4">
                 <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Dashboard</a>
-                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">My Projects</a>
+                <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">My Projects({{ auth()->user()->projects->count() }})</a>
                 <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Favorites</a>
                 <a href="#" class="block text-lg font-bold hover:text-laravel-800 dark:hover:text-laravel-500">Settings</a>
                 <a href="#" class="block text-lg font-bold hover:text-laravel-700">Logout</a>
@@ -77,7 +55,8 @@
 @persist('toast')
 <flux:toast position="top right" class="pt-20"/>
 @endpersist
+<!-- add before </body> -->
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-
 </body>
 </html>

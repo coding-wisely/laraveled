@@ -65,6 +65,13 @@ return [
             'endpoint' => env('AWS_ENDPOINT'), // MinIO endpoint
             'use_path_style_endpoint' => true, // Required for MinIO
         ],
+        'media' => [
+            'driver' => 'local',
+            'root'   => public_path('media'),
+            'url'    => env('APP_URL').'/media',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
     ],
 
     /*

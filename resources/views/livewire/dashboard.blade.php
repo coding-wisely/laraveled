@@ -3,6 +3,21 @@
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
+            @foreach($projects = auth()->user()->projects()->with(['media', ])->get() as $project)
+                <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-transform duration-300">
+                    @if($project->getMedia("*")->count() > 0)
+                        <img src="{{ $project->getMedia("*")[0]->getFullUrl()}}" alt="Project Screenshot"
+                             class="rounded-lg mb-4 w-full h-48 object-cover">
+                    @endif
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $project->name }}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">{{ $project->description }}</p>
+                    <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
+                        <div><span class="font-bold">Views:</span> {{ $project->views }}</div>
+                        <div><span class="font-bold">Comments:</span> {{ $project->comments }}</div>
+                        <div><span class="font-bold">Rating:</span> {{ $project->rating }}</div>
+                    </div>
+                </div>
+            @endforeach
             <!-- Page Content -->
             <main class="px-6 py-10">
                 <header class="text-center">
@@ -61,7 +76,8 @@
                             community.</p>
                         <flux:button
                             href="{{ route('projects.create') }}"
-                            class="mt-6 bg-laravel-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-laravel-600 transition-colors" wire:navigate="true">
+                            class="mt-6 bg-laravel-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-laravel-600 transition-colors"
+                            wire:navigate="true">
                             Submit Now
                         </flux:button>
                     </div>
@@ -70,7 +86,8 @@
                     <!-- Section Header -->
                     <header class="text-center mb-10">
                         <h2 class="text-4xl font-extrabold text-laravel-500 dark:text-laravel-600">Your Showcases</h2>
-                        <p class="text-lg text-gray-700 dark:text-gray-300 mt-2">Browse your projects and see how they're performing.</p>
+                        <p class="text-lg text-gray-700 dark:text-gray-300 mt-2">Browse your projects and see how
+                            they're performing.</p>
                     </header>
 
                     <!-- Showcases Grid -->
@@ -81,7 +98,8 @@
                             :class="selectedProject === 1 ? 'scale-105 shadow-xl' : ''"
                             @click="selectedProject = selectedProject === 1 ? null : 1"
                         >
-                            <img src="{{ asset('img.png') }}" alt="Project Screenshot" class="rounded-lg mb-4 w-full h-48 object-cover">
+                            <img src="{{ asset('img.png') }}" alt="Project Screenshot"
+                                 class="rounded-lg mb-4 w-full h-48 object-cover">
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Taskavel</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Missing task manager!</p>
                             <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
@@ -97,7 +115,8 @@
                             :class="selectedProject === 2 ? 'scale-105 shadow-xl' : ''"
                             @click="selectedProject = selectedProject === 2 ? null : 2"
                         >
-                            <img src="{{ asset('img_1.png') }}" alt="Project Screenshot" class="rounded-lg mb-4 w-full h-48 object-cover">
+                            <img src="{{ asset('img_1.png') }}" alt="Project Screenshot"
+                                 class="rounded-lg mb-4 w-full h-48 object-cover">
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">MyApp</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Best app for collaboration!</p>
                             <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
@@ -113,7 +132,8 @@
                             :class="selectedProject === 3 ? 'scale-105 shadow-xl' : ''"
                             @click="selectedProject = selectedProject === 3 ? null : 3"
                         >
-                            <img src="{{ asset('img_2.png') }}" alt="Project Screenshot" class="rounded-lg mb-4 w-full h-48 object-cover">
+                            <img src="{{ asset('img_2.png') }}" alt="Project Screenshot"
+                                 class="rounded-lg mb-4 w-full h-48 object-cover">
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">E-Shop</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">The future of e-commerce!</p>
                             <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
@@ -137,10 +157,15 @@
                                             <p class="font-bold text-gray-900 dark:text-white">John Doe</p>
                                             <p class="text-sm text-gray-600 dark:text-gray-400">2 hours ago</p>
                                         </div>
-                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Amazing project! Great work!</p>
+                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Amazing project! Great
+                                            work!</p>
                                         <!-- Replies -->
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Totally agree!</div>
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Very well done.</div>
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Totally
+                                            agree!
+                                        </div>
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Very well
+                                            done.
+                                        </div>
                                     </div>
 
                                     <!-- Comment 2 -->
@@ -151,7 +176,9 @@
                                         </div>
                                         <p class="mt-2 text-gray-700 dark:text-gray-300">Loved the UI design!</p>
                                         <!-- Replies -->
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Same thoughts!</div>
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Same
+                                            thoughts!
+                                        </div>
                                     </div>
                                 </div>
                             </template>
@@ -165,9 +192,12 @@
                                             <p class="font-bold text-gray-900 dark:text-white">Emily White</p>
                                             <p class="text-sm text-gray-600 dark:text-gray-400">1 day ago</p>
                                         </div>
-                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Collaborative features are a lifesaver!</p>
+                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Collaborative features are a
+                                            lifesaver!</p>
                                         <!-- Replies -->
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Couldn’t agree more.</div>
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Couldn’t
+                                            agree more.
+                                        </div>
                                     </div>
                                 </div>
                             </template>
@@ -181,9 +211,12 @@
                                             <p class="font-bold text-gray-900 dark:text-white">Chris Brown</p>
                                             <p class="text-sm text-gray-600 dark:text-gray-400">2 hours ago</p>
                                         </div>
-                                        <p class="mt-2 text-gray-700 dark:text-gray-300">E-shop transformed my online store!</p>
+                                        <p class="mt-2 text-gray-700 dark:text-gray-300">E-shop transformed my online
+                                            store!</p>
                                         <!-- Replies -->
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Phenomenal app!</div>
+                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply:
+                                            Phenomenal app!
+                                        </div>
                                     </div>
                                 </div>
                             </template>
