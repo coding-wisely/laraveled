@@ -24,7 +24,6 @@ class CreateProject extends Component
     {
         $this->validate();
         //$slug = $this->generateSlugManually();
-        die('here');
         $project = Project::create([
             'user_id' => auth()->id(),
             'uuid' => Str::uuid(),

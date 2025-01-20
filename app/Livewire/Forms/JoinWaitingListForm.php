@@ -8,9 +8,15 @@ use Livewire\Form;
 
 class JoinWaitingListForm extends Form
 {
-    #[Validate(['required', 'email', 'max:254'])]
+    #[Validate()]
     public $email = '';
 
+    public function rules()
+    {
+        return [
+            'email' => ['required', 'email:dns,rfc', 'unique:join_waiting_lists,email'],
+        ];
+    }
     public function store()
     {
         $this->validate();

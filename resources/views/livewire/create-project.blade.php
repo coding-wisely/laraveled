@@ -3,7 +3,7 @@
         <!-- Files -->
         <x-filepond wire:model="form.files" multiple/>
         <!-- Display Validation Errors -->
-        @error('form.files') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
+        @error('form.files') <p class="mt-3 text-sm font-medium text-red-500 dark:text-red-400">{{ $message }}</p> @enderror
         @foreach ($errors->get('form.files.*') as $fileErrors)
             @foreach ($fileErrors as $error)
                 <p class="text-red-500 text-sm">{{ $error }}</p>
@@ -11,24 +11,27 @@
         @endforeach
         <!-- Title -->
         <flux:input
+            label="Project Title"
             wire:model="form.title"
             placeholder="Enter the project title"
         />
-
         <!-- Description -->
         <flux:editor
+            label="Description"
             wire:model="form.description"
             placeholder="Tell us about your wonderful project"/>
-        <div>
-            @error('form.title') <span class="error">{{ $message }}</span> @enderror
-        </div>
+
         <!-- Website URL -->
         <flux:input
+            label="Website URL"
             wire:model="form.website_url"
             placeholder="Enter the project website URL"
         />
+
+
         <!-- GitHub URL -->
         <flux:input
+            label="GitHub URL"
             wire:model="form.github_url"
             placeholder="Enter the GitHub repository URL"
         />
