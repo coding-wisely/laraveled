@@ -26,7 +26,7 @@
 <body
     class="antialiased font-sans min-h-screen">
 <div class="min-h-screen">
-    @if(!app()->isProduction())
+    @if(app()->isProduction())
     <livewire:join-waiting-list/>
     @endif
     @auth
