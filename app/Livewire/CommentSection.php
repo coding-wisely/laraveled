@@ -36,7 +36,7 @@ class CommentSection extends Component
     {
         $this->comments = Comment::where('project_id', $this->projectId)
             ->whereNull('parent_id')
-            ->with(['children.user', 'user'])
+            ->with(['children.user', 'user']) // Eager load user and children relationships
             ->orderBy('id', 'desc')
             ->get();
     }
@@ -74,6 +74,7 @@ class CommentSection extends Component
 
     public function toggleReplies(int $commentId, bool $alwaysShow = false)
     {
+        $this->loadComments();
         if (! isset($this->showReplies[$commentId])) {
             $this->showReplies[$commentId] = true; // Show replies for the first time
         } else {
@@ -87,8 +88,6 @@ class CommentSection extends Component
 
     public function render()
     {
-        return view('livewire.comment-section', [
-            'comments' => $this->comments,
-        ]);
+        return view('livewire.comment-section');
     }
 }

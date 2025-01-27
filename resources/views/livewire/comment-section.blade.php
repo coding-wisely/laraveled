@@ -22,13 +22,13 @@
 
     <!-- Display Comments -->
     <div class="space-y-4">
-        @forelse ($comments as $comment)
+        @forelse ($this->comments as $comment)
             <div class="border rounded-lg p-4">
-                <p class="font-semibold">{{ $comment->user->name }}</p>
+                <p class="font-semibold">{{ $comment->user?->name ?: 'Anonymous' }}</p>
                 <p class="text-gray-600">{{ $comment->created_at->diffForHumans() }}</p>
                 <p class="mt-2">{{ $comment->content }}</p>
 
-                <div class="mt-2" x-data="{ showReplyBox: false, replyText: '' }">
+                <div class="mt-2" x-data="{ showReplyBox: false, replyText: '' }" x-cloak>
                     <button 
                         @click="showReplyBox = !showReplyBox"
                         class="text-sm text-blue-500 hover:underline">
