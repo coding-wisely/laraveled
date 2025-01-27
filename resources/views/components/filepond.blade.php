@@ -1,5 +1,5 @@
 <div wire:ignore
-     class="filepond-wrapper dark:bg-gray-800"
+     class=""
      x-data
      x-init="
         FilePond.setOptions({
@@ -14,9 +14,15 @@
                 },
             }
         });
-        FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginImagePreview,FilePondPluginFileValidateType,FilePondPluginFileValidateSize);
         FilePond.create($refs.input)"
 >
-
-    <input type="file" x-ref="input" {{ $attributes }}>
+    <input type="file" x-ref="input" {{ $attributes }} multiple
+           data-allow-reorder="true"
+           accept="image/png, image/jpeg, image/gif"
+           data-max-file-size="3MB"
+           data-max-files="3">
+    <flux:subheading>
+        Max files: 3, Max file size: 3MB
+    </flux:subheading>
 </div>
