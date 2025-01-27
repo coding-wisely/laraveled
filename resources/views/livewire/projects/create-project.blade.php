@@ -14,41 +14,56 @@
             badge="Required"
             label="Project Title"
             wire:model="form.title"
+            description="Your project title. This will be visible on all the pages with listing projects publicly."
             placeholder="Enter the project title"
         />
+        <flux:textarea
+            badge="Required"
+            label="Short Description"
+            wire:model="form.short_description"
+            description="A short description of your project. This will be visible on all the pages with listing projects publicly."
+            placeholder="Tell us about your project in a few words"
+            rows="auto"
+            />
         <!-- Description -->
         <flux:editor
             badge="Required"
             label="Description"
             wire:model="form.description"
+            description="This will be shown on your project page view."
             placeholder="Tell us about your wonderful project"/>
+        <flux:card class="p-4 grid md:grid-cols-2 gap-6">
+            <!-- Website URL -->
+            <flux:input
+                badge="Required"
+                label="Website URL"
+                wire:model="form.website_url"
+                description="The URL of your project website."
+                placeholder="Enter the project website URL"
+                class="h-full"
+            />
 
-        <!-- Website URL -->
-        <flux:input
-            badge="Required"
-            label="Website URL"
-            wire:model="form.website_url"
-            placeholder="Enter the project website URL"
-        />
+            <!-- GitHub URL -->
+            <flux:input
+                label="GitHub URL"
+                wire:model="form.github_url"
+                description="Good for open source projects."
+                placeholder="Enter the GitHub repository URL"
+                class="h-full"
+            />
+        </flux:card>
 
-
-        <!-- GitHub URL -->
-        <flux:input
-            label="GitHub URL"
-            wire:model="form.github_url"
-            placeholder="Enter the GitHub repository URL"
-        />
-
+        <flux:card class="p-4 grid md:grid-cols-2 gap-6">
         <!-- Technologies -->
         <flux:select
             badge="Required"
             wire:model="form.technologies"
+            description="The technologies used in your project."
             label="Technologies"
             variant="listbox"
             :multiple="true"
             :filter="false"
             placeholder="Choose technologies...">
-
             @foreach($allTechnologies as $technology)
                 <flux:option value="{{ $technology->id }}">
                     {{ $technology->name }}
@@ -60,6 +75,7 @@
         <flux:select
             badge="Required"
             wire:model="form.categories"
+            description="The categories your project belongs to."
             label="Categories"
             multiple
             variant="listbox"
@@ -71,7 +87,7 @@
                 </flux:option>
             @endforeach
         </flux:select>
-
+        </flux:card>
         <!-- Submit Button -->
         <div class="flex justify-end">
             <flux:button type="submit" variant="primary">
