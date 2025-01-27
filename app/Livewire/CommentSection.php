@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Livewire;
 
 use App\Models\Comment;
@@ -10,17 +8,15 @@ use Livewire\Component;
 
 class CommentSection extends Component
 {
-    public $comments;        // Parent comments with children
+    public $comments;
 
-    public $projectId;       // Project ID for the comments
+    public $projectId;
 
-    public $newComment = ''; // Content of the new parent comment
+    public $newComment = '';
 
-    public $replyContent = '';
+    public $replyTo = null;
 
-    public $replyTo = null;  // ID of the comment being replied to
-
-    public $showReplies = []; // Tracks which comments have their replies shown
+    public $showReplies = [];
 
     protected $rules = [
         'newComment' => 'required|min:3',
@@ -32,34 +28,32 @@ class CommentSection extends Component
         $this->loadComments();
     }
 
-    private function loadComments()
+    public function loadComments()
     {
         $this->comments = Comment::where('project_id', $this->projectId)
             ->whereNull('parent_id')
-            ->with(['children.user', 'user']) // Eager load user and children relationships
+            ->with(['childrenRecursive.user', 'user']) // Load all nested replies recursively
             ->orderBy('id', 'desc')
             ->get();
     }
 
     public function postComment()
     {
-        $this->validateOnly('newComment');
+        $this->validate();
 
-        // Create a new parent comment
         Comment::create([
-            'project_id' => $this->projectId,
             'content' => $this->newComment,
             'user_id' => Auth::id(),
-            'approved' => now(),
+            'project_id' => $this->projectId,
         ]);
 
-        $this->newComment = ''; // Clear input field
-        $this->loadComments(); // Reload comments
+        $this->newComment = '';
+        $this->replyTo = null;
+        $this->loadComments();
     }
 
     public function submitReply($commentId, $replyText)
     {
-        // Create a new reply
         Comment::create([
             'project_id' => $this->projectId,
             'content' => $replyText,
@@ -68,7 +62,7 @@ class CommentSection extends Component
             'approved' => now(),
         ]);
 
-        $this->replyContent = '';
+        $this->newComment = '';
         $this->loadComments();
     }
 
@@ -76,7 +70,7 @@ class CommentSection extends Component
     {
         $this->loadComments();
         if (! isset($this->showReplies[$commentId])) {
-            $this->showReplies[$commentId] = true; // Show replies for the first time
+            $this->showReplies[$commentId] = true;
         } else {
             if ($alwaysShow) {
                 $this->showReplies[$commentId] = true; // Always show replies
@@ -86,8 +80,15 @@ class CommentSection extends Component
         }
     }
 
+    public function replyTo($commentId)
+    {
+        $this->replyTo = $commentId;
+    }
+
     public function render()
     {
-        return view('livewire.comment-section');
+        return view('livewire.comment-section', [
+            'comments' => $this->comments,
+        ]);
     }
 }
