@@ -21,7 +21,6 @@
     @if(app()->isProduction())
         <livewire:join-waiting-list/>
     @endif
-
     {{ $slot }}
 </div>
 @fluxScripts
