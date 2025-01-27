@@ -1,24 +1,21 @@
-<div class="max-w-full mt-8">
+<div class="max-w-full">
     <!-- Post a Comment -->
     @auth
-        <div class="mb-6 bg-white shadow rounded-lg p-4">
-            <h3 class="text-lg font-semibold text-gray-700">Leave a Comment</h3>
-            <textarea 
-                wire:model="newComment" 
-                rows="3" 
-                class="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                placeholder="Write your comment..."></textarea>
+    <div class="mb-6 p-4">
+        <textarea 
+            wire:model="newComment" 
+            rows="3" 
+            class="w-full  p-3 border rounded-lg text-sm"
+            placeholder="Write your comment..."></textarea>
 
-            @error('newComment') 
-                <span class="text-red-500 text-sm">{{ $message }}</span> 
-            @enderror
-
-            <button 
-                wire:click="postComment" 
-                class="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                Post Comment
-            </button>
-        </div>
+        <button 
+            wire:click="postComment" 
+            class="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
+            :disabled="$wire.newComment === ''"
+            :class="{ 'opacity-50 cursor-not-allowed': $wire.newComment === '' }">
+            Post Comment
+        </button>
+    </div>
     @endauth
 
     <!-- Display Comments -->
@@ -38,7 +35,7 @@
                         <div class="mt-4" x-data="{ showReplyBox: false }">
                             <button 
                                 @click="showReplyBox = !showReplyBox"
-                                class="text-sm text-blue-500 hover:underline">
+                                class="text-xs text-blue-500 hover:underline">
                                 Reply
                             </button>
 
@@ -51,7 +48,7 @@
                                 <button 
                                     @click="$wire.submitReply({{ $comment->id }}, replyText); showReplyBox=false;"
                                     class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
-                                    Submit Reply
+                                    Reply
                                 </button>
                             </div>
                         </div>
@@ -60,14 +57,14 @@
                         @if ($comment->childrenRecursive->isNotEmpty())
                             <button 
                                 wire:click="toggleReplies({{ $comment->id }})"
-                                class="mt-3 text-sm text-gray-500 hover:underline">
+                                class="mt-3 text-xs text-gray-500 hover:underline">
                                 {{ $showReplies[$comment->id] ?? false ? 'Hide Replies' : 'Show Replies' }} ({{ $comment->childrenRecursive->count() }})
                             </button>
                         @endif
 
                         <!-- Replies Section -->
                         @if (isset($showReplies[$comment->id]) && $showReplies[$comment->id])
-                            <div class="mt-4 space-y-4 pl-6 border-l-2 border-gray-200">
+                            <div class="mt-4 space-y-4 pl-6  border-gray-200">
                                 @foreach ($comment->childrenRecursive as $reply)
                                     <div class="bg-gray-50 border rounded-lg p-4">
                                         <div class="flex items-start space-x-4">
@@ -82,7 +79,7 @@
                                                 <div class="mt-4" x-data="{ showNestedReplyBox: false }">
                                                     <button 
                                                         @click="showNestedReplyBox = !showNestedReplyBox"
-                                                        class="text-sm text-blue-500 hover:underline">
+                                                        class="text-xs text-blue-500 hover:underline">
                                                         Reply
                                                     </button>
 
@@ -95,7 +92,7 @@
                                                         <button 
                                                             @click="$wire.submitReply({{ $reply->id }}, nestedReplyText); showNestedReplyBox=false;"
                                                             class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
-                                                            Submit Reply
+                                                            Reply
                                                         </button>
                                                     </div>
                                                 </div>
