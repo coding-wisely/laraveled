@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Models\Comment;
@@ -8,13 +10,17 @@ use Livewire\Component;
 
 class CommentSection extends Component
 {
-    public $comments;
+    public $comments;        // Parent comments with children
 
-    public $projectId;
+    public $projectId;       // Project ID for the comments
 
-    public $newComment = '';
+    public $newComment = ''; // Content of the new parent comment
 
-    public $replyTo = null;
+    public $replyContent = '';
+
+    public $replyTo = null;  // ID of the comment being replied to
+
+    public $showReplies = []; // Tracks which comments have their replies shown
 
     protected $rules = [
         'newComment' => 'required|min:3',
@@ -23,38 +29,60 @@ class CommentSection extends Component
     public function mount($projectId)
     {
         $this->projectId = $projectId;
-        $this->comments = Comment::where('project_id', $projectId)
-            ->whereNull('parent_id')
-            ->with('children', 'user')
-            ->orderBy('id', 'desc')
-            ->get();
+        $this->loadComments();
     }
 
-    public function replyToComment($commentId)
+    private function loadComments()
     {
-        $this->replyTo = $commentId;
+        $this->comments = Comment::where('project_id', $this->projectId)
+            ->whereNull('parent_id')
+            ->with(['children.user', 'user'])
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     public function postComment()
     {
-        $this->validate();
+        $this->validateOnly('newComment');
 
+        // Create a new parent comment
         Comment::create([
             'project_id' => $this->projectId,
             'content' => $this->newComment,
             'user_id' => Auth::id(),
-            'parent_id' => $this->replyTo,
-            'approved' => true,
+            'approved' => now(),
         ]);
 
-        $this->newComment = '';
-        $this->replyTo = null;
+        $this->newComment = ''; // Clear input field
+        $this->loadComments(); // Reload comments
+    }
 
-        $this->comments = Comment::where('project_id', $this->projectId)
-            ->whereNull('parent_id')
-            ->with('children', 'user')
-            ->orderBy('id', 'desc')
-            ->get();
+    public function submitReply($commentId, $replyText)
+    {
+        // Create a new reply
+        Comment::create([
+            'project_id' => $this->projectId,
+            'content' => $replyText,
+            'user_id' => Auth::id(),
+            'parent_id' => $commentId,
+            'approved' => now(),
+        ]);
+
+        $this->replyContent = '';
+        $this->loadComments();
+    }
+
+    public function toggleReplies(int $commentId, bool $alwaysShow = false)
+    {
+        if (! isset($this->showReplies[$commentId])) {
+            $this->showReplies[$commentId] = true; // Show replies for the first time
+        } else {
+            if ($alwaysShow) {
+                $this->showReplies[$commentId] = true; // Always show replies
+            } else {
+                $this->showReplies[$commentId] = ! $this->showReplies[$commentId]; // Toggle visibility
+            }
+        }
     }
 
     public function render()
