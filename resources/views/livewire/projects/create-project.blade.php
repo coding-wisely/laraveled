@@ -11,18 +11,21 @@
         @endforeach
         <!-- Title -->
         <flux:input
+            badge="Required"
             label="Project Title"
             wire:model="form.title"
             placeholder="Enter the project title"
         />
         <!-- Description -->
         <flux:editor
+            badge="Required"
             label="Description"
             wire:model="form.description"
             placeholder="Tell us about your wonderful project"/>
 
         <!-- Website URL -->
         <flux:input
+            badge="Required"
             label="Website URL"
             wire:model="form.website_url"
             placeholder="Enter the project website URL"
@@ -38,6 +41,7 @@
 
         <!-- Technologies -->
         <flux:select
+            badge="Required"
             wire:model="form.technologies"
             label="Technologies"
             variant="listbox"
@@ -54,6 +58,7 @@
 
         <!-- Categories -->
         <flux:select
+            badge="Required"
             wire:model="form.categories"
             label="Categories"
             multiple
@@ -63,21 +68,6 @@
             @foreach($allCategories as $category)
                 <flux:option value="{{ $category->id }}">
                     {{ $category->name }}
-                </flux:option>
-            @endforeach
-        </flux:select>
-
-        <!-- Tags -->
-        <flux:select
-            wire:model="form.tags"
-            label="Tags"
-            multiple
-            variant="listbox"
-            placeholder="Choose tags..."
-        >
-            @foreach($allTags as $tag)
-                <flux:option value="{{ $tag->id }}">
-                    {{ $tag->name }}
                 </flux:option>
             @endforeach
         </flux:select>

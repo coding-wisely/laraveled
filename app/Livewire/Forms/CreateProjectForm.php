@@ -19,15 +19,14 @@ class CreateProjectForm extends Form
     public function rules(): array
     {
         return [
-            'files' => 'required|array',
+            'files' => 'required|array|max:3',
             'files.*' => [new FileSizeWithName(1024 * 1024)],
             'title' => 'required|string|max:255',
+            'short_description' => 'required|string|max:255',
             'description' => 'required|string',
-            'website_url' => 'required|url',
-            'github_url' => 'required|url',
+            'website_url' => 'required',
             'technologies' => 'required|array',
             'categories' => 'required|array',
-            'tags' => 'required|array',
         ];
     }
 

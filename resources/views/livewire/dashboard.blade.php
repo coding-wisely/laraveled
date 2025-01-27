@@ -3,21 +3,6 @@
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
-            @foreach($projects = auth()->user()->projects()->with(['media', ])->get() as $project)
-                <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-transform duration-300">
-                    @if($project->getMedia("*")->count() > 0)
-                        <img src="{{ $project->getMedia("*")[0]->getFullUrl()}}" alt="Project Screenshot"
-                             class="rounded-lg mb-4 w-full h-48 object-cover">
-                    @endif
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $project->name }}</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">{{ $project->description }}</p>
-                    <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
-                        <div><span class="font-bold">Views:</span> {{ $project->views }}</div>
-                        <div><span class="font-bold">Comments:</span> {{ $project->comments }}</div>
-                        <div><span class="font-bold">Rating:</span> {{ $project->rating }}</div>
-                    </div>
-                </div>
-            @endforeach
             <!-- Page Content -->
             <main class="px-6 py-10">
                 <header class="text-center">
@@ -40,7 +25,7 @@
                     <div
                         class="bg-gradient-to-br from-blue-300 to-blue-500 dark:from-blue-600 dark:to-purple-600 p-6 rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300">
                         <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">Projects Submitted</h3>
-                        <p class="text-5xl font-extrabold text-white mt-4">12</p>
+                        <p class="text-5xl font-extrabold text-white mt-4">{{ auth()->user()->projects->count() }}</p>
                         <p class="text-gray-600 dark:text-gray-300 mt-2">Your total submitted projects.</p>
                     </div>
 

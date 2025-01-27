@@ -1,4 +1,5 @@
 <div wire:ignore
+     class="filepond-wrapper dark:bg-gray-800"
      x-data
      x-init="
         FilePond.setOptions({

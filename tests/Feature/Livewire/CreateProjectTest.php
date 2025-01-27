@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\CreateProject;
+use App\Livewire\Projects\CreateProject;
 use Livewire\Livewire;
 
 it('renders successfully', function () {

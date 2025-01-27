@@ -9,6 +9,7 @@ $logout = function (Logout $logout) {
 };
 ?>
 <flux:header container class="bg-zinc-50 relative dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
+
     <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left"/>
     <x-application-logo class="h-10 stroke-2 fill-current"/>
     <flux:spacer />
@@ -16,33 +17,18 @@ $logout = function (Logout $logout) {
         @if (auth()->user())
             <flux:navbar.item
                 icon="home"
-                href="/dashboard"
-                :current="request()->is('dashboard')"
+                href="{{ route('dashboard') }}"
             >
                 Dashboard
             </flux:navbar.item>
             <flux:navbar.item
-                icon="inbox"
-                badge="12"
-                href="#"
-                :current="request()->is('inbox')"
+                icon="puzzle-piece"
+                badge="{{ auth()->user()->projects->count() }}"
+                href="{{ route('projects.my') }}"
             >
-                Inbox
+                My Projects
             </flux:navbar.item>
-            <flux:navbar.item
-                icon="document-text"
-                href="#"
-                :current="request()->is('documents')"
-            >
-                Documents
-            </flux:navbar.item>
-            <flux:navbar.item
-                icon="calendar"
-                href="#"
-                :current="request()->is('calendar')"
-            >
-                Calendar
-            </flux:navbar.item>
+
             <flux:spacer/>
             <flux:dropdown position="bottom" align="end" class="max-lg:hidden">
                 <flux:profile avatar="/img/demo/user.png" name="{{ auth()->user()->name }}"/>
