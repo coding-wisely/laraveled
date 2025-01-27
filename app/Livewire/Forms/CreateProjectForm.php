@@ -9,6 +9,7 @@ class CreateProjectForm extends Form
 {
     public array $files = [];
     public string $title;
+    public string $short_description;
     public string $description;
     public string $website_url;
     public string $github_url;
