@@ -177,4 +177,12 @@
             </p>
         </flux:card>
     </div>
+
+    <flux:card class="mt-10">
+        <flux:heading level="2" class="mb-4">Comments</flux:heading>
+            <livewire:comment-section :project-id="$project->id" />
+
+    </flux:card>
+
+
 </div>
