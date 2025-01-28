@@ -6,7 +6,7 @@
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         wire:click="submitRating({{ $i }})"
-                        class="h-8 w-8 cursor-pointer text-gray-300 hover:text-yellow-500 transition"
+                        class="h-6 w-6 cursor-pointer text-gray-300 hover:text-yellow-500 transition"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="#ff2600"
@@ -22,7 +22,7 @@
                     <svg
                             xmlns="http://www.w3.org/2000/svg"
                             wire:click="submitRating({{ $i }})"
-                            class="h-8 w-8 cursor-pointer"
+                            class="h-6 w-6 cursor-pointer"
                             viewBox="0 0 24 24"
                             fill="{{ $i <= $userRating ? '#ff2600' : 'none' }}"
                             stroke="#ff2600"
@@ -37,7 +37,7 @@
                 @else
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-8 w-8 "
+                        class="h-6 w-6"
                         viewBox="0 0 24 24"
                         fill="{{ $i <= $userRating ? '#ff2600' : 'none' }}"
                         stroke="#ff2600"
