@@ -37,7 +37,7 @@
                             @auth
                                 <button 
                                     @click="showReplyBox = !showReplyBox"
-                                    class="text-xs text-blue-500 hover:underline">
+                                    class="text-xs text-red-500 hover:underline">
                                     Reply
                                 </button>
 
