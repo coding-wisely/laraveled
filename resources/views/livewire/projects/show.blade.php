@@ -61,6 +61,7 @@
                 </div>
             </flux:card>
 
+
             <!-- Technologies -->
             <flux:card>
                 <flux:heading level="2" class="mb-2">Technologies</flux:heading>
@@ -94,4 +95,17 @@
             </p>
         </flux:card>
     </div>
+
+    <flux:card class="mt-10">
+        <flux:heading level="2" class="mb-4">Ratings</flux:heading>
+        <livewire:ratings :project="$project" />
+    </flux:card>
+
+    <flux:card class="mt-10">
+        <flux:heading level="2" class="mb-4">Comments</flux:heading>
+            <livewire:comment-section :project-id="$project->id" />
+
+    </flux:card>
+
+
 </div>
