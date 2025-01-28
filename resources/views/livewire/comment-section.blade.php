@@ -14,7 +14,7 @@
             @else
                 wire:click="handleRedirectToLogin"
             @endauth
-            class="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
+            class="mt-3 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
             :disabled="!newComment.trim()">
             Post Comment
         </button>
@@ -49,14 +49,14 @@
                                         placeholder="Write your reply..."></textarea>
                                     <button 
                                         @click="$wire.submitReply({{ $comment->id }}, replyText); showReplyBox=false;"
-                                        class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                                        class="mt-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
                                         Reply
                                     </button>
                                 </div>
                             @else
                                 <button 
                                     wire:click="handleRedirectToLogin"
-                                    class="text-xs text-blue-500 hover:underline">
+                                    class="text-xs text-red-500 hover:underline">
                                     Login to Reply
                                 </button>
                             @endauth
@@ -89,7 +89,7 @@
                                                     @auth
                                                         <button 
                                                             @click="showNestedReplyBox = !showNestedReplyBox"
-                                                            class="text-xs text-blue-500 hover:underline">
+                                                            class="text-xs text-red-500 hover:underline">
                                                             Reply
                                                         </button>
 
@@ -101,14 +101,14 @@
                                                                 placeholder="Write your reply..."></textarea>
                                                             <button 
                                                                 @click="$wire.submitReply({{ $reply->id }}, nestedReplyText); showNestedReplyBox=false;"
-                                                                class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                                                                class="mt-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
                                                                 Reply
                                                             </button>
                                                         </div>
                                                     @else
                                                         <button 
                                                             wire:click="handleRedirectToLogin"
-                                                            class="text-xs text-blue-500 hover:underline">
+                                                            class="text-xs text-red-500 hover:underline">
                                                             Login to Reply
                                                         </button>
                                                     @endauth
