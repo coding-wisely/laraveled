@@ -11,11 +11,12 @@ use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 class Project extends Model implements HasMedia
 {
     use HasFactory;
-    use SlugGenerator;
     use InteractsWithMedia;
+    use SlugGenerator;
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -24,6 +25,7 @@ class Project extends Model implements HasMedia
             ->fit(Fit::Contain, 300, 300)
             ->nonQueued();
     }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -42,6 +44,11 @@ class Project extends Model implements HasMedia
     public function technologies(): BelongsToMany
     {
         return $this->belongsToMany(Technology::class, 'project_technology');
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
     }
 
     public static function getSluggableField(): string
