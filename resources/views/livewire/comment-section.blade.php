@@ -74,17 +74,17 @@
                         <!-- Replies Section -->
                         @if (isset($showReplies[$comment->id]) && $showReplies[$comment->id])
                             <div class="mt-4 space-y-4 pl-6  border-gray-200">
-                                @foreach ($comment->childrenRecursive as $reply)
+                                @foreach ($comment->childrenRecursive as $child)
                                     <div class="bg-gray-50 border rounded-lg p-4">
                                         <div class="flex items-start space-x-4">
                                             <div class="flex-1">
                                                 <div class="flex items-center justify-between">
-                                                    <h4 class="text-sm font-semibold text-gray-800">{{ $reply->user?->name ?: 'Anonymous' }}</h4>
-                                                    <span class="text-xs text-gray-500">{{ $reply->created_at->diffForHumans() }}</span>
+                                                    <h4 class="text-sm font-semibold text-gray-800">{{ $child->user?->name ?: 'Anonymous' }}</h4>
+                                                    <span class="text-xs text-gray-500">{{ $child->created_at->diffForHumans() }}</span>
                                                 </div>
-                                                <p class="mt-2 text-gray-600 text-sm">{{ $reply->content }}</p>
+                                                <p class="mt-2 text-gray-600 text-sm">{{ $child->content }}</p>
 
-                                                <!-- Nested Reply Button -->
+                                                <!-- Nested Child Reply Button -->
                                                 <div class="mt-4" x-data="{ showNestedReplyBox: false, nestedReplyText: '' }">
                                                     @auth
                                                         <button 
@@ -100,7 +100,7 @@
                                                                 class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                                                 placeholder="Write your reply..."></textarea>
                                                             <button 
-                                                                @click="$wire.submitReply({{ $reply->id }}, nestedReplyText); showNestedReplyBox=false;"
+                                                                @click="$wire.submitReply({{ $child->id }}, nestedReplyText); showNestedReplyBox=false;"
                                                                 class="mt-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
                                                                 Reply
                                                             </button>
@@ -112,6 +112,33 @@
                                                             Login to Reply
                                                         </button>
                                                     @endauth
+                                                
+
+                                                    @if ($child->children->isNotEmpty())
+                                                        <button 
+                                                            wire:click="toggleReplies({{ $child->id }})"
+                                                            class="mt-3 text-xs text-gray-500 hover:underline">
+                                                            {{ $showReplies[$child->id] ?? false ? 'Hide Replies' : 'Show Replies' }} ({{ $child->children->count() }})
+                                                        </button>
+                                                    @endif
+
+                                                    @if (isset($showReplies[$child->id]) && $showReplies[$child->id])
+                                                        <div class="mt-4 space-y-4 pl-6  border-gray-200">
+                                                            @foreach ($child->children as $grandchild)
+                                                                <div class="bg-gray-50 border rounded-lg p-4">
+                                                                    <div class="flex items-start space-x-4">
+                                                                        <div class="flex-1">
+                                                                            <div class="flex items-center justify-between">
+                                                                                <h4 class="text-sm font-semibold text-gray-800">{{ $grandchild->user?->name ?: 'Anonymous' }}</h4>
+                                                                                <span class="text-xs text-gray-500">{{ $grandchild->created_at->diffForHumans() }}</span>
+                                                                            </div>
+                                                                            <p class="mt-2 text-gray-600 text-sm">{{ $grandchild->content }}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

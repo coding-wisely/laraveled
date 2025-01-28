@@ -48,6 +48,7 @@ class CommentSection extends Component
             ->whereNull('parent_id')
             ->with(['childrenRecursive.user', 'user']) // Load all nested replies recursively
             ->orderBy('id', 'desc')
+            ->limit(1)
             ->get();
     }
 
