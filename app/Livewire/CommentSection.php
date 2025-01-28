@@ -24,8 +24,22 @@ class CommentSection extends Component
 
     public function mount($projectId)
     {
+        if (session()->has('newComment')) {
+            $this->newComment = session('newComment');
+            session()->forget('newComment'); // Clear the session after retrieving the comment
+        }
+
         $this->projectId = $projectId;
         $this->loadComments();
+    }
+
+    public function handleRedirectToLogin()
+    {
+        // Save the comment in the session
+        session()->put('newComment', $this->newComment);
+
+        // Redirect to the login page
+        return redirect()->route('login');
     }
 
     public function loadComments()

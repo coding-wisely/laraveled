@@ -1,22 +1,24 @@
 <div class="max-w-full">
     <!-- Post a Comment -->
-    @auth
-    <div class="mb-6 p-4">
+    <div x-data="{ newComment: @entangle('newComment') }" class="p-4">
         <textarea 
-            wire:model="newComment" 
+            x-model="newComment" 
+            wire:model.defer="newComment" 
             rows="3" 
-            class="w-full  p-3 border rounded-lg text-sm"
+            class="w-full p-3 border rounded-lg text-sm"
             placeholder="Write your comment..."></textarea>
 
         <button 
-            wire:click="postComment" 
+            @auth
+                wire:click="postComment"
+            @else
+                wire:click="handleRedirectToLogin"
+            @endauth
             class="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
-            :disabled="$wire.newComment === ''"
-            :class="{ 'opacity-50 cursor-not-allowed': $wire.newComment === '' }">
+            :disabled="!newComment.trim()">
             Post Comment
         </button>
     </div>
-    @endauth
 
     <!-- Display Comments -->
     <div class="space-y-6">
@@ -31,26 +33,33 @@
                         </div>
                         <p class="mt-2 text-gray-600 text-sm">{{ $comment->content }}</p>
 
-                        <!-- Reply Button -->
-                        <div class="mt-4" x-data="{ showReplyBox: false }">
-                            <button 
-                                @click="showReplyBox = !showReplyBox"
-                                class="text-xs text-blue-500 hover:underline">
-                                Reply
-                            </button>
-
-                            <!-- Reply Box -->
-                            <div x-show="showReplyBox" class="mt-3" x-cloak>
-                                <textarea 
-                                    x-model="replyText" 
-                                    class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Write your reply..."></textarea>
+                        <div class="mt-4" x-data="{ showReplyBox: false, replyText: '' }">
+                            @auth
                                 <button 
-                                    @click="$wire.submitReply({{ $comment->id }}, replyText); showReplyBox=false;"
-                                    class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                                    @click="showReplyBox = !showReplyBox"
+                                    class="text-xs text-blue-500 hover:underline">
                                     Reply
                                 </button>
-                            </div>
+
+                                <!-- Reply Box -->
+                                <div x-show="showReplyBox" class="mt-3" x-cloak>
+                                    <textarea 
+                                        x-model="replyText" 
+                                        class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Write your reply..."></textarea>
+                                    <button 
+                                        @click="$wire.submitReply({{ $comment->id }}, replyText); showReplyBox=false;"
+                                        class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                                        Reply
+                                    </button>
+                                </div>
+                            @else
+                                <button 
+                                    wire:click="handleRedirectToLogin"
+                                    class="text-xs text-blue-500 hover:underline">
+                                    Login to Reply
+                                </button>
+                            @endauth
                         </div>
 
                         <!-- Show Replies Button -->
@@ -76,25 +85,33 @@
                                                 <p class="mt-2 text-gray-600 text-sm">{{ $reply->content }}</p>
 
                                                 <!-- Nested Reply Button -->
-                                                <div class="mt-4" x-data="{ showNestedReplyBox: false }">
-                                                    <button 
-                                                        @click="showNestedReplyBox = !showNestedReplyBox"
-                                                        class="text-xs text-blue-500 hover:underline">
-                                                        Reply
-                                                    </button>
-
-                                                    <!-- Nested Reply Box -->
-                                                    <div x-show="showNestedReplyBox" class="mt-3" x-cloak>
-                                                        <textarea 
-                                                            x-model="nestedReplyText" 
-                                                            class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                                            placeholder="Write your reply..."></textarea>
+                                                <div class="mt-4" x-data="{ showNestedReplyBox: false, nestedReplyText: '' }">
+                                                    @auth
                                                         <button 
-                                                            @click="$wire.submitReply({{ $reply->id }}, nestedReplyText); showNestedReplyBox=false;"
-                                                            class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                                                            @click="showNestedReplyBox = !showNestedReplyBox"
+                                                            class="text-xs text-blue-500 hover:underline">
                                                             Reply
                                                         </button>
-                                                    </div>
+
+                                                        <!-- Nested Reply Box -->
+                                                        <div x-show="showNestedReplyBox" class="mt-3" x-cloak>
+                                                            <textarea 
+                                                                x-model="nestedReplyText" 
+                                                                class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                                placeholder="Write your reply..."></textarea>
+                                                            <button 
+                                                                @click="$wire.submitReply({{ $reply->id }}, nestedReplyText); showNestedReplyBox=false;"
+                                                                class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                                                                Reply
+                                                            </button>
+                                                        </div>
+                                                    @else
+                                                        <button 
+                                                            wire:click="handleRedirectToLogin"
+                                                            class="text-xs text-blue-500 hover:underline">
+                                                            Login to Reply
+                                                        </button>
+                                                    @endauth
                                                 </div>
                                             </div>
                                         </div>
