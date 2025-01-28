@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Comment;
+use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -26,7 +27,7 @@ class CommentSection extends Component
     {
         if (session()->has('newComment')) {
             $this->newComment = session('newComment');
-            session()->forget('newComment'); // Clear the session after retrieving the comment
+            session()->forget('newComment');
         }
 
         $this->projectId = $projectId;
@@ -35,10 +36,10 @@ class CommentSection extends Component
 
     public function handleRedirectToLogin()
     {
-        // Save the comment in the session
         session()->put('newComment', $this->newComment);
 
-        // Redirect to the login page
+        session()->put('url.intended', route('projects.show', Project::whereId($this->projectId)->first()->uuid));
+
         return redirect()->route('login');
     }
 
@@ -46,7 +47,7 @@ class CommentSection extends Component
     {
         $this->comments = Comment::where('project_id', $this->projectId)
             ->whereNull('parent_id')
-            ->with(['childrenRecursive.user:id,name', 'user:id,name']) // Load all nested replies recursively
+            ->with(['childrenRecursive.user:id,name', 'user'])
             ->orderBy('id', 'desc')
             ->get();
     }
@@ -87,9 +88,9 @@ class CommentSection extends Component
             $this->showReplies[$commentId] = true;
         } else {
             if ($alwaysShow) {
-                $this->showReplies[$commentId] = true; // Always show replies
+                $this->showReplies[$commentId] = true;
             } else {
-                $this->showReplies[$commentId] = ! $this->showReplies[$commentId]; // Toggle visibility
+                $this->showReplies[$commentId] = ! $this->showReplies[$commentId];
             }
         }
     }
