@@ -11,7 +11,7 @@
     <!-- Header Section -->
     <div>
         <flux:heading>{{ $project->title }}</flux:heading>
-        <flux:subheading size="lg" class="text-gray-700">{{ $project->short_description }}</flux:subheading>
+        <flux:subheading size="lg" class="text-gray-700">{!!  $project->short_description  !!}</flux:subheading>
         <flux:separator variant="subtle" class="mt-4"/>
     </div>
 
