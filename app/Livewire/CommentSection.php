@@ -45,7 +45,7 @@ class CommentSection extends Component
     {
         $this->comments = Comment::where('project_id', $this->projectId)
             ->whereNull('parent_id')
-            ->with(['childrenRecursive.user', 'user'])
+            ->with(['user', 'children.user', 'children.children.user', 'parent'])
             ->orderBy('id', 'desc')
             ->get();
 
