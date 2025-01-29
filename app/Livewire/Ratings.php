@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Project;
 use App\Models\Rating;
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -48,7 +49,11 @@ class Ratings extends Component
     public function submitRating($rating)
     {
         if ($this->sessionRated) {
-            session()->flash('error', 'You have already rated this project in this session.');
+            Flux::toast(
+                heading: 'Already rated',
+                text: 'You have already rated this project.',
+                variant: 'warning',
+            );
 
             return;
         }
@@ -70,7 +75,11 @@ class Ratings extends Component
         $this->userRated = true;
         $this->sessionRated = true;
 
-        session()->flash('success', 'Thank you for your feedback!');
+        Flux::toast(
+            heading: 'Thank you',
+            text: 'Thank you for rating this project.',
+            variant: 'success',
+        );
     }
 
     public function render()
