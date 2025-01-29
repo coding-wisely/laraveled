@@ -8,13 +8,23 @@
         />
 
         <div class="flex justify-start mt-3">
-            <flux:button 
-                wire:click="postComment"
-                color="danger"
-                x-bind:disabled="newComment.trim() === ''"
-            >
-                Post Comment
-            </flux:button>
+            @auth
+                <flux:button 
+                    wire:click="postComment"
+                    color="danger"
+                    x-bind:disabled="(newComment?.trim() ?? '') === ''"
+                >
+                    Post Comment
+                </flux:button>
+            @else
+                <flux:button 
+                    wire:click="handleRedirectToLogin"
+                    color="danger"
+                    x-bind:disabled="(newComment?.trim() ?? '') === ''"
+                >
+                    Login to Comment
+                </flux:button>
+            @endauth
         </div>
     </div>
 

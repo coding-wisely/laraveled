@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Comment;
 use App\Models\Project;
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -45,15 +46,18 @@ class CommentSection extends Component
     {
         $this->comments = Comment::where('project_id', $this->projectId)
             ->whereNull('parent_id')
-            ->with(['user', 'children.user', 'children.children.user', 'parent'])
+            // ->whereNotNull('approved') need to uncomment this later once we are happy with the testing to show only approved ones
+            ->with(['user', 'children.user', 'children.children.user', 'parent.user'])
             ->orderBy('id', 'desc')
             ->get();
 
         $this->newComment = '';
+
     }
 
     public function postComment()
     {
+
         $this->validate();
 
         Comment::create([
@@ -61,6 +65,12 @@ class CommentSection extends Component
             'user_id' => Auth::id(),
             'project_id' => $this->projectId,
         ]);
+
+        Flux::toast(
+            heading: 'Comment posted',
+            text: 'Your comment has been posted.',
+            variant: 'success',
+        );
 
         $this->loadComments();
 
@@ -73,10 +83,7 @@ class CommentSection extends Component
             'content' => $replyText,
             'user_id' => Auth::id(),
             'parent_id' => $commentId,
-            'approved' => now(),
         ]);
-
-        $this->newComment = '';
 
         $this->loadComments();
     }
