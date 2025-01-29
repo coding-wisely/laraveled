@@ -32,7 +32,7 @@
     <x-application-logo/>
     <flux:navbar class="-mb-px max-lg:hidden ml-12">
         <flux:navbar.item
-            href="{{ route('projects.my') }}"
+            href="{{ route('projects.index') }}"
         >
             <flux:tooltip content="Discover Projects">
                 <flux:icon.globe

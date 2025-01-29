@@ -13,7 +13,7 @@ class Index extends Component
 {
     public function render(): Factory|Application|\Illuminate\Contracts\View\View|View
     {
-        $projects = Project::with(['categories', 'tags', 'technologies'])->get();
+        $projects = Project::with(['user','categories', 'tags', 'technologies', 'ratings'])->get();
 
         return view('livewire.projects.index', [
             'projects' => $projects,
