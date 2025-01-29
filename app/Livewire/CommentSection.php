@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Project;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class CommentSection extends Component
@@ -14,20 +15,10 @@ class CommentSection extends Component
 
     public $projectId;
 
-    public $newComment = '';
-
     public $showReplies = [];
-
-    protected $rules = [
-        'newComment' => 'required|min:3',
-    ];
 
     public function mount($projectId)
     {
-        if (session()->has('newComment')) {
-            $this->newComment = session('newComment');
-            session()->forget('newComment');
-        }
 
         $this->projectId = $projectId;
         $this->loadComments();
@@ -35,9 +26,7 @@ class CommentSection extends Component
 
     public function handleRedirectToLogin()
     {
-        session()->put('newComment', $this->newComment);
-
-        session()->put('url.intended', route('projects.show', Project::whereId($this->projectId)->first()->uuid));
+        Session::put('url.intended', route('projects.show', Project::whereId($this->projectId)->first()->uuid));
 
         return redirect()->route('login');
     }
@@ -51,17 +40,12 @@ class CommentSection extends Component
             ->orderBy('id', 'desc')
             ->get();
 
-        $this->newComment = '';
-
     }
 
-    public function postComment()
+    public function postComment(string $commentText)
     {
-
-        $this->validate();
-
         Comment::create([
-            'content' => $this->newComment,
+            'content' => $commentText,
             'user_id' => Auth::id(),
             'project_id' => $this->projectId,
         ]);
@@ -73,7 +57,6 @@ class CommentSection extends Component
         );
 
         $this->loadComments();
-
     }
 
     public function submitReply($commentId, $replyText)

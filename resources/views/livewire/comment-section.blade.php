@@ -1,26 +1,27 @@
-<div class="max-w-full">
-    <div class="py-4" x-data="{ newComment: @entangle('newComment').defer || '' }">
+<div class="max-w-full" x-data="{ commentText: localStorage.getItem('commentText') || '' }">
+    <div class="py-4">
         <flux:textarea 
-            x-model="newComment"
-            wire:model.defer="newComment" 
+            x-model="commentText"
             placeholder="Write your comment..." 
             class="w-full"
+            @input="localStorage.setItem('commentText', commentText)"
         />
 
         <div class="flex justify-start mt-3">
             @auth
                 <flux:button 
-                    wire:click="postComment"
+                    @click="$wire.postComment(commentText).then(() => { 
+                        commentText = ''; 
+                        localStorage.removeItem('commentText'); 
+                    })"
                     color="danger"
-                    x-bind:disabled="(newComment?.trim() ?? '') === ''"
                 >
                     Post Comment
                 </flux:button>
             @else
                 <flux:button 
-                    wire:click="handleRedirectToLogin"
+                    @click="localStorage.setItem('commentText', commentText); $wire.handleRedirectToLogin()"
                     color="danger"
-                    x-bind:disabled="(newComment?.trim() ?? '') === ''"
                 >
                     Login to Comment
                 </flux:button>
