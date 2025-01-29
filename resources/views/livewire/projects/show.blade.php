@@ -23,105 +23,24 @@
                     $photos = $project->getMedia($project->title); // Your collection name
                     $photoCount = $photos->count();
                 @endphp
-
                 @if ($photoCount === 1)
-                    <img src="{{ $photos[0]->getFullUrl() }}"
-                         alt="{{ $project->title }}"
-                         class="rounded-lg object-cover w-full h-auto">
+                    <x-heading-photo :photo="$photos[0]" :project="$project"/>
                 @elseif ($photoCount === 2)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        @foreach ($photos as $photo)
-                            <img src="{{ $photo->getFullUrl() }}" alt="{{ $project->title }}"
-                                 class="rounded-lg object-cover w-full h-full">
-                        @endforeach
-                    </div>
-                @elseif ($photoCount === 3)
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <img src="{{ $photos[0]->getFullUrl() }}" alt="{{ $project->title }}"
-                                 class="rounded-lg object-cover w-full h-full">
-                        </div>
-                        <div class="grid grid-rows-2 gap-6">
+                        <x-heading-photo :photo="$photos[0]" :project="$project"/>
+                        <div class="grid  gap-6">
                             @foreach ($photos->skip(1) as $photo)
-                                <img src="{{ $photo->getFullUrl() }}" alt="{{ $project->title }}"
-                                     class="rounded-lg object-cover w-full h-full">
+                                <x-heading-photo :photo="$photo" :project="$project"/>
                             @endforeach
                         </div>
                     </div>
-                @elseif ($photoCount === 4)
+                @elseif ($photoCount === 3)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <img src="{{ $photos[0]->getFullUrl() }}" alt="{{ $project->title }}"
-                                 class="rounded-lg object-cover w-full h-full">
-                        </div>
+                        <x-heading-photo :photo="$photos[0]" :project="$project"/>
                         <div class="grid grid-rows-2 gap-6">
-                            <div class="grid grid-cols-2 gap-6">
-                                <img src="{{ $photos[1]->getFullUrl() }}" alt="{{ $project->title }}"
-                                     class="rounded-lg object-cover w-full h-full">
-                                <img src="{{ $photos[2]->getFullUrl() }}" alt="{{ $project->title }}"
-                                     class="rounded-lg object-cover w-full h-full">
-                            </div>
-                            <div>
-                                <img src="{{ $photos[3]->getFullUrl() }}" alt="{{ $project->title }}"
-                                     class="rounded-lg object-cover w-full h-full">
-                            </div>
-                        </div>
-                    </div>
-                @elseif ($photoCount === 5)
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="hover:cursor-pointer">
-                            <flux:modal.trigger :name="$photos[0]->getFullUrl()">
-                                <img src="{{ $photos[0]->getFullUrl() }}"
-                                     alt="{{ $project->title }}"
-                                     class="rounded-lg object-cover w-full h-full">
-                            </flux:modal.trigger>
-                            <flux:modal class="max-w-5xl space-y-6" :name="$photos[0]->getFullUrl()">
-                                <div>
-                                    <flux:heading size="lg">Update profile</flux:heading>
-                                    <flux:subheading>Make changes to your personal details.</flux:subheading>
-                                </div>
-                                <div class="max-h-[800px]">
-                                    <img src="{{ $photos[0]->getFullUrl() }}"
-                                         alt="{{ $project->title }}"
-                                         class="rounded-lg object-cover w-full h-full">
-                                </div>
-
-                            </flux:modal>
-                        </div>
-                        <div class="grid grid-rows-2 gap-6">
-                            <div class="grid grid-cols-2 gap-6">
-                                @foreach ($photos->skip(1)->take(2) as $photo)
-                                    <div>
-                                        <flux:modal.trigger :name="$photo->getFullUrl()">
-                                            <img src="{{ $photo->getFullUrl() }}"
-                                                 alt="{{ $project->title }}"
-                                                 class="rounded-lg object-cover w-full h-full">
-                                        </flux:modal.trigger>
-                                        <flux:modal :name="$photo->getFullUrl()">
-                                            <flux:heading>{{ $project->title }}</flux:heading>
-                                            <img src="{{ $photo->getFullUrl() }}"
-                                                 alt="{{ $project->title }}"
-                                                 class="rounded-lg object-cover w-full h-full">
-                                        </flux:modal>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="grid grid-cols-2 gap-6">
-                                @foreach ($photos->skip(3) as $photo)
-                                    <div>
-                                        <flux:modal.trigger :name="$photo->id">
-                                            <img src="{{ $photo->getFullUrl() }}"
-                                                 alt="{{ $project->title }}"
-                                                 class="rounded-lg object-cover w-full h-full">
-                                        </flux:modal.trigger>
-                                        <flux:modal :name="$photo->id">
-                                            <img src="{{ $photo->getFullUrl() }}"
-                                                 alt="{{ $project->title }}"
-                                                 class="rounded-lg object-cover w-full h-full">
-                                        </flux:modal>
-                                    </div>
-                                @endforeach
-                            </div>
+                            @foreach ($photos->skip(1)->take(2) as $photo)
+                                <x-heading-photo :photo="$photo" :project="$project"/>
+                            @endforeach
                         </div>
                     </div>
                 @endif
@@ -168,12 +87,10 @@
                 </div>
             </flux:card>
         </div>
-
-
         <!-- Description -->
         <flux:card>
             <flux:heading level="2" class="mb-2">Description</flux:heading>
-            <p class="text-gray-700 leading-relaxed">
+            <p class="text-gray-700 leading-relaxed prose dark:prose-invert">
                 {!! $project->description !!}
             </p>
         </flux:card>

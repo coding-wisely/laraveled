@@ -9,6 +9,7 @@ class CreateProjectForm extends Form
 {
     public array $files = [];
     public string $title;
+    public string $short_description;
     public string $description;
     public string $website_url;
     public string $github_url;
@@ -20,7 +21,7 @@ class CreateProjectForm extends Form
     {
         return [
             'files' => 'required|array|max:3',
-            'files.*' => [new FileSizeWithName(1024 * 1024)],
+            'files.*' => [new FileSizeWithName(1024 * 3024)],
             'title' => 'required|string|max:255',
             'short_description' => 'required|string|max:255',
             'description' => 'required|string',

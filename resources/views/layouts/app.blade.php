@@ -24,23 +24,31 @@
 
 </head>
 <body class="min-h-screen bg-white dark:bg-zinc-800">
+@if(app()->isProduction())
+    <livewire:join-waiting-list/>
+@endif
 <flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
     <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left"/>
     <x-application-logo/>
     <flux:navbar class="-mb-px max-lg:hidden ml-12">
         <flux:navbar.item
-            icon="globe"
-            href="{{ route('projects.my') }}"
+            href="{{ route('projects.index') }}"
         >
-            Discover Projects
+            <flux:tooltip content="Discover Projects">
+                <flux:icon.globe
+                    variant="outline"
+                    class="text-gray-500 dark:text-gray-300"/>
+            </flux:tooltip>
         </flux:navbar.item>
 
         <flux:spacer/>
         <flux:navbar.item
-            icon="crown"
-            href="{{ route('projects.my') }}"
+            href="{{ route('projects.index') }}"
         >
-            Top 5
+            <flux:tooltip content="Top 5">
+                <flux:icon.crown
+                    class="text-yellow-500 dark:text-yellow-300"/>
+            </flux:tooltip>
         </flux:navbar.item>
 
         <flux:spacer/>
@@ -51,29 +59,44 @@
     @auth()
         <flux:navbar>
             <flux:navbar.item
-                icon="home"
-                size="xl"
                 href="{{ route('dashboard') }}"
             >
-
+                <flux:tooltip content="Dashboard">
+                    <flux:icon.home-modern
+                        variant="solid"
+                        class="text-orange-600 dark:text-amber-300"
+                    />
+                </flux:tooltip>
             </flux:navbar.item>
             <flux:navbar.item
-                icon="puzzle-piece"
                 badge="{{ auth()->user()->projects->count() }}"
                 href="{{ route('projects.my') }}"
             >
+                <flux:tooltip content="My Projects">
+                    <flux:icon.puzzle-piece
+                        variant="solid"
+                        class="text-blue-500 dark:text-blue-300"
+                    />
+                </flux:tooltip>
+            </flux:navbar.item>
+            <flux:navbar.item
+                href="{{ route('projects.create') }}"
+            >
+                <flux:tooltip content="Add New Project">
+                    <flux:icon.folder-plus
+                        variant="solid"
+                        class="text-green-500 dark:text-green-300"/>
+                </flux:tooltip>
 
             </flux:navbar.item>
             <flux:navbar.item
-                icon="folder-plus"
                 href="{{ route('projects.create') }}"
             >
-
-            </flux:navbar.item>
-            <flux:navbar.item
-                icon="bookmark"
-                href="{{ route('projects.create') }}"
-            >
+                <flux:tooltip content="Bookmarks">
+                    <flux:icon.bookmark
+                        variant="solid"
+                        class="text-red-500 dark:text-red-300"/>
+                </flux:tooltip>
 
             </flux:navbar.item>
         </flux:navbar>
@@ -82,7 +105,7 @@
             <flux:profile avatar="{{ auth()->user()->getAvatarUrl() }}"/>
             <flux:menu>
                 <flux:menu.radio.group>
-                    <flux:menu.item >Olivia Martin</flux:menu.item>
+                    <flux:menu.item>Olivia Martin</flux:menu.item>
                     <flux:menu.item>Truly Delta</flux:menu.item>
                 </flux:menu.radio.group>
                 <flux:menu.separator/>
@@ -138,6 +161,8 @@
 <flux:toast position="top right" class="pt-20"/>
 @endpersist
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 </body>
 </html>
