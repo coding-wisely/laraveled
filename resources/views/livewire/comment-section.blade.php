@@ -78,6 +78,7 @@
                                     <div class="border rounded-lg p-4">
                                         <div class="flex items-start space-x-4">
                                             <div class="flex-1">
+                                                <span class="text-xs">Replying to {{ $comment->user?->name ?: 'Anonymous' }}</span>
                                                 <div class="flex items-center justify-between">
                                                     <h4 class="text-sm font-semibold">{{ $child->user?->name ?: 'Anonymous' }}</h4>
                                                     <span class="text-xs ">{{ $child->created_at->diffForHumans() }}</span>
@@ -126,6 +127,8 @@
                                                                 <div class="border rounded-lg p-4">
                                                                     <div class="flex items-start space-x-4">
                                                                         <div class="flex-1">
+                                                                        <span class="text-xs">Replying to {{ $child->user?->name ?: 'Anonymous' }}</span>
+
                                                                             <div class="flex items-center justify-between">
                                                                                 <h4 class="text-sm font-semibold">{{ $grandchild->user?->name ?: 'Anonymous' }}</h4>
                                                                                 <span class="text-xs ">{{ $grandchild->created_at->diffForHumans() }}</span>
