@@ -15,8 +15,6 @@ class CommentSection extends Component
 
     public $newComment = '';
 
-    public $replyTo = null;
-
     public $showReplies = [];
 
     protected $rules = [
@@ -47,9 +45,11 @@ class CommentSection extends Component
     {
         $this->comments = Comment::where('project_id', $this->projectId)
             ->whereNull('parent_id')
-            ->with(['childrenRecursive.user:id,name', 'user'])
+            ->with(['childrenRecursive.user', 'user'])
             ->orderBy('id', 'desc')
             ->get();
+
+        $this->newComment = '';
     }
 
     public function postComment()
@@ -62,9 +62,8 @@ class CommentSection extends Component
             'project_id' => $this->projectId,
         ]);
 
-        $this->newComment = '';
-        $this->replyTo = null;
         $this->loadComments();
+
     }
 
     public function submitReply($commentId, $replyText)
@@ -78,6 +77,7 @@ class CommentSection extends Component
         ]);
 
         $this->newComment = '';
+
         $this->loadComments();
     }
 
@@ -93,11 +93,6 @@ class CommentSection extends Component
                 $this->showReplies[$commentId] = ! $this->showReplies[$commentId];
             }
         }
-    }
-
-    public function replyTo($commentId)
-    {
-        $this->replyTo = $commentId;
     }
 
     public function render()
