@@ -75,7 +75,7 @@
                         @if (isset($showReplies[$comment->id]) && $showReplies[$comment->id])
                             <div class="mt-4 space-y-4 border-gray-200">
                                 @foreach ($comment->childrenRecursive as $child)
-                                    <div class="border rounded-lg p-4">
+                                    <div >
                                         <div class="flex items-start space-x-4">
                                             <div class="flex-1">
                                                 <span class="text-xs">Replying to {{ $comment->user?->name ?: 'Anonymous' }}</span>
@@ -83,7 +83,7 @@
                                                     <h4 class="text-sm font-semibold">{{ $child->user?->name ?: 'Anonymous' }}</h4>
                                                     <span class="text-xs ">{{ $child->created_at->diffForHumans() }}</span>
                                                 </div>
-                                                <p class="mt-2  text-sm">{{ $child->content }}</p>
+                                                <p class="mt-2 text-sm">{{ $child->content }}</p>
 
                                                 <!-- Nested Child Reply Button -->
                                                 <div class="mt-4" x-data="{ showNestedReplyBox: false, nestedReplyText: '' }">
@@ -124,8 +124,8 @@
                                                     @if (isset($showReplies[$child->id]) && $showReplies[$child->id])
                                                         <div class="mt-4 space-y-4 border-gray-200">
                                                             @foreach ($child->children as $grandchild)
-                                                                <div class="border rounded-lg p-4">
-                                                                    <div class="flex items-start space-x-4">
+                                                                <div >
+                                                                    <div class="flex items-start">
                                                                         <div class="flex-1">
                                                                         <span class="text-xs">Replying to {{ $child->user?->name ?: 'Anonymous' }}</span>
 
