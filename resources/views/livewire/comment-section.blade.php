@@ -73,7 +73,7 @@
 
                         <!-- Replies Section -->
                         @if (isset($showReplies[$comment->id]) && $showReplies[$comment->id])
-                            <div class="mt-4 space-y-4">
+                            <div class="mt-2 space-y-4">
                                 @foreach ($comment->childrenRecursive as $child)
                                     <div >
                                         <div class="flex items-start space-x-4">
@@ -85,16 +85,14 @@
                                                 </div>
                                                 <p class="mt-2 text-sm">{{ $child->content }}</p>
 
-                                                <!-- Nested Child Reply Button -->
-                                                <div class="mt-4" x-data="{ showNestedReplyBox: false, nestedReplyText: '' }">
+                                                <div class="mt-2" x-data="{ showNestedReplyBox: false, nestedReplyText: '' }">
                                                     @auth
                                                         <flux:link 
                                                             @click="showNestedReplyBox = !showNestedReplyBox"
-                                                            class="text-xs cursor-pointer ml-2">
+                                                            class="text-xs cursor-pointer">
                                                             Reply
                                                         </flux:link>
 
-                                                        <!-- Nested Reply Box -->
                                                         <div x-show="showNestedReplyBox" class="mt-3" x-cloak>
                                                             <flux:textarea 
                                                                 x-model="nestedReplyText" 
@@ -114,7 +112,6 @@
                                                         </flux:link>
                                                     @endauth
                                                 
-
                                                     @if ($child->children->isNotEmpty())
                                                         <flux:link 
                                                             wire:click="toggleReplies({{ $child->id }})"
