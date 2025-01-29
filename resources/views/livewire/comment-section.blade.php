@@ -37,11 +37,11 @@
 
                         <div class="mt-4" x-data="{ showReplyBox: false, replyText: '' }">
                             @auth
-                                <flux:button 
+                                <flux:link 
                                     @click="showReplyBox = !showReplyBox"
-                                    class="text-xs">
+                                    class="text-xs cursor-pointer">
                                     Reply
-                                </flux:button>
+                                </flux:link>
 
                                 <!-- Reply Box -->
                                 <div x-show="showReplyBox" class="mt-3" x-cloak>
@@ -55,25 +55,25 @@
                                     </flux:button>
                                 </div>
                             @else
-                                <flux:button 
-                                    wire:click="handleRedirectToLogin">
+                                <flux:link 
+                                    wire:click="handleRedirectToLogin"
+                                    class="text-xs cursor-pointer">
                                     Login to Reply
-                                </flux:button>
+                                </flux:link>
                             @endauth
+                            <!-- Show Replies Button -->
+                            @if ($comment->childrenRecursive->isNotEmpty())
+                                <flux:link 
+                                    wire:click="toggleReplies({{ $comment->id }})"
+                                    class="text-xs cursor-pointer ml-2">
+                                    {{ $showReplies[$comment->id] ?? false ? 'Hide Replies' : 'Show Replies' }} ({{ $comment->childrenRecursive->count() }})
+                                </flux:link>
+                            @endif
                         </div>
-
-                        <!-- Show Replies Button -->
-                        @if ($comment->childrenRecursive->isNotEmpty())
-                            <button 
-                                wire:click="toggleReplies({{ $comment->id }})"
-                                class="mt-3 text-xs hover:underline">
-                                {{ $showReplies[$comment->id] ?? false ? 'Hide Replies' : 'Show Replies' }} ({{ $comment->childrenRecursive->count() }})
-                            </button>
-                        @endif
 
                         <!-- Replies Section -->
                         @if (isset($showReplies[$comment->id]) && $showReplies[$comment->id])
-                            <div class="mt-4 space-y-4 border-gray-200">
+                            <div class="mt-4 space-y-4">
                                 @foreach ($comment->childrenRecursive as $child)
                                     <div >
                                         <div class="flex items-start space-x-4">
@@ -88,10 +88,11 @@
                                                 <!-- Nested Child Reply Button -->
                                                 <div class="mt-4" x-data="{ showNestedReplyBox: false, nestedReplyText: '' }">
                                                     @auth
-                                                        <flux:button 
-                                                            @click="showNestedReplyBox = !showNestedReplyBox">
+                                                        <flux:link 
+                                                            @click="showNestedReplyBox = !showNestedReplyBox"
+                                                            class="text-xs cursor-pointer ml-2">
                                                             Reply
-                                                        </flux:button>
+                                                        </flux:link>
 
                                                         <!-- Nested Reply Box -->
                                                         <div x-show="showNestedReplyBox" class="mt-3" x-cloak>
@@ -105,20 +106,21 @@
                                                             </flux:button>
                                                         </div>
                                                     @else
-                                                        <flux:button 
+                                                        <flux:link 
                                                             wire:click="handleRedirectToLogin"
+                                                            class="text-xs cursor-pointer"
                                                             >
                                                             Login to Reply
-                                                        </flux:button>
+                                                        </flux:link>
                                                     @endauth
                                                 
 
                                                     @if ($child->children->isNotEmpty())
-                                                        <button 
+                                                        <flux:link 
                                                             wire:click="toggleReplies({{ $child->id }})"
-                                                            class="mt-3 text-xs hover:underline">
+                                                            class="ml-3 cursor-pointer text-xs">
                                                             {{ $showReplies[$child->id] ?? false ? 'Hide Replies' : 'Show Replies' }} ({{ $child->children->count() }})
-                                                        </button>
+                                                        </flux:link>
                                                     @endif
 
                                                     @if (isset($showReplies[$child->id]) && $showReplies[$child->id])
