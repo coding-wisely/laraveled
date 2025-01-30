@@ -122,7 +122,7 @@
         </div>
     @endauth
 </flux:header>
-
+<!-- Responsive menu -->
 <flux:sidebar stashable sticky
               class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-700">
     <flux:sidebar.toggle class="lg:hidden" icon="x-mark"/>
@@ -141,7 +141,7 @@
     </flux:navlist>
     <flux:navlist variant="outline">
         <flux:navlist.item icon="bookmark" href="#">Bookmarks</flux:navlist.item>
-        <flux:navlist.item icon="puzzle-piece" badge="{{ auth()->user()->projects->count() }}" href="{{ route('projects.my') }}">My Projects</flux:navlist.item>
+        <flux:navlist.item icon="puzzle-piece" badge="{{ auth()->user()?->projects->count() }}" href="{{ route('projects.my') }}">My Projects</flux:navlist.item>
     </flux:navlist>
     <flux:spacer/>
     @auth()
