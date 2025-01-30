@@ -23,8 +23,8 @@ new #[Layout('layouts.guest')] class extends Component {
     }
 }; ?>
 
-<form wire:submit="login" class="space-y-4">
-    <flux:card class="space-y-6">
+<form wire:submit="login">
+    <flux:card class="space-y-6 h-screen md:h-full">
         <div class="flex w-full items-center justify-center text-center">
             <x-application-logo class="w-32"/>
         </div>

@@ -4,7 +4,7 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
             <!-- Page Content -->
-            <main class="px-6 py-10">
+            <main class="px-0 lg:px-6 py-10">
                 <header class="text-center">
                     <h1 class="text-5xl font-extrabold text-laravel-500 dark:text-laravel-600">Welcome Back,
                         Artisan!</h1>
@@ -12,7 +12,7 @@
                 </header>
 
                 <!-- Statistics and Notifications -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-2 py-10 lg:p-6">
                     <!-- Global Projects -->
                     <div
                         class="bg-gradient-to-br from-gray-300 to-gray-500 dark:from-gray-700 dark:to-gray-900 p-6 rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300">
@@ -67,7 +67,7 @@
                         </flux:button>
                     </div>
                 </div>
-                <div class="px-6 py-10" x-data="{ selectedProject: 1 }">
+                <div class="px-2 lg:px-6 py-10" x-data="{ selectedProject: 1 }">
                     <!-- Section Header -->
                     <header class="text-center mb-10">
                         <h2 class="text-4xl font-extrabold text-laravel-500 dark:text-laravel-600">Your Showcases</h2>

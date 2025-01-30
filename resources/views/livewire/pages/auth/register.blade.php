@@ -51,8 +51,8 @@ class extends Component {
 ?>
 
     <!-- Registration Form -->
-<form wire:submit="register" class="space-y-4">
-    <flux:card class="space-y-6">
+<form wire:submit="register">
+    <flux:card class="space-y-6 h-screen md:h-full">
         <div class="flex w-full items-center justify-center text-center">
             <x-application-logo class="w-32"/>
         </div>
