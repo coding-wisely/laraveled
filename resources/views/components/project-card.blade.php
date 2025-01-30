@@ -50,10 +50,13 @@
             @if($showAuthor)
                 <flux:subheading size="sm">
                     <span>{{ ($project->created_at)->diffForHumans() }}</span>
-                    <flux:link>{{ $project->user->name }}</flux:link>
+                    <flux:link href="{{ route('user.profile', $project->user->id) }}">
+                        {{ $project->user->name }}
+                    </flux:link>
                 </flux:subheading>
             @endif
         </div>
+
 
     </div>
 </flux:card>
