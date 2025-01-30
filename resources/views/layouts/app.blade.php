@@ -107,7 +107,7 @@
                         class="max-lg:hidden"
                         icon="cog-6-tooth"
                         href="{{ route('account-settings') }}"
-                        >Account Settings</flux:navmenu.item>
+                        >Profile</flux:navmenu.item>
                     <livewire:logout-button/> 
                      <flux:navmenu.item href="#" icon="trash" variant="danger">Delete</flux:navmenu.item>
                 </flux:navmenu>

@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
 
 #[Layout('layouts.app')]
 class AccountSettings extends Component
 {
+    use WithFileUploads;
+
     public $name;
 
     public $email;
@@ -22,12 +26,26 @@ class AccountSettings extends Component
 
     public $confirmPassword;
 
+    public $avatar;
+
+    public $currentAvatar;
+
+    public $previewAvatarUrl;
+
     public function mount()
     {
         $user = Auth::user();
         $this->name = $user->name;
         $this->email = $user->email;
         $this->bio = $user->bio;
+        $this->currentAvatar = $user->getFirstMediaUrl('users') ?? asset('images/default-user.png');
+    }
+
+    public function updatedAvatar()
+    {
+        if ($this->avatar instanceof TemporaryUploadedFile) {
+            $this->previewAvatarUrl = $this->avatar->temporaryUrl();
+        }
     }
 
     public function updateProfileInformation()
@@ -39,6 +57,14 @@ class AccountSettings extends Component
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'bio' => ['nullable', 'string', 'max:500'],
         ]);
+
+        if ($this->avatar instanceof TemporaryUploadedFile) {
+
+            $user->addMedia($this->avatar->getRealPath())->toMediaCollection('users');
+
+            $this->currentAvatar = $user->getFirstMediaUrl('users');
+            $this->previewAvatarUrl = null;
+        }
 
         $user->update($validated);
 

@@ -9,7 +9,7 @@
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <flux:fieldset class="p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+        <flux:fieldset class="p-6 border shadow-sm rounded-md">
             <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {{ __('Profile Information') }}
             </h3>
@@ -18,6 +18,38 @@
             </p>
 
             <form wire:submit.prevent="updateProfileInformation" class="space-y-6">
+
+            <div class="flex flex-col items-center">
+                <label for="avatar" class="cursor-pointer relative">
+                        @if ($previewAvatarUrl)
+                            <img 
+                                src="{{ $previewAvatarUrl }}" 
+                                alt="Avatar Preview" 
+                                class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow"
+                            >
+                        @elseif ($currentAvatar)
+                            <img 
+                                src="{{ $currentAvatar }}" 
+                                alt="Current Avatar" 
+                                class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow"
+                            >
+                        @else
+                            <img 
+                                src="{{ asset('images/default-user.png') }}" 
+                                alt="Default Avatar" 
+                                class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow"
+                            >
+                        @endif
+                        <div class="absolute bottom-0 right-0 bg-orange-600 text-white text-xs p-1 rounded-full">
+                            <span>{{ __('Edit') }}</span>
+                        </div>
+                    </label>
+
+                    <input id="avatar" type="file" wire:model="avatar" accept="image/*" class="hidden">
+                    <p class="text-sm  mt-2">
+                        {{ __('Click the avatar to upload a new image.') }}
+                    </p>
+                </div>
 
                 <flux:input :label="__('Name')" wire:model="name" required autofocus autocomplete="name" />
 
@@ -34,7 +66,7 @@
             </form>
         </flux:fieldset>
 
-        <flux:fieldset class="p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+        <flux:fieldset class="p-6 border shadow-sm rounded-md">
             <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {{ __('Change Password') }}
             </h3>
