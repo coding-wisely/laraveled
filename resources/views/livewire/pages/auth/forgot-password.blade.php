@@ -35,7 +35,7 @@ new #[Layout('layouts.guest')] class extends Component {
     }
 }; ?>
 <form wire:submit="sendPasswordResetLink">
-    <flux:card class="space-y-6">
+    <flux:card class="space-y-6 h-screen md:h-full">
         <flux:heading>{{ __('Forgot your password?') }}</flux:heading>
         <flux:subheading>{{ __('No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}</flux:subheading>
         <div class="space-y-6">
@@ -53,7 +53,7 @@ new #[Layout('layouts.guest')] class extends Component {
         </div>
 
         <!-- Submit Button -->
-        <div class="flex justify-between">
+        <div class="flex flex-col gap-2 justify-between">
             <flux:button type="button" href="{{ route('login') }}" wire:navigate
                          icon-trailing="face-smile">{{ __('Oh, actually i remember it now!') }}</flux:button>
             <flux:button type="submit">{{ __('Email Password Reset Link') }}</flux:button>
