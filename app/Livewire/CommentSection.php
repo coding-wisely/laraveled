@@ -4,7 +4,9 @@ namespace App\Livewire;
 
 use App\Models\Comment;
 use App\Models\Project;
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class CommentSection extends Component
@@ -13,22 +15,10 @@ class CommentSection extends Component
 
     public $projectId;
 
-    public $newComment = '';
-
-    public $replyTo = null;
-
     public $showReplies = [];
-
-    protected $rules = [
-        'newComment' => 'required|min:3',
-    ];
 
     public function mount($projectId)
     {
-        if (session()->has('newComment')) {
-            $this->newComment = session('newComment');
-            session()->forget('newComment');
-        }
 
         $this->projectId = $projectId;
         $this->loadComments();
@@ -36,9 +26,7 @@ class CommentSection extends Component
 
     public function handleRedirectToLogin()
     {
-        session()->put('newComment', $this->newComment);
-
-        session()->put('url.intended', route('projects.show', Project::whereId($this->projectId)->first()->uuid));
+        Session::put('url.intended', route('projects.show', Project::whereId($this->projectId)->first()->uuid));
 
         return redirect()->route('login');
     }
@@ -47,23 +35,27 @@ class CommentSection extends Component
     {
         $this->comments = Comment::where('project_id', $this->projectId)
             ->whereNull('parent_id')
-            ->with(['childrenRecursive.user:id,name', 'user'])
+            // ->whereNotNull('approved') need to uncomment this later once we are happy with the testing to show only approved ones
+            ->with(['user', 'children.user', 'children.children.user', 'parent.user'])
             ->orderBy('id', 'desc')
             ->get();
+
     }
 
-    public function postComment()
+    public function postComment(string $commentText)
     {
-        $this->validate();
-
         Comment::create([
-            'content' => $this->newComment,
+            'content' => $commentText,
             'user_id' => Auth::id(),
             'project_id' => $this->projectId,
         ]);
 
-        $this->newComment = '';
-        $this->replyTo = null;
+        Flux::toast(
+            heading: 'Comment posted',
+            text: 'Your comment has been posted.',
+            variant: 'success',
+        );
+
         $this->loadComments();
     }
 
@@ -74,10 +66,8 @@ class CommentSection extends Component
             'content' => $replyText,
             'user_id' => Auth::id(),
             'parent_id' => $commentId,
-            'approved' => now(),
         ]);
 
-        $this->newComment = '';
         $this->loadComments();
     }
 
@@ -93,11 +83,6 @@ class CommentSection extends Component
                 $this->showReplies[$commentId] = ! $this->showReplies[$commentId];
             }
         }
-    }
-
-    public function replyTo($commentId)
-    {
-        $this->replyTo = $commentId;
     }
 
     public function render()

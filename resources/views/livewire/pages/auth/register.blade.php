@@ -10,7 +10,8 @@ use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
 new #[Layout('layouts.guest')]
-class extends Component {
+class extends Component
+{
     public string $name = '';
 
     public string $email = '';
@@ -27,12 +28,12 @@ class extends Component {
         // Validate the form
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             // Must be at least 8 characters long, include an uppercase letter, a number, and a special character
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults(), Password::min(8)
                 ->mixedCase() // Requires both uppercase and lowercase characters
                 ->numbers()   // Requires at least one number
-                ->symbols(),],
+                ->symbols(), ],
         ]);
 
         // Hash the password
@@ -44,8 +45,9 @@ class extends Component {
         // Log the user in
         Auth::login($user);
 
-        // Redirect to the dashboard
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
+        // Redirect to the dashboard or the intended URL
+        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+
     }
 };
 ?>
