@@ -8,7 +8,7 @@
         </flux:subheading>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <div class="grid grid-cols-1 gap-6 mt-6">
         <flux:fieldset class="p-6 border shadow-sm rounded-md">
             <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {{ __('Profile Information') }}
@@ -51,11 +51,22 @@
                     </p>
                 </div>
 
-                <flux:input :label="__('Name')" wire:model="name" required autofocus autocomplete="name" />
+                <div class="grid grid-cols-1 sm:grid-cols-2  gap-6">
+                    <flux:input :label="__('Name')" wire:model="name" required autofocus autocomplete="name" />
 
-                <flux:input :label="__('Email')" wire:model="email" type="email" required autofocus autocomplete="email" />
+                    <flux:input :label="__('Email')" wire:model="email" type="email" required autofocus autocomplete="email" />
+                </div>
 
                 <flux:textarea :label="__('Bio')" wire:model="bio" rows="4" />
+
+               <!-- Social Media Fields in 3 Columns (Responsive) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <flux:input :label="__('GitHub Profile')" wire:model="github" type="url" placeholder="https://github.com/yourusername" />
+
+                    <flux:input :label="__('LinkedIn Profile')" wire:model="linkedin" type="url" placeholder="https://linkedin.com/in/yourusername" />
+
+                    <flux:input :label="__('Twitter Profile')" wire:model="twitter" type="url" placeholder="https://twitter.com/yourusername" />
+                </div>
 
                 <div class="flex items-center gap-4">
                     <flux:button type="submit">{{ __('Save Changes') }}</flux:button>

@@ -32,12 +32,21 @@ class AccountSettings extends Component
 
     public $previewAvatarUrl;
 
+    public $github;
+
+    public $linkedin;
+
+    public $twitter;
+
     public function mount()
     {
         $user = Auth::user();
         $this->name = $user->name;
         $this->email = $user->email;
         $this->bio = $user->bio;
+        $this->github = $user->github;
+        $this->linkedin = $user->linkedin;
+        $this->twitter = $user->twitter;
         $this->currentAvatar = $user->getFirstMediaUrl('users') ?? asset('images/default-user.png');
     }
 
@@ -56,11 +65,15 @@ class AccountSettings extends Component
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'bio' => ['nullable', 'string', 'max:500'],
+            'github' => ['nullable', 'url', 'max:255'],
+            'linkedin' => ['nullable', 'url', 'max:255'],
+            'twitter' => ['nullable', 'url', 'max:255'],
         ]);
 
         if ($this->avatar instanceof TemporaryUploadedFile) {
+            $user->clearMediaCollection('users');
 
-            $user->addMedia($this->avatar->getRealPath())->toMediaCollection('users');
+            $user->addMediaFromDisk($this->avatar->getRealPath())->toMediaCollection('users');
 
             $this->currentAvatar = $user->getFirstMediaUrl('users');
             $this->previewAvatarUrl = null;
