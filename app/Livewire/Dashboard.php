@@ -25,6 +25,12 @@ class Dashboard extends Component
 
     public $availableCategories = [];
 
+    public $user;
+
+    public $totalProjects;
+
+    public $avgRating;
+
     public $dummyReports = [
         ['name' => 'Project Alpha', 'category' => 'Web Development', 'status' => 'Completed'],
         ['name' => 'Project Beta', 'category' => 'Mobile App', 'status' => 'In Progress'],
@@ -34,6 +40,14 @@ class Dashboard extends Component
     public function mount()
     {
         $this->availableCategories = Category::all();
+        $this->user = Auth::user();
+        $this->totalProjects = Project::count();
+
+        $this->avgRating = $this->user->projects()->with('ratings')->get()
+            ->pluck('ratings')
+            ->flatten()
+            ->avg('rating');
+
     }
 
     public function toggleForm()

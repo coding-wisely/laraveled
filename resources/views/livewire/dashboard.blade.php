@@ -7,7 +7,7 @@
             <main class="px-0 lg:px-6 py-10">
                 <header class="text-center">
                     <h1 class="text-5xl font-extrabold text-laravel-500 dark:text-laravel-600">Welcome Back,
-                        Artisan!</h1>
+                        {{$this->user->name}}</h1>
                     <p class="text-xl text-gray-700 dark:text-gray-300 mt-4">Your creative journey starts here.</p>
                 </header>
 
@@ -17,7 +17,7 @@
                     <div
                         class="bg-gradient-to-br from-gray-300 to-gray-500 dark:from-gray-700 dark:to-gray-900 p-6 rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300">
                         <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">Global Projects</h3>
-                        <p class="text-5xl font-extrabold text-laravel-500 dark:text-laravel-600 mt-4">1,234</p>
+                        <p class="text-5xl font-extrabold text-laravel-500 dark:text-laravel-600 mt-4">{{$this->totalProjects}}</p>
                         <p class="text-gray-600 dark:text-gray-300 mt-2">Total projects showcased on the platform.</p>
                     </div>
 
@@ -25,7 +25,7 @@
                     <div
                         class="bg-gradient-to-br from-blue-300 to-blue-500 dark:from-blue-600 dark:to-purple-600 p-6 rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300">
                         <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">Projects Submitted</h3>
-                        <p class="text-5xl font-extrabold text-white mt-4">{{ auth()->user()->projects->count() }}</p>
+                        <p class="text-5xl font-extrabold text-white mt-4">{{$this->user->projects->count() }}</p>
                         <p class="text-gray-600 dark:text-gray-300 mt-2">Your total submitted projects.</p>
                     </div>
 
@@ -33,7 +33,7 @@
                     <div
                         class="bg-gradient-to-br from-yellow-300 to-yellow-500 dark:from-yellow-600 dark:to-orange-600 p-6 rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300">
                         <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">Average Rating</h3>
-                        <p class="text-5xl font-extrabold text-white mt-4">8.5</p>
+                        <p class="text-5xl font-extrabold text-white mt-4">{{$this->avgRating}}</p>
                         <p class="text-gray-600 dark:text-gray-300 mt-2">Across all your projects.</p>
                     </div>
 
