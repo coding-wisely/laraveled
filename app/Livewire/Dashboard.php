@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Category;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -33,6 +34,8 @@ class Dashboard extends Component
 
     public $userProjects;
 
+    public $trendingTech;
+
     public $dummyReports = [
         ['name' => 'Project Alpha', 'category' => 'Web Development', 'status' => 'Completed'],
         ['name' => 'Project Beta', 'category' => 'Mobile App', 'status' => 'In Progress'],
@@ -57,6 +60,14 @@ class Dashboard extends Component
             ->pluck('ratings')
             ->flatten()
             ->avg('rating');
+
+        $this->trendingTech = DB::table('project_technology')
+            ->join('technologies', 'project_technology.technology_id', '=', 'technologies.id')
+            ->select('technologies.name', DB::raw('COUNT(*) as count'))
+            ->groupBy('technologies.name')
+            ->orderByDesc('count')
+            ->limit(1)
+            ->value('name') ?? 'Unknown';
 
     }
 

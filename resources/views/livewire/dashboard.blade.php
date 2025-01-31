@@ -41,7 +41,7 @@
                     <div
                         class="bg-gradient-to-br from-green-300 to-green-500 dark:from-green-600 dark:to-teal-600 p-6 rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300">
                         <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">Trending Tech</h3>
-                        <p class="text-5xl font-extrabold text-white mt-4">Laravel</p>
+                        <p class="text-5xl font-extrabold text-white mt-4">{{ $trendingTech }}</p>
                         <p class="text-gray-600 dark:text-gray-300 mt-2">Most used technology globally.</p>
                     </div>
 
