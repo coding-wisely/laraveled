@@ -84,25 +84,34 @@
                             @endforelse
                         </div>
 
-                    <!-- Comments Section -->
-                    @if($comments->isNotEmpty())
-                        <div class="mt-10">
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Latest Comments</h3>
+                        <!-- Comments Section -->
+                        @if($comments->isNotEmpty())
+                            <div class="mt-10">
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Latest Comments</h3>
 
-                            <div class="space-y-4">
-                                @foreach($comments as $comment)
-                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
-                                        <div class="flex justify-between items-center">
-                                            <p class="font-semibold text-gray-900 dark:text-white">{{ $comment->user->name }}</p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ $comment->created_at->diffForHumans() }}</p>
+                                <div class="space-y-4">
+                                    @foreach($comments as $comment)
+                                        <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex items-center space-x-3">
+                                                    <img src="{{ $comment->user->getAvatarUrl() }}" alt="{{ $comment->user->name }}" class="w-10 h-10 rounded-full">
+                                                    <p class="font-semibold text-gray-900 dark:text-white">{{ $comment->user->name }}</p>
+                                                </div>
+
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ $comment->created_at->diffForHumans() }}</p>
+                                            </div>
+
+                                            <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                                                On: <span class="font-semibold">{{ $comment->project->title }}</span>
+                                            </p>
+
+                                            <p class="text-gray-700 dark:text-gray-300 mt-2">{{ $comment->content }}</p>
                                         </div>
-                                        <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">On: <span class="font-semibold">{{ $comment->project->title }}</span></p>
-                                        <p class="text-gray-700 dark:text-gray-300 mt-2">{{ $comment->content }}</p>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
+
                 </div>
             </main>
         </div>
