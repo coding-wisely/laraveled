@@ -39,13 +39,20 @@ class Dashboard extends Component
         ['name' => 'Project Gamma', 'category' => 'Data Analysis', 'status' => 'Completed'],
     ];
 
+    public $comments = [];
+
     public function mount()
     {
         $this->availableCategories = Category::all();
         $this->user = Auth::user();
         $this->totalProjects = Project::count();
         $this->userProjects = $this->user->projects()->withCount(['comments', 'ratings'])->get();
-
+        $this->comments = \App\Models\Comment::whereIn('project_id', $this->userProjects->pluck('id'))
+            ->whereNull('parent_id')
+            ->latest()
+            ->take(3)
+            ->with('user', 'project')
+            ->get();
         $this->avgRating = $this->user->projects()->with('ratings')->get()
             ->pluck('ratings')
             ->flatten()

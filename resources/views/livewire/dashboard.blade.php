@@ -85,83 +85,24 @@
                         </div>
 
                     <!-- Comments Section -->
-                    <div class="mt-10" x-show="selectedProject !== null" x-cloak>
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Comments & Replies</h3>
-                        <div class="space-y-4">
-                            <!-- Comments for Project 1 -->
-                            <template x-if="selectedProject === 1">
-                                <div>
-                                    <!-- Comment 1 -->
-                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-2">
-                                        <div class="flex justify-between items-center">
-                                            <p class="font-bold text-gray-900 dark:text-white">John Doe</p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">2 hours ago</p>
-                                        </div>
-                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Amazing project! Great
-                                            work!</p>
-                                        <!-- Replies -->
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Totally
-                                            agree!
-                                        </div>
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Very well
-                                            done.
-                                        </div>
-                                    </div>
+                    @if($comments->isNotEmpty())
+                        <div class="mt-10">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Latest Comments</h3>
 
-                                    <!-- Comment 2 -->
-                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-2">
+                            <div class="space-y-4">
+                                @foreach($comments as $comment)
+                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
                                         <div class="flex justify-between items-center">
-                                            <p class="font-bold text-gray-900 dark:text-white">Jane Smith</p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">5 hours ago</p>
+                                            <p class="font-semibold text-gray-900 dark:text-white">{{ $comment->user->name }}</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ $comment->created_at->diffForHumans() }}</p>
                                         </div>
-                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Loved the UI design!</p>
-                                        <!-- Replies -->
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Same
-                                            thoughts!
-                                        </div>
+                                        <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">On: <span class="font-semibold">{{ $comment->project->title }}</span></p>
+                                        <p class="text-gray-700 dark:text-gray-300 mt-2">{{ $comment->content }}</p>
                                     </div>
-                                </div>
-                            </template>
-
-                            <!-- Comments for Project 2 -->
-                            <template x-if="selectedProject === 2">
-                                <div>
-                                    <!-- Comment 1 -->
-                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-2">
-                                        <div class="flex justify-between items-center">
-                                            <p class="font-bold text-gray-900 dark:text-white">Emily White</p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">1 day ago</p>
-                                        </div>
-                                        <p class="mt-2 text-gray-700 dark:text-gray-300">Collaborative features are a
-                                            lifesaver!</p>
-                                        <!-- Replies -->
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply: Couldn’t
-                                            agree more.
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-
-                            <!-- Comments for Project 3 -->
-                            <template x-if="selectedProject === 3">
-                                <div>
-                                    <!-- Comment 1 -->
-                                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-2">
-                                        <div class="flex justify-between items-center">
-                                            <p class="font-bold text-gray-900 dark:text-white">Chris Brown</p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">2 hours ago</p>
-                                        </div>
-                                        <p class="mt-2 text-gray-700 dark:text-gray-300">E-shop transformed my online
-                                            store!</p>
-                                        <!-- Replies -->
-                                        <div class="ml-4 mt-2 text-sm text-gray-700 dark:text-gray-300">Reply:
-                                            Phenomenal app!
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </main>
         </div>
