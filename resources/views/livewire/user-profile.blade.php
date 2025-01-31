@@ -1,10 +1,12 @@
 <div class="container mx-auto p-6">
     <!-- User Profile Card -->
-    <flux:card class="p-6 bg-gray-100 dark:bg-gray-800 shadow-md rounded-lg">
+    <flux:card class="bg-gray-100 dark:bg-gray-800 shadow-md rounded-lg">
         <div class="flex flex-col md:flex-row items-center space-y-10 md:space-y-0 md:space-x-10">
-            <img src="{{ $user->profile_picture ?? 'https://ui-avatars.com/api/?name='.urlencode($user->name).'&size=150&background=random' }}" 
+            <flux:card class="border-none w-32 h-32 !p-0">
+            <img src="{{ $user->getAvatarUrl() ?? 'https://ui-avatars.com/api/?name='.urlencode($user->name).'&size=150&background=random' }}" 
                  alt="Profile Picture" 
-                 class="w-24 h-24 rounded-full border-4 shadow-md">
+                 class="object-cover">
+            </flux:card>
             
             <div class="text-center md:text-left">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
