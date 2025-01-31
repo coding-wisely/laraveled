@@ -31,6 +31,8 @@ class Dashboard extends Component
 
     public $avgRating;
 
+    public $userProjects;
+
     public $dummyReports = [
         ['name' => 'Project Alpha', 'category' => 'Web Development', 'status' => 'Completed'],
         ['name' => 'Project Beta', 'category' => 'Mobile App', 'status' => 'In Progress'],
@@ -42,6 +44,7 @@ class Dashboard extends Component
         $this->availableCategories = Category::all();
         $this->user = Auth::user();
         $this->totalProjects = Project::count();
+        $this->userProjects = $this->user->projects()->withCount(['comments', 'ratings'])->get();
 
         $this->avgRating = $this->user->projects()->with('ratings')->get()
             ->pluck('ratings')

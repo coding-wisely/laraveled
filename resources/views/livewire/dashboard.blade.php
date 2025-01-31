@@ -76,58 +76,13 @@
                     </header>
 
                     <!-- Showcases Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Showcase Item 1 -->
-                        <div
-                            class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-transform duration-300"
-                            :class="selectedProject === 1 ? 'scale-105 shadow-xl' : ''"
-                            @click="selectedProject = selectedProject === 1 ? null : 1"
-                        >
-                            <img src="{{ asset('img.png') }}" alt="Project Screenshot"
-                                 class="rounded-lg mb-4 w-full h-48 object-cover">
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Taskavel.com</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">The Task Manager That Works for You.</p>
-                            <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
-                                <div><span class="font-bold">Views:</span> 123</div>
-                                <div><span class="font-bold">Comments:</span> 8</div>
-                                <div><span class="font-bold">Rating:</span> 8.5</div>
-                            </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 hover:cursor-pointer ">
+                            @forelse($this->userProjects as $project)
+                                <x-project-card :project="$project" />
+                            @empty
+                                <p class="text-gray-600 dark:text-gray-400">No projects submitted yet.</p>
+                            @endforelse
                         </div>
-
-                        <!-- Showcase Item 2 -->
-                        <div
-                            class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-transform duration-300"
-                            :class="selectedProject === 2 ? 'scale-105 shadow-xl' : ''"
-                            @click="selectedProject = selectedProject === 2 ? null : 2"
-                        >
-                            <img src="{{ asset('img_1.png') }}" alt="Project Screenshot"
-                                 class="rounded-lg mb-4 w-full h-48 object-cover">
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Laraveled!</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Best app for collaboration!</p>
-                            <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
-                                <div><span class="font-bold">Views:</span> 321</div>
-                                <div><span class="font-bold">Comments:</span> 15</div>
-                                <div><span class="font-bold">Rating:</span> 9.2</div>
-                            </div>
-                        </div>
-
-                        <!-- Showcase Item 3 -->
-                        <div
-                            class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-transform duration-300"
-                            :class="selectedProject === 3 ? 'scale-105 shadow-xl' : ''"
-                            @click="selectedProject = selectedProject === 3 ? null : 3"
-                        >
-                            <img src="{{ asset('img_2.png') }}" alt="Project Screenshot"
-                                 class="rounded-lg mb-4 w-full h-48 object-cover">
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Invoicing.to</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">The future of e-commerce!</p>
-                            <div class="mt-4 flex justify-between items-center text-gray-700 dark:text-gray-300">
-                                <div><span class="font-bold">Views:</span> 456</div>
-                                <div><span class="font-bold">Comments:</span> 20</div>
-                                <div><span class="font-bold">Rating:</span> 9.8</div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Comments Section -->
                     <div class="mt-10" x-show="selectedProject !== null" x-cloak>
