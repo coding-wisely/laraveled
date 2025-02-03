@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects;
 
 use App\Models\Project;
+use Flux\Flux;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -47,14 +48,27 @@ class EditProject extends Component
         $this->existingFiles = $project->getMedia('projects');
     }
 
+    public function removeImage($mediaId)
+    {
+        $media = $this->project->getMedia('projects')->firstWhere('id', $mediaId);
+
+        if ($media) {
+            $media->delete();
+            $this->project->refresh();
+            $this->existingFiles = $this->project->getMedia('projects');
+            Flux::toast('Image removed successfully');
+        }
+
+    }
+
     public function submit()
     {
         $this->validate([
             'form.title' => 'required|string|max:255',
             'form.short_description' => 'required|string|max:500',
             'form.description' => 'required|string',
-            'form.website_url' => 'nullable',
-            'form.github_url' => 'nullable',
+            'form.website_url' => 'nullable|string',
+            'form.github_url' => 'nullable|string',
             'form.technologies' => 'required|array',
             'form.categories' => 'required|array',
             'form.tags' => 'nullable|array',
@@ -75,7 +89,18 @@ class EditProject extends Component
 
         if ($this->file instanceof TemporaryUploadedFile) {
 
-            $this->project->addMediaFromDisk($this->file->getRealPath())->toMediaCollection('projects');
+            if ($this->project->getMedia('projects')->count() < 3) {
+                $this->project->addMediaFromDisk($this->file->getRealPath())->toMediaCollection('projects');
+
+            } else {
+                Flux::toast(
+                    heading: 'Maximum of 3 images allowed.',
+                    text: 'Please remove one before adding a new one.',
+                    variant: 'warning'
+                );
+
+                return;
+            }
         }
 
         return redirect()->route('projects.my');
