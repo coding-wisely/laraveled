@@ -1,22 +1,65 @@
 <?php
+
 namespace App\Livewire\Projects;
 
+use App\Models\Category;
+use App\Models\Project;
+use App\Models\Technology;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use App\Models\Project;
+use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class Index extends Component
 {
-    public function render(): Factory|Application|\Illuminate\Contracts\View\View|View
+    use WithPagination;
+
+    public $category = '';
+
+    public $technology = '';
+
+    public $user = '';
+
+    protected $queryString = ['category', 'technology', 'user'];
+
+    public function updated($field)
     {
-        $projects = Project::with(['user','categories', 'tags', 'technologies', 'ratings'])->get();
+        $this->resetPage();
+    }
+
+    public function render(): Factory|Application|View
+    {
+        $query = Project::with(['user', 'categories', 'tags', 'technologies', 'ratings']);
+
+        if ($this->category) {
+            $query->whereHas('categories', function ($q) {
+                $q->where('categories.name', $this->category);
+            });
+        }
+
+        if ($this->technology) {
+            $query->whereHas('technologies', function ($q) {
+                $q->where('technologies.name', $this->technology);
+            });
+        }
+
+        if ($this->user) {
+            $query->whereHas('user', function ($q) {
+                $q->where('users.name', $this->user);
+            });
+        }
+
+        $projects = $query->paginate(10);
 
         return view('livewire.projects.index', [
             'projects' => $projects,
+            'categories' => Category::all(),
+            'technologies' => Technology::all(),
+            'users' => User::all(),
         ]);
     }
 }
