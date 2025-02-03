@@ -12,11 +12,16 @@
             @endif
 
             <div class="flex items-center justify-between">
-                <h4 class="text-sm font-semibold">{{ $comment->user?->name ?: 'Anonymous' }}</h4>
+                <div class="flex items-center space-x-3">
+                    <img src="{{ $comment->user->getAvatarUrl() }}" alt="{{ $comment->user->name }}" class="w-10 h-10 rounded-full">
+                    <p class="font-semibold text-sm">{{ $comment->user->name }}</p>
+                </div>
+
                 <span class="text-xs">{{ $comment->created_at->diffForHumans() }}</span>
             </div>
-            <p class="mt-2 text-sm">{{ $comment->content }}</p>
 
+            <p class="mt-2 text-sm">{{ $comment->content }}</p>
+            
             <div class="mt-4" x-data="{ showReplyBox: false, replyText: '' }">
                 @auth
                     <flux:link @click="showReplyBox = !showReplyBox" class="text-xs cursor-pointer">

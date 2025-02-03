@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, InteractsWithMedia, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -59,7 +61,10 @@ class User extends Authenticatable
             return Storage::url($this->avatar);
         }
 
+        $avatarUrl = $this->getFirstMediaUrl('users');
+
         $gravatarHash = md5(strtolower(trim($this->email)));
-        return "https://www.gravatar.com/avatar/{$gravatarHash}?s=200&d=mp";
+
+        return $avatarUrl ?: "https://www.gravatar.com/avatar/{$gravatarHash}?s=200&d=mp";
     }
 }

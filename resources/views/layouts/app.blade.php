@@ -100,16 +100,23 @@
         </flux:navbar>
         <flux:navbar.item icon="magnifying-glass" href="#" label="Search"/>
 
-        <flux:dropdown position="top" align="end" class="ml-6">
-            <flux:profile avatar="{{ auth()->user()->getAvatarUrl() }}"/>
-            <flux:menu>
-                <flux:menu.radio.group>
-                    <flux:menu.item>Olivia Martin</flux:menu.item>
-                    <flux:menu.item>Truly Delta</flux:menu.item>
-                </flux:menu.radio.group>
-                <flux:menu.separator/>
-                <livewire:logout-button/>
-            </flux:menu>
+        <flux:dropdown position="bottom" align="end" class="max-lg:hidden" >
+                <flux:profile avatar="{{ auth()->user()->getAvatarUrl() }}"/>
+                <flux:navmenu>
+                    <flux:navmenu.item
+                        class="max-lg:hidden"
+                        icon="cog-6-tooth"
+                        href="{{ route('account-settings') }}"
+                        >Profile</flux:navmenu.item>
+                    <flux:navmenu.item
+                        class="max-lg:hidden"
+                        icon="folder-open"
+                        href="{{ route('projects.my') }}"
+                        >My Projects</flux:navmenu.item>
+                    <livewire:logout-button/> 
+                     <flux:navmenu.item href="#" icon="trash" variant="danger">Delete</flux:navmenu.item>
+                </flux:navmenu>
+
         </flux:dropdown>
         <flux:navbar class="mr-0 lg:mr-4">
             <flux:button x-data x-on:click="$flux.dark = ! $flux.dark" icon="moon" variant="subtle"

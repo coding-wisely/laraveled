@@ -20,7 +20,7 @@
         <flux:card class="overflow-hidden">
             <div class="grid gap-6">
                 @php
-                    $photos = $project->getMedia($project->title); // Your collection name
+                    $photos = $project->getMedia('projects'); // Your collection name
                     $photoCount = $photos->count();
                 @endphp
                 @if ($photoCount === 1)
@@ -34,7 +34,7 @@
                             @endforeach
                         </div>
                     </div>
-                @elseif ($photoCount === 3)
+                @elseif ($photoCount >= 3)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <x-heading-photo :photo="$photos[0]" :project="$project"/>
                         <div class="grid grid-rows-2 gap-6">

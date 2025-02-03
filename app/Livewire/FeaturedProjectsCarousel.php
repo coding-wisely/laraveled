@@ -1,28 +1,62 @@
 <?php
+
 namespace App\Livewire;
+
+use App\Models\Project;
 use Livewire\Component;
+
 class FeaturedProjectsCarousel extends Component
 {
-    public $featuredProjects = [
-        [
-            'title' => 'E-commerce Platform',
-            'description' => 'A full-featured online store built with Laravel and Livewire',
-            'tags' => ['Laravel', 'Livewire', 'Alpine.js', 'MySQL'],
-            'image' => 'https://picsum.photos/800/600',
-        ],
-        [
-            'title' => 'Task Management',
-            'description' => 'Collaborative project management tool with real-time updates',
-            'tags' => ['Laravel', 'Vue.js', 'Tailwind', 'Redis'],
-            'image' => 'https://picsum.photos/800/600',
-        ],
-        [
-            'title' => 'Learning Platform',
-            'description' => 'Online course platform with video streaming capabilities',
-            'tags' => ['Laravel', 'React', 'PostgreSQL', 'AWS'],
-            'image' => 'https://picsum.photos/800/600',
-        ],
-    ];
+    public $featuredProjects;
+
+    public function mount()
+    {
+        // Retrieve featured projects with tags and media
+        $featured = Project::with('tags', 'media')
+            ->where('is_featured', true)
+            ->get();
+
+        if ($featured->isEmpty()) {
+            // No featured projects exist – use dummy data with a local placeholder image.
+            $this->featuredProjects = collect([
+                [
+                    'title' => 'Your Project Could Be Here!',
+                    'short_description' => 'Showcase your amazing work and join our community of innovative creators.',
+                    'tags' => ['Laravel', 'Livewire', 'Tailwind'],
+                    'image' => asset('img_2.png'),
+                    'website' => 'https://laraveled.com',
+                ],
+                [
+                    'title' => 'Make Your Mark',
+                    'short_description' => 'Be featured among the best projects. Let your creativity shine!',
+                    'tags' => ['Innovation', 'Creativity', 'Tech'],
+                    'image' => asset('img.png'),
+                    'website' => 'https://laraveled.com',
+                ],
+
+            ]);
+        } else {
+            // Map the featured projects to the desired array format
+            $this->featuredProjects = $featured->map(function ($project) {
+                $media = $project->getMedia('projects')->first();
+                $imageUrl = $media ? $media->getUrl() : asset('img.png');
+
+                $websiteUrl = $project->website_url;
+                if (! preg_match('/^https?:\/\//', $websiteUrl)) {
+                    $websiteUrl = 'https://'.$websiteUrl;
+                }
+
+                return [
+                    'title' => $project->title,
+                    'short_description' => $project->short_description,
+                    'tags' => $project->tags->pluck('name')->toArray(),
+                    'image' => $imageUrl,
+                    'website' => $websiteUrl,
+                ];
+            });
+        }
+    }
+
     public function render()
     {
         return view('livewire.featured-projects-carousel');

@@ -50,10 +50,18 @@
             @if($showAuthor)
                 <flux:subheading size="sm">
                     <span>{{ ($project->created_at)->diffForHumans() }}</span>
-                    <flux:link>{{ $project->user->name }}</flux:link>
+                    <flux:link href="{{ route('user.profile', $project->user->id) }}">
+                        {{ $project->user->name }}
+                    </flux:link>
                 </flux:subheading>
             @endif
         </div>
+
+        @if($project->user_id === Auth::id() && Route::currentRouteName() === 'projects.my')
+            <flux:button href="{{ route('projects.edit', $project->id) }}" size="sm" class="mt-2">
+                Edit
+            </flux:button>
+        @endif
 
     </div>
 </flux:card>
