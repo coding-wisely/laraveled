@@ -36,8 +36,16 @@
         @endforelse
     </div>
 
-    <!-- Pagination -->
-    <div class="mt-6 flex justify-center">
-        {{ $projects->links() }}
+    @if ($projects->hasMorePages())
+        <div class="mt-6 flex justify-center">
+            <flux:button wire:click="loadMore" wire:loading.attr="disabled" variant="primary">
+                Load More
+            </flux:button>
+        </div>
+    @endif
+
+
+    <div wire:loading class="text-center text-gray-600 dark:text-gray-400 mt-4">
+        Loading more projects...
     </div>
 </div>

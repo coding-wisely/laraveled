@@ -24,7 +24,14 @@ class Index extends Component
 
     public $user = '';
 
+    public $perPage = 10;
+
     protected $queryString = ['category', 'technology', 'user'];
+
+    public function loadMore()
+    {
+        $this->perPage += 10;
+    }
 
     public function updated($field)
     {
@@ -53,7 +60,7 @@ class Index extends Component
             });
         }
 
-        $projects = $query->paginate(3);
+        $projects = $query->paginate($this->perPage);
 
         return view('livewire.projects.index', [
             'projects' => $projects,
