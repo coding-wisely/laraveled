@@ -11,17 +11,42 @@ class FeaturedProjectsCarousel extends Component
 
     public function mount()
     {
-        $this->featuredProjects = Project::with('tags', 'media')->where('is_featured', true)
-            ->get()
-            ->map(function ($project) {
+        // Retrieve featured projects with tags and media
+        $featured = Project::with('tags', 'media')
+            ->where('is_featured', true)
+            ->get();
+
+        if ($featured->isEmpty()) {
+            // No featured projects exist – use dummy data with a local placeholder image.
+            $this->featuredProjects = collect([
+                [
+                    'title' => 'Your Project Could Be Here!',
+                    'short_description' => 'Showcase your amazing work and join our community of innovative creators.',
+                    'tags' => ['Laravel', 'Livewire', 'Tailwind'],
+                    'image' => asset('img_2.png'),
+                ],
+                [
+                    'title' => 'Make Your Mark',
+                    'short_description' => 'Be featured among the best projects. Let your creativity shine!',
+                    'tags' => ['Innovation', 'Creativity', 'Tech'],
+                    'image' => asset('img.png'),
+                ],
+
+            ]);
+        } else {
+            // Map the featured projects to the desired array format
+            $this->featuredProjects = $featured->map(function ($project) {
+                $media = $project->getMedia('projects')->first();
+                $imageUrl = $media ? $media->getUrl() : asset('img.png');
 
                 return [
                     'title' => $project->title,
                     'short_description' => $project->short_description,
                     'tags' => $project->tags->pluck('name')->toArray(),
-                    'image' => $project->getMedia('projects')->first()->getUrl(),
+                    'image' => $imageUrl,
                 ];
             });
+        }
     }
 
     public function render()
