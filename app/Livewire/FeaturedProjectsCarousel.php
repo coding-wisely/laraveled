@@ -1,28 +1,29 @@
 <?php
+
 namespace App\Livewire;
+
+use App\Models\Project;
 use Livewire\Component;
+
 class FeaturedProjectsCarousel extends Component
 {
-    public $featuredProjects = [
-        [
-            'title' => 'E-commerce Platform',
-            'description' => 'A full-featured online store built with Laravel and Livewire',
-            'tags' => ['Laravel', 'Livewire', 'Alpine.js', 'MySQL'],
-            'image' => 'https://picsum.photos/800/600',
-        ],
-        [
-            'title' => 'Task Management',
-            'description' => 'Collaborative project management tool with real-time updates',
-            'tags' => ['Laravel', 'Vue.js', 'Tailwind', 'Redis'],
-            'image' => 'https://picsum.photos/800/600',
-        ],
-        [
-            'title' => 'Learning Platform',
-            'description' => 'Online course platform with video streaming capabilities',
-            'tags' => ['Laravel', 'React', 'PostgreSQL', 'AWS'],
-            'image' => 'https://picsum.photos/800/600',
-        ],
-    ];
+    public $featuredProjects;
+
+    public function mount()
+    {
+        $this->featuredProjects = Project::with('tags', 'media')->where('is_featured', true)
+            ->get()
+            ->map(function ($project) {
+
+                return [
+                    'title' => $project->title,
+                    'short_description' => $project->short_description,
+                    'tags' => $project->tags->pluck('name')->toArray(),
+                    'image' => $project->getMedia('projects')->first()->getUrl(),
+                ];
+            });
+    }
+
     public function render()
     {
         return view('livewire.featured-projects-carousel');

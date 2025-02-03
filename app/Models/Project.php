@@ -27,6 +27,11 @@ class Project extends Model implements HasMedia
             ->nonQueued();
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('projects');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -56,6 +61,7 @@ class Project extends Model implements HasMedia
     {
         return 'title'; // your own field on Model
     }
+
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);

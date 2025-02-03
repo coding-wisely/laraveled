@@ -7,7 +7,7 @@
                         <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}" class="w-full h-64 object-cover">
                         <div class="p-6 space-y-4">
                             <h3 class="text-2xl font-semibold">{{ $project['title'] }}</h3>
-                            <p class="text-muted-foreground">{{ $project['description'] }}</p>
+                            <p class="text-muted-foreground">{{ $project['short_description'] }}</p>
                             <div class="flex gap-2 flex-wrap">
                                 @foreach($project['tags'] as $tag)
                                     <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
