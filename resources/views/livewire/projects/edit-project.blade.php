@@ -11,9 +11,9 @@
             <flux:label>Project Images</flux:label>
 
             @if ($existingFiles && $existingFiles->isNotEmpty())
-                <div class="grid grid-cols-3 gap-4 mt-2 mb-2">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2 mb-2">
                     @foreach ($existingFiles as $media)
-                        <div class="relative w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-96 xl:h-96">
+                        <div class="relative w-48 h-48">
                             <img src="{{ $media->getUrl() }}" alt="Project Image"
                                 class="w-full h-full object-cover rounded">
                             <button wire:click="removeImage({{ $media->id }})" type="button"
