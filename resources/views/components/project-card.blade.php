@@ -57,6 +57,11 @@
             @endif
         </div>
 
+        @if($project->user_id === Auth::id() && Route::currentRouteName() === 'projects.my')
+            <flux:button href="{{ route('projects.edit', $project->id) }}" size="sm" class="mt-2">
+                Edit
+            </flux:button>
+        @endif
 
     </div>
 </flux:card>

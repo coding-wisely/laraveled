@@ -25,6 +25,9 @@ Route::get('/profile/{userId}', UserProfile::class)->name('user.profile'); // pu
 // Authenticated routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/project/create', CreateProject::class)->name('projects.create'); // Auth: Create a project
+    Route::get('/projects/{project}/edit', \App\Livewire\Projects\EditProject::class)
+        ->name('projects.edit');
+
     Route::get('/my-projects', MyProjects::class)->name('projects.my'); // Auth: Manage own projects
     Route::get('dashboard', Dashboard::class)->name('dashboard'); // Auth: Dashboard
     Route::get('account-settings', AccountSettings::class)->name('account-settings'); // Auth: Account settings
