@@ -53,7 +53,7 @@ class Index extends Component
             });
         }
 
-        $projects = $query->paginate(10);
+        $projects = $query->paginate(3);
 
         return view('livewire.projects.index', [
             'projects' => $projects,
