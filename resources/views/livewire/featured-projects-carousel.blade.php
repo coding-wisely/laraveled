@@ -7,7 +7,15 @@
                     <div class="rounded-lg border overflow-hidden">
                         <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}" class="w-full h-64 object-cover">
                         <div class="p-6 space-y-4">
-                            <h3 class="text-2xl font-semibold">{{ $project['title'] }}</h3>
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-2xl font-semibold">{{ $project['title'] }}</h3>
+                                @if (isset($project['website']) && $project['website'])
+                                    <flux:link href="{{ $project['website'] }}" target="_blank"
+                                        class="text-red-500 hover:underline text-sm">
+                                        Visit Website
+                                    </flux:link>
+                                @endif
+                            </div>
                             <p class="text-muted-foreground">{{ $project['short_description'] }}</p>
                             <div class="flex gap-2 flex-wrap">
                                 @foreach ($project['tags'] as $tag)

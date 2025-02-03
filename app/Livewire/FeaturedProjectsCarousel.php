@@ -24,12 +24,14 @@ class FeaturedProjectsCarousel extends Component
                     'short_description' => 'Showcase your amazing work and join our community of innovative creators.',
                     'tags' => ['Laravel', 'Livewire', 'Tailwind'],
                     'image' => asset('img_2.png'),
+                    'website' => 'https://laraveled.com',
                 ],
                 [
                     'title' => 'Make Your Mark',
                     'short_description' => 'Be featured among the best projects. Let your creativity shine!',
                     'tags' => ['Innovation', 'Creativity', 'Tech'],
                     'image' => asset('img.png'),
+                    'website' => 'https://laraveled.com',
                 ],
 
             ]);
@@ -39,11 +41,17 @@ class FeaturedProjectsCarousel extends Component
                 $media = $project->getMedia('projects')->first();
                 $imageUrl = $media ? $media->getUrl() : asset('img.png');
 
+                $websiteUrl = $project->website_url;
+                if (! preg_match('/^https?:\/\//', $websiteUrl)) {
+                    $websiteUrl = 'https://'.$websiteUrl;
+                }
+
                 return [
                     'title' => $project->title,
                     'short_description' => $project->short_description,
                     'tags' => $project->tags->pluck('name')->toArray(),
                     'image' => $imageUrl,
+                    'website' => $websiteUrl,
                 ];
             });
         }
