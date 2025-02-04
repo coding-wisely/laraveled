@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/my-projects', MyProjects::class)->name('projects.my'); // Auth: Manage own projects
     Route::get('dashboard', Dashboard::class)->name('dashboard'); // Auth: Dashboard
     Route::get('account-settings', AccountSettings::class)->name('account-settings'); // Auth: Account settings
+    Route::get('bookmarks', \App\Livewire\Bookmark::class)->name('bookmarks'); // Auth: Bookmarks
 
 });
 // Authentication-related overrides for production

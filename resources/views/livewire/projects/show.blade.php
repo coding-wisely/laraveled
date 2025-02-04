@@ -48,12 +48,16 @@
         <flux:breadcrumbs.item>{{ $project->title }}</flux:breadcrumbs.item>
     </flux:breadcrumbs>
 
+
     <!-- Header Section -->
-    <div>
-        <flux:heading>{{ $project->title }}</flux:heading>
-        <flux:subheading size="lg" class="text-gray-700">{!! $project->short_description !!}</flux:subheading>
-        <flux:separator variant="subtle" class="mt-4" />
+    <div class="flex items-center justify-between">
+        <div>
+            <flux:heading>{{ $project->title }}</flux:heading>
+            <flux:subheading size="lg" class="text-gray-700">{!! $project->short_description !!}</flux:subheading>
+        </div>
+        <livewire:projects.toggle-bookmark :project="$project" key="{{ $project->id }}" />
     </div>
+
 
     <!-- Gallery Section -->
     <div>
