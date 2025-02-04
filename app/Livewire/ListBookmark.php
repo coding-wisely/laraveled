@@ -4,9 +4,13 @@ namespace App\Livewire;
 
 use App\Models\Bookmark as ModelsBookmark;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class Bookmark extends Component
+#[Layout('layouts.app')]
+#[Title('Bookmarks')]
+class ListBookmark extends Component
 {
     public $bookmarks;
 
@@ -19,6 +23,6 @@ class Bookmark extends Component
 
     public function render()
     {
-        return view('livewire.bookmark');
+        return view('livewire.list-bookmark');
     }
 }

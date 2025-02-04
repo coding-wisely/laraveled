@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects;
 
 use App\Models\Project;
+use Flux\Flux;
 use Livewire\Component;
 
 class ToggleBookmark extends Component
@@ -22,9 +23,21 @@ class ToggleBookmark extends Component
         if ($this->bookmarked) {
             $this->project->unmark();
             $this->bookmarked = false;
+
+            Flux::toast(
+                heading: 'Bookmark Removed',
+                text: 'Project has been removed from your bookmarks',
+                variant: 'warning'
+            );
         } else {
             $this->project->bookmark();
             $this->bookmarked = true;
+
+            Flux::toast(
+                heading: 'Bookmark Added',
+                text: 'Project has been added to your bookmarks',
+                variant: 'success'
+            );
         }
     }
 

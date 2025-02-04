@@ -55,7 +55,10 @@
             <flux:heading>{{ $project->title }}</flux:heading>
             <flux:subheading size="lg" class="text-gray-700">{!! $project->short_description !!}</flux:subheading>
         </div>
-        <livewire:projects.toggle-bookmark :project="$project" key="{{ $project->id }}" />
+
+        @if (Auth::check())
+            <livewire:projects.toggle-bookmark :project="$project" key="{{ $project->id }}" />
+        @endif
     </div>
 
 
