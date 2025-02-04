@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\Resources\CommentResource\Pages\ListComments;
 use App\Filament\Resources\ProjectResource\Pages\ListProjects;
 use App\Models\Comment;
 use App\Models\Project;
@@ -32,7 +33,8 @@ class StatsWidget extends BaseWidget
             'comments' => Stat::make('Unapproved Comments', $unapprovedCommentsCount)
                 ->description("{$unapprovedCommentsCount} need review")
                 ->descriptionIcon('heroicon-s-exclamation-circle')
-                ->color($unapprovedCommentsCount ? 'warning' : 'success'),
+                ->color($unapprovedCommentsCount ? 'warning' : 'success')
+                ->url(ListComments::getUrl(['activeTab' => 'unapproved'])),
 
         ];
     }
