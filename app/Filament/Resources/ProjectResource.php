@@ -8,6 +8,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 
 class ProjectResource extends Resource
@@ -55,6 +56,10 @@ class ProjectResource extends Resource
         return $table
             ->columns([
 
+                SpatieMediaLibraryImageColumn::make('media')
+                    ->collection('projects')
+                    ->circular()
+                    ->label('Image'),
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
