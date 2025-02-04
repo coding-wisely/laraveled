@@ -1,4 +1,44 @@
 <div class="flex flex-col space-y-10">
+    <!-- Navigation Arrows Section -->
+    @if ($prevProject || $nextProject)
+        <div class="flex items-center justify-between">
+            @if ($prevProject)
+                <flux:link href="{{ route('projects.show', ['project' => $prevProject, 'start' => $startProject]) }}"
+                    class="flex items-center text-sm sm:text-base text-red-600 hover:text-red-800">
+                    <svg class="h-4 w-4 sm:h-6 sm:w-6 mr-1 sm:mr-2" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <span>Previous Project</span>
+                </flux:link>
+            @else
+                <div></div>
+            @endif
+
+            @if ($nextProject)
+                <flux:link href="{{ route('projects.show', ['project' => $nextProject, 'start' => $startProject]) }}"
+                    class="flex items-center text-sm sm:text-base text-red-600 hover:text-red-800">
+                    <span>Next Project</span>
+                    <svg class="h-4 w-4 sm:h-6 sm:w-6 ml-1 sm:ml-2" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </flux:link>
+            @else
+                <div></div>
+            @endif
+        </div>
+    @else
+        <div class="bg-gray-100 p-4 rounded-lg text-center">
+            <p class="text-gray-700 text-sm">
+                No more projects for this user.
+                <flux:link href="{{ route('projects.index') }}" class="text-blue-600 hover:text-blue-800 font-medium">
+                    Discover Projects
+                </flux:link>
+            </p>
+        </div>
+    @endif
+
     <!-- Breadcrumbs -->
     <flux:breadcrumbs>
         @auth
@@ -11,8 +51,8 @@
     <!-- Header Section -->
     <div>
         <flux:heading>{{ $project->title }}</flux:heading>
-        <flux:subheading size="lg" class="text-gray-700">{!!  $project->short_description  !!}</flux:subheading>
-        <flux:separator variant="subtle" class="mt-4"/>
+        <flux:subheading size="lg" class="text-gray-700">{!! $project->short_description !!}</flux:subheading>
+        <flux:separator variant="subtle" class="mt-4" />
     </div>
 
     <!-- Gallery Section -->
@@ -20,26 +60,26 @@
         <flux:card class="overflow-hidden">
             <div class="grid gap-6">
                 @php
-                    $photos = $project->getMedia('projects'); // Your collection name
+                    $photos = $project->getMedia('projects');
                     $photoCount = $photos->count();
                 @endphp
                 @if ($photoCount === 1)
-                    <x-heading-photo :photo="$photos[0]" :project="$project"/>
+                    <x-heading-photo :photo="$photos[0]" :project="$project" />
                 @elseif ($photoCount === 2)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <x-heading-photo :photo="$photos[0]" :project="$project"/>
-                        <div class="grid  gap-6">
+                        <x-heading-photo :photo="$photos[0]" :project="$project" />
+                        <div class="grid gap-6">
                             @foreach ($photos->skip(1) as $photo)
-                                <x-heading-photo :photo="$photo" :project="$project"/>
+                                <x-heading-photo :photo="$photo" :project="$project" />
                             @endforeach
                         </div>
                     </div>
                 @elseif ($photoCount >= 3)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <x-heading-photo :photo="$photos[0]" :project="$project"/>
+                        <x-heading-photo :photo="$photos[0]" :project="$project" />
                         <div class="grid grid-rows-2 gap-6">
                             @foreach ($photos->skip(1)->take(2) as $photo)
-                                <x-heading-photo :photo="$photo" :project="$project"/>
+                                <x-heading-photo :photo="$photo" :project="$project" />
                             @endforeach
                         </div>
                     </div>
@@ -61,7 +101,6 @@
                 </div>
             </flux:card>
 
-
             <!-- Technologies -->
             <flux:card>
                 <flux:heading level="2" class="mb-2">Technologies</flux:heading>
@@ -76,11 +115,13 @@
             <flux:card>
                 <flux:heading level="2" class="mb-2">Links</flux:heading>
                 <div class="flex flex-col space-y-2">
-                    <flux:link external="{{ true }}" href="{{ $project->website_url }}" icon-trailing="arrow-right">
+                    <flux:link external="{{ true }}" href="{{ $project->website_url }}"
+                        icon-trailing="arrow-right">
                         Visit Website
                     </flux:link>
                     @if ($project->github_url)
-                        <flux:link external="{{ true }}" href="{{ $project->github_url }}" icon-trailing="arrow-right">
+                        <flux:link external="{{ true }}" href="{{ $project->github_url }}"
+                            icon-trailing="arrow-right">
                             GitHub Repository
                         </flux:link>
                     @endif
@@ -96,16 +137,15 @@
         </flux:card>
     </div>
 
+    <!-- Ratings Section -->
     <flux:card class="mt-10">
         <flux:heading level="2" class="mb-4">Ratings</flux:heading>
         <livewire:ratings :project="$project" />
     </flux:card>
 
+    <!-- Comments Section -->
     <flux:card class="mt-10">
         <flux:heading level="2" class="mb-4">Comments</flux:heading>
-            <livewire:comment-section :project-id="$project->id" />
-
+        <livewire:comment-section :project-id="$project->id" />
     </flux:card>
-
-
 </div>
