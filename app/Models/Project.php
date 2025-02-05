@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\HasBookmarks;
 use CodingWisely\SlugGenerator\SlugGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Project extends Model implements HasMedia
 {
+    use HasBookmarks;
     use HasFactory;
     use InteractsWithMedia;
     use SlugGenerator;
