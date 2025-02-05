@@ -2,8 +2,12 @@
     <button x-on:click="open = true" class="relative focus:outline-none border-none shadow-none p-2">
         <flux:icon.bell class="w-6 h-6 text-gray-600 dark:text-gray-300" />
         @if (auth()->check() && auth()->user()->unreadNotifications()->count() > 0)
-            <span class="absolute top-0 right-0 block w-2 h-2 bg-red-600 rounded-full"></span>
+            <span
+                class="absolute top-0 right-0 flex items-center justify-center w-4 h-4 bg-red-600 text-white text-xs rounded-full">
+                {{ auth()->user()->unreadNotifications()->count() }}
+            </span>
         @endif
+
     </button>
 
     <div x-show="open" x-transition:enter="transform transition ease-in-out duration-300"
