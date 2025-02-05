@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Project;
 use App\Models\Rating;
+use Filament\Notifications\Notification;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -80,6 +81,11 @@ class Ratings extends Component
             text: 'Thank you for rating this project.',
             variant: 'success',
         );
+
+        Notification::make()
+            ->title('New rating posted')
+            ->body("{$ratingRecord->user->name} has given {$ratingRecord->rating} stars to {$ratingRecord->project->title}")
+            ->send()->sendToDatabase($ratingRecord->project->user);
     }
 
     public function render()

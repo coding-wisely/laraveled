@@ -138,7 +138,7 @@
     </flux:main>
     @fluxScripts
     @livewireScripts
-    @livewire('database-notifications')
+
     @persist('toast')
         <flux:toast position="top right" class="pt-20" />
     @endpersist
