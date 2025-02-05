@@ -76,6 +76,8 @@
             </flux:navbar>
             <flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
 
+            <livewire:notifications-panel />
+
             <flux:dropdown position="bottom" align="end" class="max-lg:hidden">
                 <flux:profile avatar="{{ auth()->user()->getAvatarUrl() }}" />
                 <flux:navmenu>
@@ -136,6 +138,7 @@
     </flux:main>
     @fluxScripts
     @livewireScripts
+    @livewire('database-notifications')
     @persist('toast')
         <flux:toast position="top right" class="pt-20" />
     @endpersist

@@ -8,6 +8,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
@@ -69,7 +70,14 @@ class CommentResource extends Resource
                 ActionsViewAction::make(),
                 Action::make('approve')
                     ->label('Approve')
-                    ->action(fn (Comment $record) => $record->update(['approved' => now()]))
+                    ->action(function (Comment $record) {
+                        $record->update(['approved' => now()]);
+
+                        Notification::make()
+                            ->title('Comment Approved')
+                            ->body("The comment $record->content has been approved.")
+                            ->sendToDatabase($record->user);
+                    })
                     ->requiresConfirmation()
                     ->modalHeading(fn (Comment $record) => new HtmlString("Approve Comment by {$record->user->name}"))
                     ->modalContent(fn (Comment $record) => new HtmlString(
