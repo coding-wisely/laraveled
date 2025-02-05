@@ -14,7 +14,6 @@ class NotificationsPanel extends Component
 
     public function mount()
     {
-        // Initialize as an empty collection to avoid undefined variable errors
         $this->notifications = collect();
 
         if (Auth::check()) {
@@ -22,33 +21,22 @@ class NotificationsPanel extends Component
         }
     }
 
-    /**
-     * This hook is called when isOpen changes.
-     */
     public function updatedIsOpen($value)
     {
         if ($value && Auth::check()) {
-            // Refresh the notifications when the panel opens
             $this->notifications = Auth::user()->unreadNotifications()->latest()->get();
         }
     }
 
-    /**
-     * Mark a single notification as read.
-     */
     public function markAsRead($notificationId)
     {
         $notification = Auth::user()->notifications()->find($notificationId);
         if ($notification) {
             $notification->markAsRead();
         }
-        // Refresh the notifications list
         $this->notifications = Auth::user()->unreadNotifications()->latest()->get();
     }
 
-    /**
-     * Mark all notifications as read.
-     */
     public function markAllAsRead()
     {
         if (Auth::check()) {

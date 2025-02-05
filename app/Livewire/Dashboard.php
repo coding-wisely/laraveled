@@ -36,6 +36,8 @@ class Dashboard extends Component
 
     public $trendingTech;
 
+    public $notifications;
+
     public $dummyReports = [
         ['name' => 'Project Alpha', 'category' => 'Web Development', 'status' => 'Completed'],
         ['name' => 'Project Beta', 'category' => 'Mobile App', 'status' => 'In Progress'],
@@ -56,10 +58,15 @@ class Dashboard extends Component
             ->take(3)
             ->with('user', 'project')
             ->get();
-        $this->avgRating = $this->user->projects()->with('ratings')->get()
+
+        $rawAvg = $this->user->projects()->with('ratings')->get()
             ->pluck('ratings')
             ->flatten()
             ->avg('rating');
+
+        $this->avgRating = round($rawAvg * 2) / 2;
+
+        $this->notifications = $this->user->unreadNotifications()->latest()->count();
 
         $this->trendingTech = DB::table('project_technology')
             ->join('technologies', 'project_technology.technology_id', '=', 'technologies.id')
