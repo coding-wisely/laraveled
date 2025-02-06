@@ -25,10 +25,11 @@ class Ratings extends Component
 
     public $userRated;
 
+    public $ratingToSubmit = null;
+
     public function mount(Project $project)
     {
         $this->project = $project;
-
         $this->averageRating = $this->project->ratings()->avg('rating') ?? 0;
         $this->totalRatings = $this->project->ratings()->count();
 
@@ -45,6 +46,26 @@ class Ratings extends Component
 
         $this->userRated = ! is_null($this->userRating);
         $this->sessionRated = ! is_null($this->sessionRating);
+    }
+
+    public function confirmSubmitRating($rating)
+    {
+
+        $this->ratingToSubmit = $rating;
+    }
+
+    public function cancelSubmitRating()
+    {
+        Flux::modals()->close();
+    }
+
+    public function submitRatingConfirmed()
+    {
+        if ($this->ratingToSubmit) {
+            $this->submitRating($this->ratingToSubmit);
+        }
+
+        Flux::modals()->close();
     }
 
     public function submitRating($rating)
