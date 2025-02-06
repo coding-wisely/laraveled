@@ -33,15 +33,29 @@
             @endif
 
             @if ($existingFiles->count() < 3)
-                <x-filepond wire:model="file" accept="image/*" />
+                <x-filepond wire:model="files" multiple />
+
+                @php
+                    $existingCount = $existingFiles ? $existingFiles->count() : 0;
+                    $remaining = 3 - $existingCount;
+                @endphp
+                <p class="text-sm text-red-700 mt-1">
+                    You can upload {{ $remaining }} more image{{ $remaining > 1 ? 's' : '' }}.
+                </p>
             @else
                 <p class="text-sm text-red-500 mt-2">Maximum of 3 images reached. Please remove an image to upload a new
                     one.</p>
             @endif
 
-            @error('file')
+            @error('files')
                 <p class="mt-2 text-sm font-medium text-red-500 dark:text-red-400">{{ $message }}</p>
             @enderror
+
+            @foreach ($errors->get('files.*') as $fileErrors)
+                @foreach ($fileErrors as $error)
+                    <p class="text-red-500 text-sm">{{ $error }}</p>
+                @endforeach
+            @endforeach
         </flux:card>
 
         <flux:card>

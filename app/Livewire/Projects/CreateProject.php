@@ -22,7 +22,6 @@ class CreateProject extends Component
 
     public CreateProjectForm $form;
 
-
     public function submit()
     {
         $this->validate();
@@ -31,9 +30,9 @@ class CreateProject extends Component
             'uuid' => Str::uuid(),
             'title' => $this->form->title,
             'description' => $this->form->description,
-            'short_description' => $this->form->short_description??'',
-            'website_url' => $this->form->website_url??'',
-            'github_url' => $this->form->github_url??'',
+            'short_description' => $this->form->short_description ?? '',
+            'website_url' => $this->form->website_url ?? '',
+            'github_url' => $this->form->github_url ?? '',
         ]);
 
         // Attach relationships if applicable
@@ -42,15 +41,16 @@ class CreateProject extends Component
         $project->tags()->sync($this->form->tags);
         foreach ($this->form->files as $file) {
             $project->addMediaFromDisk($file->getRealPath(), 'minio')
-                ->setName($file->getClientOriginalName())
-                ->toMediaCollection($project->title, 'minio');
+                ->setName($file->getClientOriginalName());
+
         }
-//        $project
-//            ->addMediaFromDisk($this->form->file->getRealPath(), 'minio')
-//            ->setName($this->form->file->getClientOriginalName())
-//            ->toMediaCollection('collection', 'minio');
+        //        $project
+        //            ->addMediaFromDisk($this->form->file->getRealPath(), 'minio')
+        //            ->setName($this->form->file->getClientOriginalName())
+        //            ->toMediaCollection('collection', 'minio');
 
         session()->flash('success', 'Project created successfully!');
+
         return redirect()->route('projects.index');
     }
 

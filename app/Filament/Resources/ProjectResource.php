@@ -5,6 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Models\Project;
 use Filament\Forms;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,28 +28,57 @@ class ProjectResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required(),
+
                 Forms\Components\TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
+                    ->rules('string|max:255'),
+
+                Group::make([
+                    Forms\Components\RichEditor::make('description')
+                        ->required()
+                        ->rules('string')
+                        ->columnSpanFull(),
+                    Forms\Components\Textarea::make('short_description')
+                        ->required()
+                        ->rules('string|max:255'),
+                ])->columnSpanFull(),
+
                 Forms\Components\TextInput::make('website_url')
                     ->required()
-                    ->maxLength(255),
+                    ->rules('string|max:255'),
+
                 Forms\Components\TextInput::make('github_url')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('short_description')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('views')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\Toggle::make('is_featured')
+                    ->rules('string|max:255'),
+
+                Section::make([
+                    Forms\Components\Select::make('technologies')
+                        ->multiple()
+                        ->relationship('technologies', 'name')
+                        ->required()
+                        ->rules('array'),
+
+                    Forms\Components\Select::make('categories')
+                        ->multiple()
+                        ->relationship('categories', 'name')
+                        ->required()
+                        ->rules('array'),
+
+                    Forms\Components\Select::make('tags')
+                        ->multiple()
+                        ->preload()
+                        ->relationship('tags', 'name')
+                        ->rules('array'),
+
+                ])->columns(3)->columnSpanFull(),
+
+                SpatieMediaLibraryFileUpload::make('media')
+                    ->multiple()
+                    ->image()
+                    ->panelLayout('grid')
+                    ->maxFiles(3)
+                    ->maxSize(1024 * 3024)
+                    ->columnSpanFull()
                     ->required(),
             ]);
     }
