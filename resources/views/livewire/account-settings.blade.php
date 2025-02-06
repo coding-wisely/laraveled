@@ -102,7 +102,7 @@
 
             <div class="mb-4 flex justify-end">
                 <flux:modal.trigger name="add-company-modal">
-                    <flux:button>{{ __('Add More Companies') }}</flux:button>
+                    <flux:button>{{ __('Add Companies') }}</flux:button>
                 </flux:modal.trigger>
             </div>
 
@@ -153,19 +153,23 @@
                             </div>
                         @else
                             <!-- View Mode -->
-                            <div class="flex items-center gap-4">
-                                <img src="{{ $company->getFirstMediaUrl('companies') ?: asset('images/default-user.png') }}"
-                                    alt="{{ $company->title }}"
-                                    class="w-24 h-24 rounded-full object-contain border border-gray-300 shadow">
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <div class="flex justify-center">
+                                    <img src="{{ $company->getFirstMediaUrl('companies') }}"
+                                        alt="{{ $company->title }}"
+                                        class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
+                                </div>
 
-                                <div>
-                                    <strong class="text-xl">{{ $company->title }}</strong>
-                                    <p class="text-sm mt-1">{{ $company->description }}</p>
-                                    <p class="text-sm  mt-1">{{ $company->phone }}</p>
-                                    <p class="text-sm  mt-1">{{ $company->address }}</p>
+                                <!-- Text Information -->
+                                <div class="w-full">
+                                    <strong class="text-xl block">{{ $company->title }}</strong>
+                                    <p class="text-sm mt-1 break-words">{{ $company->description }}</p>
+                                    <p class="text-sm mt-1 break-words">{{ $company->phone }}</p>
+                                    <p class="text-sm mt-1 break-words">{{ $company->address }}</p>
+
                                     @if ($company->website)
                                         <flux:link href="{{ $company->website }}" target="_blank"
-                                            class="text-sm mt-1">
+                                            class="text-sm mt-1 break-all block">
                                             {{ $company->website }}
                                         </flux:link>
                                     @endif
