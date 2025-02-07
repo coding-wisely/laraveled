@@ -153,11 +153,10 @@
                             </div>
                         @else
                             <!-- View Mode -->
-                            <div class="flex flex-col sm:flex-row gap-4">
+                            <div class=" gap-4">
                                 <div class="flex justify-center">
                                     <img src="{{ $company->getFirstMediaUrl('companies') }}"
-                                        alt="{{ $company->title }}"
-                                        class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
+                                        alt="{{ $company->title }}" class="w-24 h-24 rounded-none object-cover">
                                 </div>
 
                                 <!-- Text Information -->
