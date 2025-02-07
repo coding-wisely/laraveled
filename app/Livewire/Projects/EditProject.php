@@ -5,6 +5,7 @@ namespace App\Livewire\Projects;
 use App\Models\Project;
 use App\Rules\FileSizeWithName;
 use Flux\Flux;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -20,6 +21,8 @@ class EditProject extends Component
     public array $files = [];
 
     public $existingFiles;
+
+    public $cover_image_id;
 
     public $form = [
         'title' => '',
@@ -47,6 +50,24 @@ class EditProject extends Component
         ];
 
         $this->existingFiles = $project->getMedia('projects');
+
+        $this->cover_image_id = $this->project->coverImage()?->id;
+
+    }
+
+    public function setCoverImage($mediaId)
+    {
+        DB::transaction(function () use ($mediaId) {
+            $this->project->media()->update(['is_cover' => false]);
+
+            $this->project->media()->where('id', $mediaId)->first()->update(['is_cover' => true]);
+
+        });
+
+        $this->project->refresh();
+        $this->existingFiles = $this->project->getMedia('projects');
+
+        Flux::toast('Cover image updated successfully!');
     }
 
     public function removeImage($mediaId)
@@ -98,7 +119,8 @@ class EditProject extends Component
         $this->project->categories()->sync($this->form['categories']);
         $this->project->tags()->sync($this->form['tags']);
 
-        foreach ($this->files as $file) {
+        // Handle file uploads
+        foreach ($this->files as $index => $file) {
             if ($existingCount >= 3) {
                 Flux::toast(
                     heading: 'Maximum of 3 images allowed.',
@@ -109,12 +131,20 @@ class EditProject extends Component
             }
 
             if ($file instanceof TemporaryUploadedFile) {
-                $this->project->addMediaFromDisk($file->getRealPath())
+                $media = $this->project->addMediaFromDisk($file->getRealPath())
                     ->setName($file->getClientOriginalName())
                     ->toMediaCollection('projects');
                 $existingCount++;
+
+                // If this was selected as the cover image, set it
+                if ($this->cover_image_id === "new-{$index}") {
+                    $this->setCoverImage($media->id);
+                }
             }
         }
+
+        $this->existingFiles = $this->project->getMedia('projects');
+        $this->cover_image_id = $this->project->coverImage()?->id;
 
         Flux::toast(
             heading: 'Project updated successfully!',

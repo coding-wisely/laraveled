@@ -68,4 +68,9 @@ class Project extends Model implements HasMedia
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function coverImage(): ?Media
+    {
+        return $this->getFirstMedia('projects', fn ($media) => $media->is_cover);
+    }
 }

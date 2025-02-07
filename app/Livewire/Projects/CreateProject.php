@@ -7,8 +7,10 @@ use App\Models\Category;
 use App\Models\Project;
 use App\Models\Tag;
 use App\Models\Technology;
+use Flux\Flux;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
@@ -25,6 +27,7 @@ class CreateProject extends Component
     public function submit()
     {
         $this->validate();
+
         $project = Project::create([
             'user_id' => auth()->id(),
             'uuid' => Str::uuid(),
@@ -35,21 +38,36 @@ class CreateProject extends Component
             'github_url' => $this->form->github_url ?? '',
         ]);
 
-        // Attach relationships if applicable
+        // Attach relationships
         $project->technologies()->sync($this->form->technologies);
         $project->categories()->sync($this->form->categories);
         $project->tags()->sync($this->form->tags);
-        foreach ($this->form->files as $file) {
-            $project->addMediaFromDisk($file->getRealPath(), 'minio')
-                ->setName($file->getClientOriginalName());
 
+        // Handle file uploads
+        $uploadedMedia = [];
+        foreach ($this->form->files as $index => $file) {
+            $media = $project->addMediaFromDisk($file->getRealPath())
+                ->setName($file->getClientOriginalName())
+                ->toMediaCollection('projects');
+
+            $uploadedMedia[] = $media->id;
         }
-        //        $project
-        //            ->addMediaFromDisk($this->form->file->getRealPath(), 'minio')
-        //            ->setName($this->form->file->getClientOriginalName())
-        //            ->toMediaCollection('collection', 'minio');
 
-        session()->flash('success', 'Project created successfully!');
+        if ($this->form->cover_image !== null && isset($uploadedMedia[$this->form->cover_image])) {
+            DB::table('media')
+                ->where('model_type', Project::class)
+                ->where('model_id', $project->id)
+                ->update(['is_cover' => false]);
+            DB::table('media')
+                ->where('id', $uploadedMedia[$this->form->cover_image])
+                ->update(['is_cover' => true]);
+        }
+
+        Flux::toast(
+            heading: 'Project Created',
+            text: 'Your project has been created successfully.',
+            variant: 'success',
+        );
 
         return redirect()->route('projects.index');
     }
