@@ -32,6 +32,31 @@
             <flux:subheading size="sm">
                 {{ $project->short_description }}</flux:subheading>
         </div>
+
+        <div class="flex flex-wrap gap-2 mt-3">
+            @foreach ($project->categories as $category)
+                <flux:badge size="sm" class="bg-blue-500 text-white px-2 py-1 rounded">
+                    {{ $category->name }}
+                </flux:badge>
+            @endforeach
+        </div>
+
+        <div class="flex flex-wrap gap-2 mt-3">
+            @foreach ($project->tags as $tag)
+                <flux:badge size="sm" class="bg-green-500 text-white px-2 py-1 rounded">
+                    {{ $tag->name }}
+                </flux:badge>
+            @endforeach
+        </div>
+
+        <div class="flex flex-wrap gap-2 mt-3">
+            @foreach ($project->technologies as $tech)
+                <flux:badge size="sm" class="bg-purple-500 text-white px-2 py-1 rounded">
+                    {{ $tech->name }}
+                </flux:badge>
+            @endforeach
+        </div>
+
         @can('view-stats', $project)
             <div class="flex justify-between items-center mt-4">
                 <flux:subheading>Views: {{ $project->views }}</flux:subheading>
