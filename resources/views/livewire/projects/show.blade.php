@@ -78,25 +78,26 @@
         <flux:card class="overflow-hidden">
             <div class="grid gap-6">
                 @php
-                    $photos = $project->getMedia('projects');
+                    $photos = $project->getMedia('projects')->where('is_cover', false);
+                    $coverImage = $project->coverImage();
                     $photoCount = $photos->count();
                 @endphp
                 @if ($photoCount === 1)
-                    <x-heading-photo :photo="$photos[0]" :project="$project" />
+                    <x-heading-photo :photo="$coverImage" :project="$project" />
                 @elseif ($photoCount === 2)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <x-heading-photo :photo="$photos[0]" :project="$project" />
+                        <x-heading-photo :photo="$coverImage" :project="$project" />
                         <div class="grid gap-6">
-                            @foreach ($photos->skip(1) as $photo)
+                            @foreach ($photos as $photo)
                                 <x-heading-photo :photo="$photo" :project="$project" />
                             @endforeach
                         </div>
                     </div>
                 @elseif ($photoCount >= 3)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <x-heading-photo :photo="$photos[0]" :project="$project" />
+                        <x-heading-photo :photo="$coverImage" :project="$project" />
                         <div class="grid grid-rows-2 gap-6">
-                            @foreach ($photos->skip(1)->take(2) as $photo)
+                            @foreach ($photos as $photo)
                                 <x-heading-photo :photo="$photo" :project="$project" />
                             @endforeach
                         </div>
