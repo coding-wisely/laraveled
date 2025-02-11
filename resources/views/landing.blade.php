@@ -2,9 +2,10 @@
     {{-- Hero Section --}}
     <section class="relative overflow-hidden">
         <div class="absolute inset-0  z-0"></div>
-        <div class="container mx-auto px-4 py-24 relative z-10">
+        <div class="container mx-auto px-4 py-24 relative">
             <div class="max-w-3xl mx-auto text-center space-y-8">
-                <h1 class="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-b from-red-600 dark:from-gray-100 via-red-400 dark:via-white to-red-600 dark:to-gray-600 bg-clip-text text-transparent">
+                <h1
+                    class="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-b from-red-600 dark:from-gray-100 via-red-400 dark:via-white to-red-600 dark:to-gray-600 bg-clip-text text-transparent">
                     Showcase Your Laravel Projects
                 </h1>
                 <p class="text-xl text-muted-foreground">
@@ -12,19 +13,12 @@
                     and finding inspiration.
                 </p>
                 <div class="flex gap-4 justify-center">
-                    <flux:button wire:navigate
-                                 href="{{ route('projects.create') }}"
-                                 variant="outline"
-                                 class="w-full"
-                                 icon-trailing="arrow-right"
-                    >
+                    <flux:button wire:navigate href="{{ route('projects.create') }}" variant="outline" class="w-full"
+                        icon-trailing="arrow-right">
                         Submit Your Project
                     </flux:button>
-                    <flux:button wire:navigate
-                                 href="{{ route('projects.index') }}"
-                                 variant="primary"
-                                 class="w-full"
-                                 icon-trailing="arrow-up-right">
+                    <flux:button wire:navigate href="{{ route('projects.index') }}" variant="primary" class="w-full"
+                        icon-trailing="arrow-up-right">
                         Explore Projects
                     </flux:button>
                 </div>
@@ -36,7 +30,7 @@
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12">Featured Projects</h2>
             <div class="max-w-5xl mx-auto">
-                <livewire:featured-projects-carousel/>
+                <livewire:featured-projects-carousel />
             </div>
         </div>
     </section>
@@ -45,26 +39,14 @@
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12">Why Choose Laraveled?</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <x-benefit-card
-                    icon="code-2"
-                    title="Showcase Your Work"
-                    description="Share your Laravel projects with the community and get feedback"
-                />
-                <x-benefit-card
-                    icon="users"
-                    title="Connect with Peers"
-                    description="Network with other Laravel developers and find collaborators"
-                />
-                <x-benefit-card
-                    icon="star"
-                    title="Gain Recognition"
-                    description="Get your project's noticed by the Laravel community"
-                />
-                <x-benefit-card
-                    icon="activity"
-                    title="Track Performance"
-                    description="Monitor your project's engagement and growth"
-                />
+                <x-benefit-card icon="code-2" title="Showcase Your Work"
+                    description="Share your Laravel projects with the community and get feedback" />
+                <x-benefit-card icon="users" title="Connect with Peers"
+                    description="Network with other Laravel developers and find collaborators" />
+                <x-benefit-card icon="star" title="Gain Recognition"
+                    description="Get your project's noticed by the Laravel community" />
+                <x-benefit-card icon="activity" title="Track Performance"
+                    description="Monitor your project's engagement and growth" />
             </div>
         </div>
     </section>

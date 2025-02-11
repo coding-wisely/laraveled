@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Comment;
 use App\Models\Project;
-use Filament\Notifications\Notification;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -68,12 +67,6 @@ class CommentSection extends Component
             'user_id' => Auth::id(),
             'parent_id' => $commentId,
         ]);
-
-        Notification::make()
-            ->title('New comment posted')
-            ->body("{$comment->user->name} has replied: {$comment->content} to your comment on: {$comment->project->title}")
-            ->send()->sendToDatabase($comment->user);
-
         $this->loadComments();
     }
 

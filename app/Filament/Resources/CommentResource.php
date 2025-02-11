@@ -78,10 +78,13 @@ class CommentResource extends Resource
                             ->body("The comment $record->content has been approved.")
                             ->sendToDatabase($record->user);
 
-                        Notification::make()
-                            ->title('New comment posted')
-                            ->body("{$record->user->name} has commented: {$record->content} on: {$record->project->title}")
-                            ->send()->sendToDatabase($record->project->user);
+                        if ($record->project->user->id !== $record->user->id) {
+
+                            Notification::make()
+                                ->title('New comment posted')
+                                ->body("{$record->user->name} has commented: {$record->content} on: {$record->project->title}")
+                                ->send()->sendToDatabase($record->project->user);
+                        }
                     })
                     ->requiresConfirmation()
                     ->modalHeading(fn (Comment $record) => new HtmlString("Approve Comment by {$record->user->name}"))

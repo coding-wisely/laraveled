@@ -30,6 +30,7 @@ class Show extends Component
         }
 
         $startProjectId = request('start', $this->project->id);
+        $user = $this->project->user;
 
         $userProjects = $this->project->user->projects()->orderBy('id')->get();
 
@@ -56,6 +57,7 @@ class Show extends Component
             'prevProject' => $prevProject,
             'nextProject' => $nextProject,
             'startProject' => $startProjectId,
+            'user' => $user,
         ]);
     }
 }

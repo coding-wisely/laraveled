@@ -6,10 +6,12 @@ namespace App\Models;
 
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -79,6 +81,13 @@ class User extends Authenticatable implements FilamentUser, HasMedia
         $gravatarHash = md5(strtolower(trim($this->email)));
 
         return $avatarUrl ?: "https://www.gravatar.com/avatar/{$gravatarHash}?s=200&d=mp";
+    }
+
+    protected function firstName(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => Arr::first(explode(' ', $attributes['name'])),
+        );
     }
 
     public function canAccessPanel(Panel $panel): bool

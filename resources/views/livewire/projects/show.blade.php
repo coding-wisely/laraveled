@@ -9,7 +9,7 @@
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
-                    <span>Previous Project</span>
+                    <span>Previous </span>
                 </flux:link>
             @else
                 <div></div>
@@ -18,7 +18,7 @@
             @if ($nextProject)
                 <flux:link href="{{ route('projects.show', ['project' => $nextProject, 'start' => $startProject]) }}"
                     class="flex items-center text-sm sm:text-base text-red-600 hover:text-red-800">
-                    <span>Next Project</span>
+                    <span>Next by {{ $user->first_name }}</span>
                     <svg class="h-4 w-4 sm:h-6 sm:w-6 ml-1 sm:ml-2" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -29,8 +29,8 @@
             @endif
         </div>
     @else
-        <div class="bg-gray-100 p-4 rounded-lg text-center">
-            <p class="text-gray-700 text-sm">
+        <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+            <p class="text-gray-700 dark:text-gray-300 text-sm">
                 Oops! This Artisan has no more projects to showcase. 🚀✨ Time to craft something amazing? 🔥
                 <flux:link href="{{ route('projects.index') }}" class="text-blue-600 hover:text-blue-800 font-medium">
                     Discover Projects
@@ -40,17 +40,28 @@
     @endif
 
     <!-- Breadcrumbs -->
-    <flux:breadcrumbs>
-        @auth
-            <flux:breadcrumbs.item href="{{ route('projects.my') }}">My Projects</flux:breadcrumbs.item>
-        @endauth
-        <flux:breadcrumbs.item href="{{ route('projects.index') }}">Projects</flux:breadcrumbs.item>
-        <flux:breadcrumbs.item>{{ $project->title }}</flux:breadcrumbs.item>
+    <flux:breadcrumbs class="flex flex-col sm:flex-row sm:items-center">
+        <div class="flex flex-wrap gap-2">
+            @auth
+                <flux:breadcrumbs.item href="{{ route('projects.my') }}">My Projects</flux:breadcrumbs.item>
+            @endauth
+            <flux:breadcrumbs.item href="{{ route('projects.index') }}">Projects</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item>{{ $project->title }}</flux:breadcrumbs.item>
+        </div>
+        @if ($project->user_id === Auth::id())
+            <div class="mt-4 sm:mt-0 sm:ml-auto">
+                <flux:button href="{{ route('projects.edit', $project->id) }}" size="sm">
+                    Edit
+                </flux:button>
+            </div>
+        @endif
     </flux:breadcrumbs>
+
 
 
     <!-- Header Section -->
     <div class="flex items-center justify-between">
+
         <div>
             <flux:heading>{{ $project->title }}</flux:heading>
             <flux:subheading size="lg" class="text-gray-700">{!! $project->short_description !!}</flux:subheading>
@@ -67,25 +78,26 @@
         <flux:card class="overflow-hidden">
             <div class="grid gap-6">
                 @php
-                    $photos = $project->getMedia('projects');
+                    $photos = $project->getMedia('projects')->where('is_cover', false);
+                    $coverImage = $project->coverImage();
                     $photoCount = $photos->count();
                 @endphp
                 @if ($photoCount === 1)
-                    <x-heading-photo :photo="$photos[0]" :project="$project" />
+                    <x-heading-photo :photo="$coverImage" :project="$project" />
                 @elseif ($photoCount === 2)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <x-heading-photo :photo="$photos[0]" :project="$project" />
+                        <x-heading-photo :photo="$coverImage" :project="$project" />
                         <div class="grid gap-6">
-                            @foreach ($photos->skip(1) as $photo)
+                            @foreach ($photos as $photo)
                                 <x-heading-photo :photo="$photo" :project="$project" />
                             @endforeach
                         </div>
                     </div>
                 @elseif ($photoCount >= 3)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <x-heading-photo :photo="$photos[0]" :project="$project" />
+                        <x-heading-photo :photo="$coverImage" :project="$project" />
                         <div class="grid grid-rows-2 gap-6">
-                            @foreach ($photos->skip(1)->take(2) as $photo)
+                            @foreach ($photos as $photo)
                                 <x-heading-photo :photo="$photo" :project="$project" />
                             @endforeach
                         </div>
