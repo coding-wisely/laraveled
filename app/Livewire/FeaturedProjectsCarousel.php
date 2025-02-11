@@ -20,18 +20,20 @@ class FeaturedProjectsCarousel extends Component
             // No featured projects exist – use dummy data with a local placeholder image.
             $this->featuredProjects = collect([
                 [
-                    'title' => 'Your Project Could Be Here!',
-                    'short_description' => 'Showcase your amazing work and join our community of innovative creators.',
-                    'tags' => ['Laravel', 'Livewire', 'Tailwind'],
-                    'image' => asset('img_2.png'),
-                    'website' => 'https://laraveled.com',
+                    'title' => 'Taskavel.com',
+                    'short_description' => 'Intuitive and simple Task Management system. Built on Laravel.',
+                    'tags' => ['Project Management', 'Task management', 'Laravel Agile Board', 'Kanban'],
+                    'technologies' => ['Laravel', 'Inertia', 'TailwindCSS', 'Vue'],
+                    'image' => asset('img.png'),
+                    'website' => 'https://taskavel.com',
                 ],
                 [
-                    'title' => 'Make Your Mark',
-                    'short_description' => 'Be featured among the best projects. Let your creativity shine!',
-                    'tags' => ['Innovation', 'Creativity', 'Tech'],
-                    'image' => asset('img.png'),
-                    'website' => 'https://laraveled.com',
+                    'title' => 'Invoice client with ease',
+                    'short_description' => 'Invoicing.to is a simple and intuitive invoicing system. Keep your invoicing simple and professional.',
+                    'tags' => ['Invoicing', 'Creativity', 'Tech'],
+                    'technologies' => ['Laravel', 'Inertia', 'TailwindCSS', 'Vue'],
+                    'image' => asset('img_2.png'),
+                    'website' => 'https://invoicing.to',
                 ],
 
             ]);
@@ -49,7 +51,8 @@ class FeaturedProjectsCarousel extends Component
                 return [
                     'title' => $project->title,
                     'short_description' => $project->short_description,
-                    'tags' => $project->tags->pluck('name')->toArray(),
+                    'tags' => $project->tags()->pluck('name')->toArray(),
+                    'technologies' => $project->technologies()->pluck('name')->toArray(),
                     'image' => $imageUrl,
                     'website' => $websiteUrl,
                 ];

@@ -21,7 +21,6 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required(),
@@ -38,7 +37,6 @@ class ProjectResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('github_url')
-                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('short_description')
                     ->maxLength(255),

@@ -31,7 +31,7 @@
     @else
         <div class="bg-gray-100 p-4 rounded-lg text-center">
             <p class="text-gray-700 text-sm">
-                No more projects for this user.
+                Oops! This Artisan has no more projects to showcase. 🚀✨ Time to craft something amazing? 🔥
                 <flux:link href="{{ route('projects.index') }}" class="text-blue-600 hover:text-blue-800 font-medium">
                     Discover Projects
                 </flux:link>
