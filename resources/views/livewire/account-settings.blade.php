@@ -59,8 +59,8 @@
                     <flux:input :label="__('LinkedIn Profile')" wire:model="linkedin" type="url"
                         placeholder="https://linkedin.com/in/yourusername" />
 
-                    <flux:input :label="__('Twitter Profile')" wire:model="twitter" type="url"
-                        placeholder="https://twitter.com/yourusername" />
+                    <flux:input :label="__('X Profile')" wire:model="twitter" type="url"
+                        placeholder="https://x.com/yourusername" />
                 </div>
 
                 <div class="flex items-center gap-4">
