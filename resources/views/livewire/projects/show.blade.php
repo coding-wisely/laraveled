@@ -9,7 +9,7 @@
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
-                    <span>Previous Project</span>
+                    <span>Previous </span>
                 </flux:link>
             @else
                 <div></div>
@@ -18,7 +18,7 @@
             @if ($nextProject)
                 <flux:link href="{{ route('projects.show', ['project' => $nextProject, 'start' => $startProject]) }}"
                     class="flex items-center text-sm sm:text-base text-red-600 hover:text-red-800">
-                    <span>Next Project</span>
+                    <span>Next by {{ $user->first_name }}</span>
                     <svg class="h-4 w-4 sm:h-6 sm:w-6 ml-1 sm:ml-2" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -29,8 +29,8 @@
             @endif
         </div>
     @else
-        <div class="bg-gray-100 p-4 rounded-lg text-center">
-            <p class="text-gray-700 text-sm">
+        <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+            <p class="text-gray-700 dark:text-gray-300 text-sm">
                 Oops! This Artisan has no more projects to showcase. 🚀✨ Time to craft something amazing? 🔥
                 <flux:link href="{{ route('projects.index') }}" class="text-blue-600 hover:text-blue-800 font-medium">
                     Discover Projects
