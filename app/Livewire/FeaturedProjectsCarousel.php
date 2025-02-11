@@ -11,13 +11,11 @@ class FeaturedProjectsCarousel extends Component
 
     public function mount()
     {
-        // Retrieve featured projects with tags and media
         $featured = Project::with('tags', 'media')
             ->where('is_featured', true)
             ->get();
 
         if ($featured->isEmpty()) {
-            // No featured projects exist – use dummy data with a local placeholder image.
             $this->featuredProjects = collect([
                 [
                     'title' => 'Taskavel.com',
@@ -40,7 +38,7 @@ class FeaturedProjectsCarousel extends Component
         } else {
             // Map the featured projects to the desired array format
             $this->featuredProjects = $featured->map(function ($project) {
-                $media = $project->getMedia('projects')->first();
+                $media = $project->coverImage() ?? $project->getMedia('projects')->first();
                 $imageUrl = $media ? $media->getUrl() : asset('img.png');
 
                 $websiteUrl = $project->website_url;

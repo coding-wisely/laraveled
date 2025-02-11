@@ -16,6 +16,16 @@
                         <div class="relative w-48 h-48">
                             <img src="{{ $media->getUrl() }}" alt="Project Image"
                                 class="w-full h-full object-cover rounded">
+
+                            <!-- Select Cover Image -->
+                            <div class="absolute bottom-2 left-2 bg-white dark:bg-gray-700 px-2 py-1 rounded">
+                                <input type="radio" wire:model="cover_image_id"
+                                    wire:change="setCoverImage({{ $media->id }})" value="{{ $media->id }}"
+                                    @if ($media->getCustomProperty('cover_image', false)) checked @endif>
+                                <label class="text-sm">Cover</label>
+                            </div>
+
+                            <!-- Remove Image Button -->
                             <button wire:click="removeImage({{ $media->id }})" type="button"
                                 class="absolute top-1 right-1 z-10 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 focus:outline-none"
                                 title="Remove Image">
@@ -28,21 +38,41 @@
                         </div>
                     @endforeach
                 </div>
-            @else
-                <p class="text-gray-500 dark:text-gray-400 mt-2">No images available.</p>
+            @endif
+
+            <!-- Show newly uploaded images -->
+            @if ($files)
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2 mb-2">
+                    @foreach ($files as $index => $file)
+                        <div class="relative w-48 h-48">
+                            <img src="{{ $file->temporaryUrl() }}" alt="New Image"
+                                class="w-full h-full object-cover rounded">
+
+                            <!-- Select Cover Image for New Uploads -->
+                            <div class="absolute bottom-2 left-2 bg-white dark:bg-gray-700 px-2 py-1 rounded">
+                                <input type="radio" wire:model="cover_image_id" value="new-{{ $index }}">
+                                <label class="text-sm">Cover</label>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             @endif
 
             @if ($existingFiles->count() < 3)
-                <x-filepond wire:model="file" accept="image/*" />
+                <x-filepond wire:model="files" multiple />
+                @php
+                    $existingCount = $existingFiles ? $existingFiles->count() : 0;
+                    $remaining = 3 - $existingCount;
+                @endphp
+                <p class="text-sm text-red-700 mt-1">
+                    You can upload {{ $remaining }} more image{{ $remaining > 1 ? 's' : '' }}.
+                </p>
             @else
                 <p class="text-sm text-red-500 mt-2">Maximum of 3 images reached. Please remove an image to upload a new
                     one.</p>
             @endif
-
-            @error('file')
-                <p class="mt-2 text-sm font-medium text-red-500 dark:text-red-400">{{ $message }}</p>
-            @enderror
         </flux:card>
+
 
         <flux:card>
             <!-- Title -->

@@ -2,20 +2,30 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Form;
 use App\Rules\FileSizeWithName;
+use Livewire\Form;
 
 class CreateProjectForm extends Form
 {
     public array $files = [];
+
     public string $title;
+
     public string $short_description;
+
     public string $description;
+
     public string $website_url;
+
     public string $github_url;
+
     public array $technologies = [];
+
     public array $categories = [];
+
     public array $tags = [];
+
+    public $cover_image = null;
 
     public function rules(): array
     {
@@ -37,5 +47,4 @@ class CreateProjectForm extends Form
             'files' => 'Oops! It looks like we’re missing something. Please share some screenshots of your beautiful app so we can proceed—your work deserves to shine! 🌟',
         ];
     }
-
 }

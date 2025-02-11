@@ -57,11 +57,6 @@ class CommentSection extends Component
             variant: 'success',
         );
 
-        Notification::make()
-            ->title('New comment posted')
-            ->body("{$comment->user->name} has commented: {$comment->content} on: {$comment->project->title}")
-            ->send()->sendToDatabase($comment->project->user);
-
         $this->loadComments();
     }
 
