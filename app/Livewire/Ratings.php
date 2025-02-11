@@ -103,10 +103,14 @@ class Ratings extends Component
             variant: 'success',
         );
 
-        Notification::make()
-            ->title('New rating posted')
-            ->body("{$ratingRecord->user->name} has given {$ratingRecord->rating} stars to {$ratingRecord->project->title}")
-            ->send()->sendToDatabase($ratingRecord->project->user);
+        if ($ratingRecord->project->user->id !== $ratingRecord->user->id) {
+
+            Notification::make()
+                ->title('New rating posted')
+                ->body("{$ratingRecord->user->name} has given {$ratingRecord->rating} stars to {$ratingRecord->project->title}")
+                ->send()->sendToDatabase($ratingRecord->project->user);
+        }
+
     }
 
     public function render()

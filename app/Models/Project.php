@@ -71,6 +71,6 @@ class Project extends Model implements HasMedia
 
     public function coverImage(): ?Media
     {
-        return $this->getFirstMedia('projects', fn ($media) => $media->is_cover);
+        return $this->getFirstMedia('projects', fn ($media) => $media->is_cover) ?? $this->getFirstMedia('projects');
     }
 }
