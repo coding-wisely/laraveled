@@ -5,7 +5,7 @@
             @foreach ($featuredProjects as $project)
                 <div class="w-full flex-shrink-0">
                     <div class="rounded-lg border overflow-hidden">
-                        <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}" class="w-full h-64 object-cover">
+                        <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}" class="w-full object-cover h-auto max-h-[500px]">
                         <div class="p-6 space-y-4">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-2xl font-semibold">{{ $project['title'] }}</h3>
@@ -31,14 +31,12 @@
             @endforeach
         </div>
     </div>
-
     <button @click="activeSlide = activeSlide === 0 ? {{ count($featuredProjects) - 1 }} : activeSlide - 1"
         class="absolute -left-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground"
         :disabled="activeSlide === 0">
         <x-dynamic-icon name="arrow-left" class="h-4 w-4" />
         <span class="sr-only">Previous slide</span>
     </button>
-
     <button @click="activeSlide = activeSlide === {{ count($featuredProjects) - 1 }} ? 0 : activeSlide + 1"
         class="absolute -right-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground"
         :disabled="activeSlide === {{ count($featuredProjects) - 1 }}">

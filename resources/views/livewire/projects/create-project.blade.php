@@ -51,6 +51,8 @@
                 description="This will be shown on your project page view."
                 placeholder="Tell us about your wonderful project" />
         </flux:card>
+
+
         <flux:card class="grid md:grid-cols-2 gap-6">
             <!-- Website URL -->
             <flux:card>
@@ -66,7 +68,7 @@
             </flux:card>
         </flux:card>
 
-        <flux:card class="grid md:grid-cols-2 gap-6">
+        <flux:card class="grid md:grid-cols-3 gap-6">
             <!-- Technologies -->
             <flux:card>
                 <flux:select badge="Required" wire:model="form.technologies"

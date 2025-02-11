@@ -21,3 +21,4 @@ yarn-error.log
 /.vscode
 /.zed
 /auth.json
+.DS_Store

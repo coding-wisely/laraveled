@@ -23,7 +23,7 @@
 
 </head>
 
-<body class="min-h-screen bg-white dark:bg-zinc-800">
+<body class="animated-gradient min-h-screen bg-white dark:bg-zinc-800">
     @if (app()->isProduction())
         <livewire:join-waiting-list />
     @endif
