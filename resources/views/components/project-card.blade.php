@@ -11,26 +11,30 @@
                     {{ $project->title }}
                 </flux:link>
             </flux:heading>
-            <x-average-rating :average-rating="$project->ratings()->avg('rating') ?? 0" :total-ratings="$project->ratings()->count()" :display-comment="false" />
-            <flux:separator variant="subtle" class="mt-4" />
+            <x-average-rating :average-rating="$project->ratings()->avg('rating') ?? 0"
+                              :total-ratings="$project->ratings()->count()" :display-comment="false"/>
+            <flux:separator variant="subtle" class="mt-4"/>
         </div>
         <!-- Photos -->
         <div class="pt-4">
-            @if ($project->coverImage())
-                <img src="{{ $project->coverImage()->getFullUrl() }}" alt="Project Cover Image"
-                    class="rounded-lg mb-4 w-full h-48 object-cover">
-            @else
-                @if ($project->getMedia('projects')->count() > 0)
-                    <img src="{{ $project->getMedia('projects')[0]->getFullUrl() }}" alt="Project Screenshot"
-                        class="rounded-lg mb-4 w-full h-48 object-cover">
+            <a wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
+                @if ($project->coverImage())
+                    <img src="{{ $project->coverImage()->getFullUrl() }}" alt="Project Cover Image"
+                         class="rounded-lg mb-4 w-full h-48 object-cover">
+                @else
+                    @if ($project->getMedia('projects')->count() > 0)
+                        <img src="{{ $project->getMedia('projects')[0]->getFullUrl() }}" alt="Project Screenshot"
+                             class="rounded-lg mb-4 w-full h-48 object-cover">
+                    @endif
                 @endif
-            @endif
+            </a>
         </div>
 
         <!-- description -->
         <div class="flex-1">
             <flux:subheading size="sm">
-                {{ $project->short_description }}</flux:subheading>
+                {{ $project->short_description }}
+            </flux:subheading>
         </div>
 
         <div class="flex flex-wrap gap-2 mt-3">
@@ -61,11 +65,13 @@
             <div class="flex justify-between items-center mt-4">
                 <flux:subheading>Views: {{ $project->views }}</flux:subheading>
                 <flux:subheading>
-                    <div class="relative">
-                        <flux:icon name="chat-bubble-left" />
-                        <span class="absolute -top-0.5 right-1.5"><span
-                                class="text-[10px]">{{ $project->comments()->count() }}</span> </span>
-                    </div>
+                    <a wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
+                        <flux:icon name="chat-bubble-left"
+                            @class(
+                            ['text-gray-500' => $project->comments()->count() > 0,
+                        'text-gray-100'])/>
+                    </a>
+
                 </flux:subheading>
             </div>
         @endcan

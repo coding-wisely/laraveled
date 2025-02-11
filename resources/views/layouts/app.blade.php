@@ -38,7 +38,7 @@
             </flux:navbar.item>
 
             <flux:spacer />
-            <flux:navbar.item href="{{ route('projects.index') }}">
+            <flux:navbar.item href="{{ route('projects.top') }}">
                 <flux:tooltip content="Top 5">
                     <flux:icon.crown class="text-yellow-500 dark:text-yellow-300" />
                 </flux:tooltip>

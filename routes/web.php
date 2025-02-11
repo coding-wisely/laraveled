@@ -6,6 +6,7 @@ use App\Livewire\Projects\CreateProject;
 use App\Livewire\Projects\Index as PublicProjects;
 use App\Livewire\Projects\MyProjects;
 use App\Livewire\Projects\Show as ProjectDetails;
+use App\Livewire\Projects\Top;
 use App\Livewire\Projects\UserProjects;
 use App\Livewire\UserProfile;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ Route::get('/', function () {
 Route::get('/projects', PublicProjects::class)->name('projects.index'); // Public: List all projects
 Route::get('/projects/{project:uuid}', ProjectDetails::class)->name('projects.show'); // Public: View a specific project
 Route::get('/users/{user}/projects', UserProjects::class)->name('user.projects'); // Public: View projects by a specific user
+Route::get('/top/{category?}', Top::class)->name('projects.top'); // Public: Top projects
 
 Route::get('/profile/{userId}', UserProfile::class)->name('user.profile'); // public profile
 
