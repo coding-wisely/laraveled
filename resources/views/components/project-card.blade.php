@@ -63,4 +63,7 @@
         @endif
 
     </div>
+    <a href="{{ route('projects.show', $project->uuid) }}" class="absolute inset-0 z-0"
+        aria-label="View Project Details">
+    </a>
 </flux:card>
