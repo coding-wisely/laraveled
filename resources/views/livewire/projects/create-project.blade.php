@@ -56,15 +56,36 @@
         <flux:card class="grid md:grid-cols-2 gap-6">
             <!-- Website URL -->
             <flux:card>
-                <flux:input badge="Required" label="Website URL" wire:model="form.website_url"
-                    description="The URL of your project website." placeholder="Enter the project website URL"
-                    class="h-full" />
+
+                <flux:field>
+                    <flux:label badge="Required">Website</flux:label>
+
+                    <flux:input.group>
+                        <flux:input.group.prefix>https://</flux:input.group.prefix>
+
+                        <flux:input wire:model="form.website_url" placeholder="The URL of your project website." />
+                    </flux:input.group>
+
+                    <flux:error name="form.website_url" />
+                </flux:field>
+
             </flux:card>
 
             <!-- GitHub URL -->
             <flux:card>
-                <flux:input label="GitHub URL" wire:model="form.github_url" description="Good for open source projects."
-                    placeholder="Enter the GitHub repository URL" class="h-full" />
+                <flux:field>
+                    <flux:label badge='Required'>GitHub URL</flux:label>
+
+                    <flux:input.group>
+                        <flux:input.group.prefix>https://</flux:input.group.prefix>
+
+                        <flux:input wire:model="form.github_url" placeholder="Enter the GitHub repository URL"
+                            badge="Required" />
+                    </flux:input.group>
+
+                    <flux:error name="form.github_url" />
+                </flux:field>
+
             </flux:card>
         </flux:card>
 
