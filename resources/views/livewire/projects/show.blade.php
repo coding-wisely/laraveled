@@ -40,17 +40,28 @@
     @endif
 
     <!-- Breadcrumbs -->
-    <flux:breadcrumbs>
-        @auth
-            <flux:breadcrumbs.item href="{{ route('projects.my') }}">My Projects</flux:breadcrumbs.item>
-        @endauth
-        <flux:breadcrumbs.item href="{{ route('projects.index') }}">Projects</flux:breadcrumbs.item>
-        <flux:breadcrumbs.item>{{ $project->title }}</flux:breadcrumbs.item>
+    <flux:breadcrumbs class="flex flex-col sm:flex-row sm:items-center">
+        <div class="flex flex-wrap gap-2">
+            @auth
+                <flux:breadcrumbs.item href="{{ route('projects.my') }}">My Projects</flux:breadcrumbs.item>
+            @endauth
+            <flux:breadcrumbs.item href="{{ route('projects.index') }}">Projects</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item>{{ $project->title }}</flux:breadcrumbs.item>
+        </div>
+        @if ($project->user_id === Auth::id())
+            <div class="mt-4 sm:mt-0 sm:ml-auto">
+                <flux:button href="{{ route('projects.edit', $project->id) }}" size="sm">
+                    Edit
+                </flux:button>
+            </div>
+        @endif
     </flux:breadcrumbs>
+
 
 
     <!-- Header Section -->
     <div class="flex items-center justify-between">
+
         <div>
             <flux:heading>{{ $project->title }}</flux:heading>
             <flux:subheading size="lg" class="text-gray-700">{!! $project->short_description !!}</flux:subheading>
