@@ -74,7 +74,6 @@
 
                 </flux:navbar.item>
             </flux:navbar>
-            <flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
 
             <livewire:notifications-panel />
 
