@@ -77,24 +77,21 @@
         </div>
 
 
-        @can('view-stats', $project)
-            <div class="flex justify-between items-center mt-4">
-                <flux:subheading class="flex items-center gap-1">
-                    <flux:icon name="eye" />
-                    {{ $project->views }}
-                </flux:subheading>
+        <div class="flex justify-between items-center mt-4">
+            <flux:subheading class="flex items-center gap-1 text-sm">
+                <flux:icon name="eye" class="w-4 h-4" />
+                <span class="text-gray-600 text-xs">{{ $project->views }}</span>
+            </flux:subheading>
 
-                <flux:subheading>
-                    <a wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
-                        <flux:icon name="chat-bubble-left" @class([
-                            'text-gray-500' => $project->comments()->count() > 0,
-                            'text-gray-100',
-                        ]) />
-                    </a>
-                </flux:subheading>
-            </div>
-        @endcan
-
+            <flux:subheading>
+                <a wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
+                    <flux:icon name="chat-bubble-left" @class([
+                        'text-gray-500' => $project->comments()->count() > 0,
+                        'text-gray-100',
+                    ]) />
+                </a>
+            </flux:subheading>
+        </div>
 
         <div class="flex justify-between items-center mt-4">
             @if ($showAuthor)
