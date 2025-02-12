@@ -39,7 +39,7 @@
 
             <flux:spacer />
             <flux:navbar.item href="{{ route('projects.top') }}">
-                <flux:tooltip content="Top 5">
+                <flux:tooltip content="Top 6">
                     <flux:icon.crown class="text-yellow-500 dark:text-yellow-300" />
                 </flux:tooltip>
             </flux:navbar.item>
@@ -116,7 +116,7 @@
             </flux:navlist.item>
             <flux:navlist.item icon="globe" href="{{ route('projects.index') }}">Discover Projects
             </flux:navlist.item>
-            <flux:navlist.item icon="crown" href="#">Top 5</flux:navlist.item>
+            <flux:navlist.item icon="crown" href="#">Top 6</flux:navlist.item>
         </flux:navlist>
         <flux:navlist variant="outline">
             <flux:navlist.item icon="bookmark" href="{{ route('bookmarks') }}">Bookmarks</flux:navlist.item>

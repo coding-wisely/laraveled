@@ -1,7 +1,7 @@
 <div class="container mx-auto px-6 py-8">
     <div class="text-center">
-        <flux:heading class="text-3xl font-bold text-gray-900 dark:text-white">Top 5!</flux:heading>
-        <flux:subheading class="text-lg mt-2 text-gray-600 dark:text-gray-400">These are Top 5 project rated by
+        <flux:heading class="text-3xl font-bold text-gray-900 dark:text-white">Top 6!</flux:heading>
+        <flux:subheading class="text-lg mt-2 text-gray-600 dark:text-gray-400">These are Top 6 project rated by
             community!</flux:subheading>
     </div>
 

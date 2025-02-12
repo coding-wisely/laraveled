@@ -82,9 +82,7 @@
                     $coverImage = $project->coverImage();
                     $photoCount = $photos->count();
                 @endphp
-                @if ($photoCount === 1)
-                    <x-heading-photo :photo="$coverImage" :project="$project" />
-                @elseif ($photoCount === 2)
+                @if ($photoCount >= 1 && $photoCount <= 2)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <x-heading-photo :photo="$coverImage" :project="$project" />
                         <div class="grid gap-6">
