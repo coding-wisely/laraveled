@@ -80,16 +80,15 @@
         <div class="flex justify-between items-center mt-4">
             <flux:subheading class="flex items-center gap-1 text-sm">
                 <flux:icon name="eye" class="w-4 h-4" />
-                <span class="text-gray-600 text-xs">{{ $project->views }}</span>
+                <span class="text-xs">{{ $project->views }}</span>
             </flux:subheading>
 
             <flux:subheading>
-                <a wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
-                    <flux:icon name="chat-bubble-left" @class([
-                        'text-gray-500' => $project->comments()->count() > 0,
-                        'text-gray-100',
-                    ]) />
-                </a>
+                <div class="relative">
+                    <flux:icon name="chat-bubble-left" />
+                    <span class="absolute -top-0.5 right-2 items-center justify-center"><span
+                            class="text-[8px]">{{ $project->comments()->count() }}</span> </span>
+                </div>
             </flux:subheading>
         </div>
 
