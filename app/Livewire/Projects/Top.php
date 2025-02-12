@@ -27,16 +27,57 @@ class Top extends Component
 
     public $perPage = 10;
 
+    public $searchQuery = [
+        'category' => '',
+        'technology' => '',
+        'user' => '',
+    ];
+
+    public $resultLimit = [
+        'category' => 4,
+        'technology' => 4,
+        'user' => 4,
+    ];
+
     protected $queryString = ['category', 'technology', 'user'];
 
-    public function loadMore()
+    /**
+     * Custom function to update search query and load more results dynamically
+     */
+    public function loadMoreResults($type, $value)
     {
-        $this->perPage += 10;
+        if (isset($this->searchQuery[$type])) {
+            $this->searchQuery[$type] = $value;
+
+            if (empty($value)) {
+                $this->resultLimit[$type] = 4;
+            } else {
+                $this->resultLimit[$type] += 5;
+            }
+        }
     }
 
-    public function updated($field)
+    /**
+     * Fetch filtered results based on search query
+     */
+    public function getFilteredResults($type)
     {
-        $this->resetPage();
+        switch ($type) {
+            case 'category':
+                return Category::where('name', 'ilike', '%'.$this->searchQuery['category'].'%')
+                    ->limit($this->resultLimit['category'])
+                    ->get();
+            case 'technology':
+                return Technology::where('name', 'ilike', '%'.$this->searchQuery['technology'].'%')
+                    ->limit($this->resultLimit['technology'])
+                    ->get();
+            case 'user':
+                return User::where('name', 'ilike', '%'.$this->searchQuery['user'].'%')
+                    ->limit($this->resultLimit['user'])
+                    ->get();
+            default:
+                return collect();
+        }
     }
 
     public function render(): Factory|Application|View
@@ -51,10 +92,10 @@ class Top extends Component
                 'projects.id'
             )
             ->select('projects.*', DB::raw('
-                COALESCE(avg_rating, 0) * 0.7 + 
-                COALESCE(total_ratings, 0) * 0.2 + 
-                views * 0.1 AS score
-            '))
+            COALESCE(avg_rating, 0) * 0.7 + 
+            COALESCE(total_ratings, 0) * 0.2 + 
+            views * 0.1 AS score
+        '))
             ->orderByDesc('score')
             ->take(6);
 
@@ -74,9 +115,9 @@ class Top extends Component
 
         return view('livewire.projects.top', [
             'projects' => $projects,
-            'categories' => Category::all(),
-            'technologies' => Technology::all(),
-            'users' => User::all(),
+            'categories' => $this->getFilteredResults('category'),
+            'technologies' => $this->getFilteredResults('technology'),
+            'users' => $this->getFilteredResults('user'),
         ]);
     }
 }
