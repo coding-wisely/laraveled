@@ -11,13 +11,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class Index extends Component
 {
-    use WithPagination;
-
     public $category = '';
 
     public $technology = '';
@@ -26,16 +23,62 @@ class Index extends Component
 
     public $perPage = 10;
 
-    protected $queryString = ['category', 'technology', 'user'];
+    public $searchQuery = [
+        'category' => '',
+        'technology' => '',
+        'user' => '',
+    ];
+
+    public $resultLimit = [
+        'category' => 4,
+        'technology' => 4,
+        'user' => 4,
+    ];
 
     public function loadMore()
     {
         $this->perPage += 10;
     }
 
-    public function updated($field)
+    protected $queryString = ['category', 'technology', 'user'];
+
+    /**
+     * Custom function to update search query and load more results dynamically
+     */
+    public function loadMoreResults($type, $value)
     {
-        $this->resetPage();
+        if (isset($this->searchQuery[$type])) {
+            $this->searchQuery[$type] = $value;
+
+            if (empty($value)) {
+                $this->resultLimit[$type] = 4;
+            } else {
+                $this->resultLimit[$type] += 5;
+            }
+        }
+    }
+
+    /**
+     * Fetch filtered results based on search query
+     */
+    public function getFilteredResults($type)
+    {
+        switch ($type) {
+            case 'category':
+                return Category::where('name', 'ilike', '%'.$this->searchQuery['category'].'%')
+                    ->limit($this->resultLimit['category'])
+                    ->get();
+            case 'technology':
+                return Technology::where('name', 'ilike', '%'.$this->searchQuery['technology'].'%')
+                    ->limit($this->resultLimit['technology'])
+                    ->get();
+            case 'user':
+                return User::where('name', 'ilike', '%'.$this->searchQuery['user'].'%')
+                    ->limit($this->resultLimit['user'])
+                    ->get();
+            default:
+                return collect();
+        }
     }
 
     public function render(): Factory|Application|View
@@ -43,30 +86,24 @@ class Index extends Component
         $query = Project::with(['user', 'categories', 'tags', 'technologies', 'ratings']);
 
         if ($this->category) {
-            $query->whereHas('categories', function ($q) {
-                $q->where('categories.name', $this->category);
-            });
+            $query->whereHas('categories', fn ($q) => $q->where('categories.name', $this->category));
         }
 
         if ($this->technology) {
-            $query->whereHas('technologies', function ($q) {
-                $q->where('technologies.name', $this->technology);
-            });
+            $query->whereHas('technologies', fn ($q) => $q->where('technologies.name', $this->technology));
         }
 
         if ($this->user) {
-            $query->whereHas('user', function ($q) {
-                $q->where('users.name', $this->user);
-            });
+            $query->whereHas('user', fn ($q) => $q->where('users.name', $this->user));
         }
 
         $projects = $query->paginate($this->perPage);
 
         return view('livewire.projects.index', [
             'projects' => $projects,
-            'categories' => Category::all(),
-            'technologies' => Technology::all(),
-            'users' => User::all(),
+            'categories' => $this->getFilteredResults('category'),
+            'technologies' => $this->getFilteredResults('technology'),
+            'users' => $this->getFilteredResults('user'),
         ]);
     }
 }

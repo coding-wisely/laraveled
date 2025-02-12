@@ -20,7 +20,7 @@ class UserProfile extends Component
     public function mount($userId)
     {
         $this->user = User::with(['projects', 'companies'])->findOrFail($userId);
-        $this->projects = $this->user->projects;
+        $this->projects = $this->user->projects()->with('categories', 'technologies', 'tags')->get();
         $this->averageRating = $this->user->projects()->with('ratings')->get()
             ->pluck('ratings')
             ->flatten()

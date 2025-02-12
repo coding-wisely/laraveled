@@ -29,14 +29,14 @@
             @endif
         </div>
     @else
-        <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+        <flux:card class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
             <p class="text-gray-700 dark:text-gray-300 text-sm">
-                Oops! This Artisan has no more projects to showcase. 🚀✨ Time to craft something amazing? 🔥
-                <flux:link href="{{ route('projects.index') }}" class="text-blue-600 hover:text-blue-800 font-medium">
+                Oops! {{ $user->name }} has no more projects to showcase. Checkout more from other creators !
+                <flux:link href="{{ route('projects.index') }}" class=" font-medium">
                     Discover Projects
                 </flux:link>
             </p>
-        </div>
+        </flux:card>
     @endif
 
     <!-- Breadcrumbs -->
@@ -72,7 +72,6 @@
         @endif
     </div>
 
-
     <!-- Gallery Section -->
     <div>
         <flux:card class="overflow-hidden">
@@ -82,9 +81,7 @@
                     $coverImage = $project->coverImage();
                     $photoCount = $photos->count();
                 @endphp
-                @if ($photoCount === 1)
-                    <x-heading-photo :photo="$coverImage" :project="$project" />
-                @elseif ($photoCount === 2)
+                @if ($photoCount >= 1 && $photoCount <= 2)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <x-heading-photo :photo="$coverImage" :project="$project" />
                         <div class="grid gap-6">

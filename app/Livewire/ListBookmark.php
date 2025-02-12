@@ -17,8 +17,9 @@ class ListBookmark extends Component
     public function mount()
     {
         $this->bookmarks = ModelsBookmark::where('user_id', Auth::id())
-            ->with('bookmarkable')
+            ->with('bookmarkable.categories', 'bookmarkable.technologies', 'bookmarkable.tags')
             ->get();
+
     }
 
     public function render()
