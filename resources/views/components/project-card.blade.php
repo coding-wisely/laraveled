@@ -40,8 +40,9 @@
             class="mt-2 grid gap-4 
         {{ $project->categories->count() === 1 || $project->tags->count() === 1 || $project->technologies->count() === 1 ? 'grid-cols-2' : 'grid-cols-1' }}">
 
+            <!--Categories -->
             @if ($project->categories->isNotEmpty())
-                <div class="flex flex-wrap gap-2 items-start">
+                <div class="flex flex-wrap gap-2 items-start justify-start">
                     @foreach ($project->categories as $category)
                         <flux:badge size="sm" class="bg-blue-500 text-white px-2 py-1 rounded">
                             {{ $category->name }}
@@ -50,8 +51,10 @@
                 </div>
             @endif
 
+
+            <!-- Tags -->
             @if ($project->tags->isNotEmpty())
-                <div class="flex flex-wrap gap-2 items-start">
+                <div class="flex flex-wrap gap-2 items-start justify-end">
                     @foreach ($project->tags as $tag)
                         <flux:badge size="sm" class="bg-green-500 text-white px-2 py-1 rounded">
                             {{ $tag->name }}
@@ -60,8 +63,9 @@
                 </div>
             @endif
 
+            <!-- Technologies -->
             @if ($project->technologies->isNotEmpty())
-                <div class="flex flex-wrap gap-2 items-start">
+                <div class="flex flex-wrap gap-2 items-start justify-end }}">
                     @foreach ($project->technologies as $tech)
                         <flux:badge size="sm" class="bg-purple-500 text-white px-2 py-1 rounded">
                             {{ $tech->name }}
@@ -71,7 +75,6 @@
             @endif
 
         </div>
-
 
 
         @can('view-stats', $project)
