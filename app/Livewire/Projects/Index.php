@@ -42,7 +42,12 @@ class Index extends Component
     {
         if (isset($this->searchQuery[$type])) {
             $this->searchQuery[$type] = $value;
-            $this->resultLimit[$type] += 5;
+
+            if (empty($value)) {
+                $this->resultLimit[$type] = 4;
+            } else {
+                $this->resultLimit[$type] += 5;
+            }
         }
     }
 
