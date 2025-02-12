@@ -86,8 +86,10 @@
             <flux:subheading>
                 <div class="relative">
                     <flux:icon name="chat-bubble-left" />
-                    <span class="absolute -top-0.5 right-2 items-center justify-center"><span
-                            class="text-[8px]">{{ $project->comments()->count() }}</span> </span>
+                    <a wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
+                        <span class="absolute -top-0.5 right-2 items-center justify-center"><span
+                                class="text-[8px]">{{ $project->comments()->count() }}</span> </span>
+                    </a>
                 </div>
             </flux:subheading>
         </div>
