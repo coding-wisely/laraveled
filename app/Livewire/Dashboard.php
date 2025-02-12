@@ -51,7 +51,7 @@ class Dashboard extends Component
         $this->availableCategories = Category::all();
         $this->user = Auth::user();
         $this->totalProjects = Project::count();
-        $this->userProjects = $this->user->projects()->withCount(['comments', 'ratings'])->get();
+        $this->userProjects = $this->user->projects()->with('categories', 'tags', 'technologies')->withCount(['comments', 'ratings'])->get();
         $this->comments = \App\Models\Comment::whereIn('project_id', $this->userProjects->pluck('id'))
             ->whereNull('parent_id')
             ->latest()
