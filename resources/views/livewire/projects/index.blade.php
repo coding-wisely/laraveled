@@ -6,35 +6,57 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-6">
+
         <!-- Category Dropdown -->
         <flux:select wire:model.defer="category" wire:change="$refresh" searchable variant="listbox" clearable
-            placeholder="Category" class="max-h-60 overflow-y-auto">
+            class="max-h-60 overflow-y-auto">
+
+            <x-slot name="search">
+                <flux:select.search wire:model.lazy="searchQuery.category"
+                    wire:keyup.debounce.100ms="loadMoreResults('category', $event.target.value)" class="px-4"
+                    placeholder="Search categories..." />
+            </x-slot>
+
             <flux:option value="">All Categories</flux:option>
             @foreach ($categories as $category)
                 <flux:option value="{{ $category->name }}">{{ $category->name }}</flux:option>
             @endforeach
         </flux:select>
 
+        <!-- Technology Dropdown -->
         <flux:select wire:model.defer="technology" wire:change="$refresh" searchable variant="listbox" clearable
-            placeholder="Technology" class="max-h-60 overflow-y-auto">
+            class="max-h-60 overflow-y-auto">
+
+            <x-slot name="search">
+                <flux:select.search wire:model.lazy="searchQuery.technology"
+                    wire:keyup.debounce.100ms="loadMoreResults('technology', $event.target.value)" class="px-4"
+                    placeholder="Search technologies..." />
+            </x-slot>
+
             <flux:option value="">All Technologies</flux:option>
             @foreach ($technologies as $technology)
                 <flux:option value="{{ $technology->name }}">{{ $technology->name }}</flux:option>
             @endforeach
         </flux:select>
 
-        <flux:select wire:model.defer="user" wire:change="$refresh" searchable placeholder="User" variant="listbox"
-            clearable autocomplete class="max-h-60 overflow-y-auto" wire:model.debounce.500ms="userSearch">
+        <!-- User Dropdown -->
+        <flux:select wire:model.defer="user" wire:change="$refresh" searchable variant="listbox" clearable
+            class="max-h-60 overflow-y-auto">
+
+            <x-slot name="search">
+                <flux:select.search wire:model.lazy="searchQuery.user"
+                    wire:keyup.debounce.100ms="loadMoreResults('user', $event.target.value)" class="px-4"
+                    placeholder="Search users..." />
+            </x-slot>
 
             <flux:option value="">All Users</flux:option>
-
             @foreach ($users as $user)
                 <flux:option value="{{ $user->name }}">{{ $user->name }}</flux:option>
             @endforeach
-
         </flux:select>
 
     </div>
+
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-6">
         @forelse ($projects as $project)
