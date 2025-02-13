@@ -40,8 +40,9 @@
             class="mt-2 grid gap-4 
         {{ $project->categories->count() === 1 || $project->tags->count() === 1 || $project->technologies->count() === 1 ? 'grid-cols-2' : 'grid-cols-1' }}">
 
+            <!--Categories -->
             @if ($project->categories->isNotEmpty())
-                <div class="flex flex-wrap gap-2 items-start">
+                <div class="flex flex-wrap gap-2 items-start justify-start">
                     @foreach ($project->categories as $category)
                         <flux:badge size="sm" class="bg-blue-500 text-white px-2 py-1 rounded">
                             {{ $category->name }}
@@ -50,8 +51,10 @@
                 </div>
             @endif
 
+
+            <!-- Tags -->
             @if ($project->tags->isNotEmpty())
-                <div class="flex flex-wrap gap-2 items-start">
+                <div class="flex flex-wrap gap-2 items-start justify-end">
                     @foreach ($project->tags as $tag)
                         <flux:badge size="sm" class="bg-green-500 text-white px-2 py-1 rounded">
                             {{ $tag->name }}
@@ -60,8 +63,9 @@
                 </div>
             @endif
 
+            <!-- Technologies -->
             @if ($project->technologies->isNotEmpty())
-                <div class="flex flex-wrap gap-2 items-start">
+                <div class="flex flex-wrap gap-2 items-start justify-end }}">
                     @foreach ($project->technologies as $tech)
                         <flux:badge size="sm" class="bg-purple-500 text-white px-2 py-1 rounded">
                             {{ $tech->name }}
@@ -73,25 +77,22 @@
         </div>
 
 
+        <div class="flex justify-between items-center mt-4">
+            <flux:subheading class="flex items-center gap-1 text-sm">
+                <flux:icon name="eye" class="w-4 h-4" />
+                <span class="text-xs">{{ $project->views }}</span>
+            </flux:subheading>
 
-        @can('view-stats', $project)
-            <div class="flex justify-between items-center mt-4">
-                <flux:subheading class="flex items-center gap-1">
-                    <flux:icon name="eye" />
-                    {{ $project->views }}
-                </flux:subheading>
-
-                <flux:subheading>
+            <flux:subheading>
+                <div class="relative">
+                    <flux:icon name="chat-bubble-left" />
                     <a wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
-                        <flux:icon name="chat-bubble-left" @class([
-                            'text-gray-500' => $project->comments()->count() > 0,
-                            'text-gray-100',
-                        ]) />
+                        <span class="absolute -top-0.5 right-2 items-center justify-center"><span
+                                class="text-[8px]">{{ $project->comments()->count() }}</span> </span>
                     </a>
-                </flux:subheading>
-            </div>
-        @endcan
-
+                </div>
+            </flux:subheading>
+        </div>
 
         <div class="flex justify-between items-center mt-4">
             @if ($showAuthor)

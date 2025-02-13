@@ -62,7 +62,13 @@
         @forelse ($projects as $project)
             <x-project-card :project="$project" :show-author="true" />
         @empty
-            <p class="col-span-full text-center text-gray-500 dark:text-gray-400">No projects found.</p>
+            <div class="col-span-full text-center text-gray-500 dark:text-gray-400">
+                <p class='text-xl'>No projects found for applied filters. Do you want to create one?</p>
+
+                <flux:button href="{{ route('projects.create') }}" variant="primary" class="mt-4" target="_blank">
+                    Create a Project
+                </flux:button>
+            </div>
         @endforelse
     </div>
 
