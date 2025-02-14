@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard'); // Auth: Dashboard
     Route::get('account-settings', AccountSettings::class)->name('account-settings'); // Auth: Account settings
     Route::get('bookmarks', \App\Livewire\ListBookmark::class)->name('bookmarks'); // Auth: Bookmarks
+    Route::get('notifications', \App\Livewire\ListNotifications::class)->name('notifications'); // Auth: Notifications
 
 });
 // Authentication-related overrides for production
