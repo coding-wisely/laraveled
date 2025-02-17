@@ -22,13 +22,17 @@
                     Notifications
                 </h3>
 
-                @if (auth()->check() && auth()->user()->unreadNotifications()->count() > 0)
-                    <div class="mt-2">
+                <div class="mt-2 flex space-x-4 justify-between">
+                    @if (auth()->check() && auth()->user()->unreadNotifications()->count() > 0)
                         <flux:link wire:click="markAllAsRead" class="text-sm border-none shadow-none cursor-pointer">
                             Mark All As Read
                         </flux:link>
-                    </div>
-                @endif
+                    @endif
+                    <flux:link href="{{ route('notifications') }}"
+                        class="text-sm border-none shadow-none cursor-pointer">
+                        Show All
+                    </flux:link>
+                </div>
 
                 <div class="absolute top-2 right-2">
                     <flux:button x-on:click="open = false" class="focus:outline-none border-none shadow-none">

@@ -116,11 +116,16 @@ class AccountSettings extends Component
             'companyAddress' => 'nullable|string|max:255',
         ]);
 
+        $website = $this->companyWebsite;
+        if ($website && ! (str_starts_with($website, 'http://') || str_starts_with($website, 'https://'))) {
+            $website = 'https://'.$website;
+        }
+
         $company = Auth::user()->companies()->create(
             [
                 'title' => $this->companyTitle,
                 'description' => $this->companyDescription,
-                'website' => $this->companyWebsite,
+                'website' => $website,
                 'phone' => $this->companyPhone,
                 'address' => $this->companyAddress,
                 'user_id' => Auth::id(),
@@ -164,10 +169,15 @@ class AccountSettings extends Component
     {
         $company = Auth::user()->companies()->findOrFail($this->editingCompanyId);
 
+        $website = $this->companyWebsite;
+        if ($website && ! (str_starts_with($website, 'http://') || str_starts_with($website, 'https://'))) {
+            $website = 'https://'.$website;
+        }
+
         $company->update([
             'title' => $this->companyTitle,
             'description' => $this->companyDescription,
-            'website' => $this->companyWebsite,
+            'website' => $website,
             'phone' => $this->companyPhone,
             'address' => $this->companyAddress,
         ]);
@@ -196,6 +206,12 @@ class AccountSettings extends Component
 
         Flux::modals()->close();
 
+    }
+
+    public function cancel()
+    {
+
+        Flux::modals()->close();
     }
 
     private function resetCompanyFields()

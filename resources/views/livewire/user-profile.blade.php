@@ -75,12 +75,14 @@
                         <h4 class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $company->name }}</h4>
                         <p class="text-gray-600 dark:text-gray-300">
                             {{ $company->description ?? 'No description available' }}</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">📍
-                            {{ $company->location ?? 'No location specified' }}</p>
+                            <p class="text-gray-600 dark:text-gray-300">
+                            {{ $company->phone ?? ''}}</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            {{ $company->address ?? '' }}</p>
                         @if ($company->website)
                             <a href="{{ $company->website }}" target="_blank"
                                 class="text-blue-500 hover:underline mt-2 block">
-                                🌍 Visit Website
+                                Visit Website
                             </a>
                         @endif
                     </flux:card>

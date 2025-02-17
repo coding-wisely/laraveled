@@ -56,12 +56,6 @@
                         <flux:icon.home-modern variant="solid" class="text-orange-600 dark:text-amber-300" />
                     </flux:tooltip>
                 </flux:navbar.item>
-                <flux:navbar.item class="hidden" badge="{{ auth()->user()->projects->count() }}"
-                    href="{{ route('projects.my') }}">
-                    <flux:tooltip content="My Projects">
-                        <flux:icon.puzzle-piece variant="solid" class="text-blue-500 dark:text-blue-300" />
-                    </flux:tooltip>
-                </flux:navbar.item>
                 <flux:navbar.item href="{{ route('projects.create') }}">
                     <flux:tooltip content="Add New Project">
                         <flux:icon.folder-plus variant="solid" class="text-green-500 dark:text-green-300" />
@@ -71,7 +65,6 @@
                     <flux:tooltip content="Bookmarks">
                         <flux:icon.bookmark variant="solid" class="text-red-500 dark:text-red-300" />
                     </flux:tooltip>
-
                 </flux:navbar.item>
             </flux:navbar>
 
@@ -85,10 +78,10 @@
                     <flux:navmenu.item class="max-lg:hidden" icon="folder-open" href="{{ route('projects.my') }}">My
                         Projects</flux:navmenu.item>
                     <livewire:logout-button />
-                    <flux:navmenu.item href="#" icon="trash" variant="danger">Delete</flux:navmenu.item>
                 </flux:navmenu>
 
             </flux:dropdown>
+            
             <flux:navbar class="mr-0 lg:mr-4">
                 <flux:button x-data x-on:click="$flux.dark = ! $flux.dark" icon="moon" variant="subtle"
                     aria-label="Toggle dark mode" />
@@ -116,7 +109,7 @@
             </flux:navlist.item>
             <flux:navlist.item icon="globe" href="{{ route('projects.index') }}">Discover Projects
             </flux:navlist.item>
-            <flux:navlist.item icon="crown" href="#">Top 6</flux:navlist.item>
+            <flux:navlist.item icon="crown" href="{{ route('projects.top') }}">Top 6</flux:navlist.item>
         </flux:navlist>
         <flux:navlist variant="outline">
             <flux:navlist.item icon="bookmark" href="{{ route('bookmarks') }}">Bookmarks</flux:navlist.item>
@@ -126,8 +119,10 @@
         <flux:spacer />
         @auth()
             <flux:navlist variant="outline">
-                <flux:navlist.item icon="puzzle-piece" href="{{ route('projects.my') }}">My projects</flux:navlist.item>
-                <flux:navlist.item icon="information-circle" href="#">Help</flux:navlist.item>
+                <flux:navlist.item  icon="cog-6-tooth" href="{{ route('account-settings') }}">
+                    Profile
+                </flux:navlist.item>
+                <livewire:logout-button />
             </flux:navlist>
         @endauth
     </flux:sidebar>

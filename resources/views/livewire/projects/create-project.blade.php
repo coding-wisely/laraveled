@@ -26,9 +26,6 @@
 
 
         <!-- Display Validation Errors -->
-        @error('form.files')
-            <p class="mt-3 text-sm font-medium text-red-500 dark:text-red-400">{{ $message }}</p>
-        @enderror
         @foreach ($errors->get('form.files.*') as $fileErrors)
             @foreach ($fileErrors as $error)
                 <p class="text-red-500 text-sm">{{ $error }}</p>

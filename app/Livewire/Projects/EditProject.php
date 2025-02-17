@@ -107,12 +107,22 @@ class EditProject extends Component
             return;
         }
 
+        $website = $this->form['website_url'];
+        if ($website && ! (str_starts_with($website, 'http://') || str_starts_with($website, 'https://'))) {
+            $website = 'https://'.$website;
+        }
+
+        $github = $this->form['github_url'];
+        if ($github && ! (str_starts_with($github, 'http://') || str_starts_with($github, 'https://'))) {
+            $github = 'https://'.$github;
+        }
+
         $this->project->update([
             'title' => $this->form['title'],
             'short_description' => $this->form['short_description'],
             'description' => $this->form['description'],
-            'website_url' => $this->form['website_url'],
-            'github_url' => $this->form['github_url'],
+            'website_url' => $website,
+            'github_url' => $github,
         ]);
 
         $this->project->technologies()->sync($this->form['technologies']);
