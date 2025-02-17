@@ -14,18 +14,14 @@ class ListNotifications extends Component
 
     public function mount()
     {
-        // For an admin view that shows all notifications:
         $this->notifications = Auth::user()->notifications()->get();
-        // If you want to show notifications only for the logged in user,
-        // you could use:
-        // $this->notifications = auth()->user()->notifications;
+
     }
 
     public function markAllAsRead()
     {
         if (auth()->check()) {
             auth()->user()->unreadNotifications->markAsRead();
-            // Optionally, refresh the notifications list:
             $this->notifications = auth()->user()->notifications;
         }
     }
@@ -37,7 +33,6 @@ class ListNotifications extends Component
             if ($notification && ! $notification->read_at) {
                 $notification->markAsRead();
             }
-            // Optionally, refresh the notifications list:
             $this->notifications = auth()->user()->notifications;
 
             Flux::toast(
@@ -55,7 +50,6 @@ class ListNotifications extends Component
             if ($notification) {
                 $notification->delete();
             }
-            // Optionally, refresh the notifications list:
             $this->notifications = auth()->user()->notifications;
 
             Flux::toast(
