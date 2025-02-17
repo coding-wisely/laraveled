@@ -109,7 +109,7 @@
             <!-- Grid layout for company cards -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 @foreach ($companies as $company)
-                    <flux:card class="bg-white p-6 rounded-lg border flex flex-col justify-between">
+                    <flux:card class="rounded-lg border flex flex-col justify-between">
 
                         @if ($editingCompanyId === $company->id)
                             <!-- Editable Mode -->
@@ -140,9 +140,18 @@
                                 </div>
 
                                 <flux:input wire:model.defer="companyTitle" label="Company Title" required />
-                                <flux:textarea wire:model.defer="companyDescription" label="Description"
-                                    rows="3" />
-                                <flux:input wire:model.defer="companyWebsite" label="Website" type="url" />
+                                <flux:textarea wire:model.defer="companyDescription" label="Description" rows="3" />
+                                    <flux:field>
+                                        <flux:label badge="Required">Website</flux:label>
+
+                                        <flux:input.group>
+                                            <flux:input.group.prefix>https://</flux:input.group.prefix>
+
+                                            <flux:input wire:model.defer="companyWebsite" placeholder="The URL of your project website." />
+                                        </flux:input.group>
+
+                                        <flux:error name="companyWebsite" />
+                                    </flux:field>
                                 <flux:input wire:model.defer="companyPhone" label="Phone" type="text" />
                                 <flux:input wire:model.defer="companyAddress" label="Address" type="text" />
                             </div>
@@ -210,7 +219,19 @@
                     <flux:input :label="__('Company Title')" wire:model.defer="companyTitle" required />
                     <flux:textarea :label="__('Company Description')" wire:model.defer="companyDescription"
                         rows="3" />
-                    <flux:input :label="__('Website')" wire:model.defer="companyWebsite" type="url" />
+                   
+                    <flux:field>
+                        <flux:label badge="Required">Website</flux:label>
+
+                        <flux:input.group>
+                            <flux:input.group.prefix>https://</flux:input.group.prefix>
+
+                            <flux:input wire:model.defer="companyWebsite" placeholder="The URL of your project website." />
+                        </flux:input.group>
+
+                        <flux:error name="companyWebsite" />
+                    </flux:field>
+
                     <flux:input :label="__('Phone')" wire:model.defer="companyPhone" type="text" />
                     <flux:input :label="__('Address')" wire:model.defer="companyAddress" type="text" />
 

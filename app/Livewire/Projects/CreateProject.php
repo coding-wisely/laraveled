@@ -28,14 +28,24 @@ class CreateProject extends Component
     {
         $this->validate();
 
+        $website = $this->form->website_url;
+        if ($website && ! (str_starts_with($website, 'http://') || str_starts_with($website, 'https://'))) {
+            $website = 'https://'.$website;
+        }
+
+        $github = $this->form->github_url;
+        if ($github && ! (str_starts_with($github, 'http://') || str_starts_with($github, 'https://'))) {
+            $github = 'https://'.$github;
+        }
+
         $project = Project::create([
             'user_id' => auth()->id(),
             'uuid' => Str::uuid(),
             'title' => $this->form->title,
             'description' => $this->form->description,
             'short_description' => $this->form->short_description ?? '',
-            'website_url' => $this->form->website_url ?? '',
-            'github_url' => $this->form->github_url ?? '',
+            'website_url' => $website ?? '',
+            'github_url' => $github ?? '',
         ]);
 
         // Attach relationships
