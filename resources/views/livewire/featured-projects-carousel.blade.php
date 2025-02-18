@@ -67,7 +67,7 @@
 
     <!-- Previous Button -->
     <button @click="prevSlide()"
-        class="absolute -left-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full border bg-white hover:bg-gray-200 flex items-center justify-center">
+        class="absolute -left-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full border flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -77,7 +77,7 @@
 
     <!-- Next Button -->
     <button @click="nextSlide()"
-        class="absolute -right-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full border bg-white hover:bg-gray-200 flex items-center justify-center">
+        class="absolute -right-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full border flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
