@@ -64,15 +64,15 @@ class Top extends Component
     {
         switch ($type) {
             case 'category':
-                return Category::where('name', 'ilike', '%'.$this->searchQuery['category'].'%')
+                return Category::where('name', 'like', '%'.$this->searchQuery['category'].'%')
                     ->limit($this->resultLimit['category'])
                     ->get();
             case 'technology':
-                return Technology::where('name', 'ilike', '%'.$this->searchQuery['technology'].'%')
+                return Technology::where('name', 'like', '%'.$this->searchQuery['technology'].'%')
                     ->limit($this->resultLimit['technology'])
                     ->get();
             case 'user':
-                return User::where('name', 'ilike', '%'.$this->searchQuery['user'].'%')
+                return User::where('name', 'like', '%'.$this->searchQuery['user'].'%')
                     ->limit($this->resultLimit['user'])
                     ->get();
             default:
@@ -92,8 +92,8 @@ class Top extends Component
                 'projects.id'
             )
             ->select('projects.*', DB::raw('
-            COALESCE(avg_rating, 0) * 0.7 + 
-            COALESCE(total_ratings, 0) * 0.2 + 
+            COALESCE(avg_rating, 0) * 0.7 +
+            COALESCE(total_ratings, 0) * 0.2 +
             views * 0.1 AS score
         '))
             ->orderByDesc('score')

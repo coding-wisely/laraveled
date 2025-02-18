@@ -65,15 +65,15 @@ class Index extends Component
     {
         switch ($type) {
             case 'category':
-                return Category::where('name', 'ilike', '%'.$this->searchQuery['category'].'%')
+                return Category::where('name', 'like', '%'.$this->searchQuery['category'].'%')
                     ->limit($this->resultLimit['category'])
                     ->get();
             case 'technology':
-                return Technology::where('name', 'ilike', '%'.$this->searchQuery['technology'].'%')
+                return Technology::where('name', 'like', '%'.$this->searchQuery['technology'].'%')
                     ->limit($this->resultLimit['technology'])
                     ->get();
             case 'user':
-                return User::where('name', 'ilike', '%'.$this->searchQuery['user'].'%')
+                return User::where('name', 'like', '%'.$this->searchQuery['user'].'%')
                     ->limit($this->resultLimit['user'])
                     ->get();
             default:
