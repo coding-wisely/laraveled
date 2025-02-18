@@ -29,6 +29,10 @@ class Index extends Component
         'user' => '',
     ];
 
+    protected $listeners = [
+        'applyFilter' => 'applyFilter',
+    ];
+
     public $resultLimit = [
         'category' => 4,
         'technology' => 4,
@@ -56,6 +60,11 @@ class Index extends Component
                 $this->resultLimit[$type] += 5;
             }
         }
+    }
+
+    public function applyFilter($filter, $value)
+    {
+        $this->$filter = $value;
     }
 
     /**

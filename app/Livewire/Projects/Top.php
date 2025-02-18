@@ -41,6 +41,11 @@ class Top extends Component
 
     protected $queryString = ['category', 'technology', 'user'];
 
+    public function applyFilter($filter, $value)
+    {
+        $this->$filter = $value;
+    }
+
     /**
      * Custom function to update search query and load more results dynamically
      */
