@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -60,6 +61,8 @@ class AccountSettings extends Component
     public $showEditModal = false;
 
     public $editingCompanyId = null;
+
+    public $deleteAccountPassword;
 
     public function mount()
     {
@@ -229,6 +232,34 @@ class AccountSettings extends Component
             text: 'Company has been deleted.',
             variant: 'success',
         );
+    }
+
+    public function confirmDeleteAccount()
+    {
+        $this->validate([
+            'deleteAccountPassword' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+
+        if (! Hash::check($this->deleteAccountPassword, $user->password)) {
+            $this->addError('deleteAccountPassword', __('The provided password does not match our records.'));
+
+            return;
+        }
+
+        // Delete the user account and log out
+        $user->delete();
+        Auth::logout();
+
+        return redirect('/');
+    }
+
+    // NEW: Cancel deletion (reset field and close modal)
+    public function cancelDeleteAccount()
+    {
+        $this->reset('deleteAccountPassword');
+        Flux::modals()->close('delete-account-modal');
     }
 
     public function render()

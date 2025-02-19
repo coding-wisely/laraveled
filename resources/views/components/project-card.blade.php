@@ -2,15 +2,24 @@
     /** @var \Illuminate\Database\Eloquent\Model */
     'project',
     'showAuthor' => false,
+    'enableFilters' => false,
 ])
 <flux:card>
     <div class="flex flex-col h-full">
         <div class="flex flex-col items-start justify-start gap-1 space-y-1">
-            <flux:heading>
-                <flux:link wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
-                    {{ $project->title }}
-                </flux:link>
-            </flux:heading>
+        <flux:heading class="flex justify-between items-center w-full">
+            <flux:link wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
+                {{ $project->title }}
+            </flux:link>
+
+            @if ($project->bookmarks()->where('user_id', Auth::id())->exists())
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 5v14l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z" />
+                </svg>
+            @endif
+        </flux:heading>
+
             <x-average-rating :average-rating="$project->ratings()->avg('rating') ?? 0" :total-ratings="$project->ratings()->count()" :display-comment="false" />
             <flux:separator variant="subtle" class="mt-4" />
         </div>
@@ -40,17 +49,25 @@
             class="mt-2 grid gap-4 
         {{ $project->categories->count() === 1 || $project->tags->count() === 1 || $project->technologies->count() === 1 ? 'grid-cols-2' : 'grid-cols-1' }}">
 
-            <!--Categories -->
+            <!-- Categories -->
             @if ($project->categories->isNotEmpty())
                 <div class="flex flex-wrap gap-2 items-start justify-start">
                     @foreach ($project->categories as $category)
-                        <flux:badge size="sm" class="bg-blue-500 text-white px-2 py-1 rounded">
-                            {{ $category->name }}
-                        </flux:badge>
+                        @if ($enableFilters)
+                            <flux:badge 
+                                size="sm" 
+                                class=" cursor-pointer"
+                                wire:click="applyFilter('category', '{{ $category->name }}')">
+                                {{ $category->name }}
+                            </flux:badge>
+                        @else
+                            <flux:badge size="sm">
+                                {{ $category->name }}
+                            </flux:badge>
+                        @endif
                     @endforeach
                 </div>
             @endif
-
 
             <!-- Tags -->
             @if ($project->tags->isNotEmpty())
@@ -64,16 +81,26 @@
             @endif
 
             <!-- Technologies -->
-            @if ($project->technologies->isNotEmpty())
-                <div class="flex flex-wrap gap-2 items-start justify-end }}">
-                    @foreach ($project->technologies as $tech)
-                        <flux:badge size="sm" class="bg-purple-500 text-white px-2 py-1 rounded">
-                            {{ $tech->name }}
-                        </flux:badge>
-                    @endforeach
-                </div>
-            @endif
-
+                @if ($project->technologies->isNotEmpty())
+                    <div class="flex flex-wrap gap-2 items-start justify-end">
+                        @foreach ($project->technologies as $technology)
+                            @if ($enableFilters)
+                                <flux:badge 
+                                    size="sm" 
+                                    class="cursor-pointer"
+                                    wire:click="applyFilter('technology', '{{ $technology->name }}')">
+                                    {{ $technology->name }}
+                                </flux:badge>
+                            @else
+                                <flux:badge 
+                                    size="sm" 
+                                    class="rounded">
+                                    {{ $technology->name }}
+                                </flux:badge>
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
         </div>
 
 

@@ -55,7 +55,7 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-6">
         @forelse ($projects as $project)
-            <x-project-card :project="$project" :show-author="true" />
+            <x-project-card :project="$project" :show-author="true" :enable-filters="true"/>
         @empty
             <div class="col-span-full text-center text-gray-500 dark:text-gray-400">
                 <p class='text-xl'>No projects found for applied filters. Do you want to create one?</p>

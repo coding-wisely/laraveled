@@ -45,6 +45,7 @@ class CreateProjectForm extends Form
     {
         return [
             'files' => 'Oops! It looks like we’re missing something. Please share some screenshots of your beautiful app so we can proceed—your work deserves to shine! 🌟',
+            'files.max' => 'You can only upload a maximum of 3 files.',
         ];
     }
 }

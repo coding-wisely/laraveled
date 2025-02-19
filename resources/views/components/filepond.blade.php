@@ -21,7 +21,7 @@
            data-allow-reorder="true"
            accept="image/png, image/jpeg, image/gif"
            data-max-file-size="3MB"
-           data-max-files="3">
+           >
     <flux:subheading>
         Max files: 3, Max file size: 3MB
     </flux:subheading>

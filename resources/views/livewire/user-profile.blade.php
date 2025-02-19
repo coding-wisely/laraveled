@@ -8,21 +8,25 @@
             </flux:card>
 
             <div class="text-center md:text-left">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                <h2 class="text-2xl font-bold">
                     {{ $user->name }}
                 </h2>
 
+                <h2 class="text-xs">
+                    {{ $user->bio }}
+                </h2>
+
                 @if (!$companies->isNotEmpty())
-                    <p class="text-gray-600 dark:text-gray-300">
+                    <p class="">
                         No Company
                     </p>
                 @endif
 
-                <p class="text-yellow-500 font-semibold mt-1">
+                <p class="text-yellow-500 mt-1">
                     ⭐ {{ number_format($averageRating, 1) }}/5
                 </p>
 
-                <div class="mt-3 text-gray-700 dark:text-gray-300 text-sm space-y-1">
+                <div class="mt-3 text-sm space-y-1">
                     @if ($user->email)
                         <p>📧 <span class="font-medium">{{ $user->email }}</span></p>
                     @endif
@@ -80,10 +84,10 @@
                         <p class="text-sm text-gray-500 dark:text-gray-400">
                             {{ $company->address ?? '' }}</p>
                         @if ($company->website)
-                            <a href="{{ $company->website }}" target="_blank"
-                                class="text-blue-500 hover:underline mt-2 block">
+                            <flux:link href="{{ $company->website }}" target="_blank"
+                                class="mt-2 block">
                                 Visit Website
-                            </a>
+                            </flux:link>
                         @endif
                     </flux:card>
                 @endforeach
