@@ -38,9 +38,9 @@ Route::middleware(['auth'])->group(function () {
 
 });
 // Authentication-related overrides for production
-if (app()->isProduction()) {
-    Route::get('register', fn () => view('landing'))->name('register');
-    Route::get('login', fn () => view('landing'))->name('login');
-}
+//if (app()->isProduction()) {
+//    Route::get('register', fn () => view('landing'))->name('register');
+//    Route::get('login', fn () => view('landing'))->name('login');
+//}
 
 require __DIR__.'/auth.php';

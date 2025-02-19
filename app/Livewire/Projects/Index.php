@@ -6,8 +6,10 @@ use App\Models\Category;
 use App\Models\Project;
 use App\Models\Technology;
 use App\Models\User;
+use App\Services\SearchService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -34,7 +36,12 @@ class Index extends Component
         'technology' => 4,
         'user' => 4,
     ];
+    protected SearchService $searchService;
 
+    public function __construct()
+    {
+        $this->searchService = app(SearchService::class);
+    }
     public function loadMore()
     {
         $this->perPage += 10;
@@ -67,50 +74,13 @@ class Index extends Component
     /**
      * Fetch filtered results based on search query
      */
-    public function getFilteredResults($type)
+    public function getFilteredResults(string $type)
     {
-        if ($type === 'category') {
-            $results = Category::whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($this->searchQuery['category']).'%'])
-                ->limit($this->resultLimit['category'])
-                ->get();
+        $query = $this->searchQuery[$type] ?? '';
+        $limit = $this->resultLimit[$type] ?? 10;
+        $selectedItem = $this->{$type} ?? null;
 
-            // If a category filter is applied and it's not in the results, appending it so it's displayed in the search bar when clicking the badges from the project card.
-            if ($this->category && ! $results->contains(function ($item) {
-                return strtolower($item->name) === strtolower($this->category);
-            })) {
-                $selected = Category::whereRaw('LOWER(name) = ?', [strtolower($this->category)])->first();
-                if ($selected) {
-                    $results->push($selected);
-                }
-            }
-
-            return $results;
-        }
-
-        if ($type === 'technology') {
-            $results = Technology::whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($this->searchQuery['technology']).'%'])
-                ->limit($this->resultLimit['technology'])
-                ->get();
-
-            if ($this->technology && ! $results->contains(function ($item) {
-                return strtolower($item->name) === strtolower($this->technology);
-            })) {
-                $selected = Technology::whereRaw('LOWER(name) = ?', [strtolower($this->technology)])->first();
-                if ($selected) {
-                    $results->push($selected);
-                }
-            }
-
-            return $results;
-        }
-
-        if ($type === 'user') {
-            return User::whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($this->searchQuery['user']).'%'])
-                ->limit($this->resultLimit['user'])
-                ->get();
-        }
-
-        return collect();
+        return $this->searchService->search($type, $query, $limit, $selectedItem);
     }
 
     public function render(): Factory|Application|View

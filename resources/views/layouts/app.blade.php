@@ -24,9 +24,6 @@
 </head>
 
 <body class="animated-gradient min-h-screen bg-white dark:bg-zinc-800">
-    @if (app()->isProduction())
-        <livewire:join-waiting-list />
-    @endif
     <flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
         <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
         <x-application-logo class="hidden lg:flex" />
@@ -81,7 +78,7 @@
                 </flux:navmenu>
 
             </flux:dropdown>
-            
+
             <flux:navbar class="mr-0 lg:mr-4">
                 <flux:button x-data x-on:click="$flux.dark = ! $flux.dark" icon="moon" variant="subtle"
                     aria-label="Toggle dark mode" />
