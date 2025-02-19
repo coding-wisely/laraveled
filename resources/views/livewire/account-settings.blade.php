@@ -28,8 +28,8 @@
                             <img src="{{ $currentAvatar }}" alt="Current Avatar"
                                  class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
                         @else
-                            <img src="{{ asset('images/default-user.png') }}" alt="Default Avatar"
-                                 class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
+                            <flux:icon name="user-circle" class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow" />
+
                         @endif
                         <div class="absolute bottom-0 right-0 bg-orange-600 text-white text-xs p-1 rounded-full">
                             <span>{{ __('Edit') }}</span>
@@ -173,7 +173,7 @@
             </div>
 
             <!-- Add Company Modal -->
-            <flux:modal name="add-company-modal" class="w-full max-w-3xl space-y-6"> 
+            <flux:modal name="add-company-modal" class="w-full max-w-3xl space-y-6">
                 <flux:heading size="lg">{{ __('Add Company') }}</flux:heading>
                 <form wire:submit.prevent="saveCompany" class="space-y-4">
                     <label for="companyLogo" class="cursor-pointer justify-center items-center relative">
@@ -189,10 +189,10 @@
                         @endif
                     </label>
                     <input id="companyLogo" type="file" wire:model="companyLogo" accept="image/*" class="hidden">
-                    
+
                     <flux:input :label="__('Company Title')" wire:model.defer="companyTitle" required />
                     <flux:textarea :label="__('Company Description')" wire:model.defer="companyDescription" rows="3" />
-                    
+
                     <flux:field>
                         <flux:label badge="Required">Website</flux:label>
                         <flux:input.group>
@@ -211,7 +211,7 @@
                     </div>
                 </form>
             </flux:modal>
-            
+
         </flux:fieldset>
 
         <!-- Delete Account Fieldset -->
