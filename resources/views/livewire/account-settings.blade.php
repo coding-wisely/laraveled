@@ -214,7 +214,7 @@
             <h3 class="text-xl font-bold text-red-600 mb-4">
                 {{ __('Delete Account') }}
             </h3>
-            <p class="text-sm text-gray-600 mb-6">
+            <p class="text-sm mb-6">
                 {{ __("Once you delete your account, all of its resources and data will be permanently deleted. Please ensure you have downloaded any important data before proceeding.") }}
             </p>
             <flux:modal.trigger name="delete-account-modal">
