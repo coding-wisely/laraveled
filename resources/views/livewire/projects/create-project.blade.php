@@ -88,8 +88,7 @@
 
         <flux:card class="grid md:grid-cols-3 gap-6">
             <!-- Technologies -->
-            <flux:card>
-                <flux:select badge="Required" wire:model="form.technologies"
+                <flux:select badge="Required" wire:model="form.technologies" searchable
                     description="The technologies used in your project." label="Technologies" variant="listbox"
                     :multiple="true" :filter="false" placeholder="Choose technologies...">
                     @foreach ($allTechnologies as $technology)
@@ -98,23 +97,23 @@
                         </flux:option>
                     @endforeach
                 </flux:select>
-            </flux:card>
-            <flux:card>
+
                 <!-- Categories -->
-                <flux:select badge="Required" wire:model="form.categories"
+                <flux:select badge="Required" wire:model="form.categories" searchable
                     description="The categories your project belongs to." label="Categories" multiple variant="listbox"
                     placeholder="Choose categories...">
                     @foreach ($allCategories as $category)
                         <flux:option value="{{ $category->id }}">
-                            {{ $category->name }}
+                            <div class="flex flex-col">
+                                <span class="font-bold">{{ $category->name }}</span>
+                                <span class="text-gray-500 text-xs">{{ $category->description }}</span>
+                            </div>
                         </flux:option>
                     @endforeach
                 </flux:select>
-            </flux:card>
 
-            <flux:card>
                 <!-- Tags -->
-                <flux:select badge="Required" wire:model="form.tags"
+                <flux:select badge="Required" wire:model="form.tags" searchable
                     description="The tags your project belongs to." label="Tags" multiple variant="listbox"
                     placeholder="Choose tags...">
                     @foreach ($allTags as $tag)
@@ -123,10 +122,8 @@
                         </flux:option>
                     @endforeach
                 </flux:select>
-            </flux:card>
         </flux:card>
 
-        
         <!-- Submit Button -->
         <div class="flex justify-end">
             <flux:button type="submit" variant="primary">
