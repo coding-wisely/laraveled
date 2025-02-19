@@ -3,7 +3,6 @@
 namespace App\Livewire\Forms;
 
 use App\Rules\FileSizeWithName;
-use Illuminate\Validation\Rule;
 use Livewire\Form;
 
 class CreateProjectForm extends Form
@@ -32,14 +31,7 @@ class CreateProjectForm extends Form
     {
         return [
             'files' => 'required|array|max:3',
-            'files.*' => [new FileSizeWithName(1024 * 3024),
-                Rule::dimensions()
-                    ->minWidth(400)
-                    ->minHeight(400)
-                    ->maxWidth(2000)
-                    ->maxHeight(2000),
-            ],
-
+            'files.*' => [new FileSizeWithName(1024 * 3024)],
             'title' => 'required|string|max:255',
             'short_description' => 'required|string|max:255',
             'description' => 'required|string',
@@ -54,7 +46,6 @@ class CreateProjectForm extends Form
         return [
             'files' => 'Oops! It looks like we’re missing something. Please share some screenshots of your beautiful app so we can proceed—your work deserves to shine! 🌟',
             'files.max' => 'You can only upload a maximum of 3 files.',
-            'files.*.dimensions' => 'Each image must be at least 400x400 pixels and no larger than 2000x2000 pixels.',
         ];
     }
 }

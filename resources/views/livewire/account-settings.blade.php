@@ -173,24 +173,26 @@
             </div>
 
             <!-- Add Company Modal -->
-            <flux:modal name="add-company-modal" class="md:w-96 space-y-6">
+            <flux:modal name="add-company-modal" class="w-full max-w-3xl space-y-6"> 
                 <flux:heading size="lg">{{ __('Add Company') }}</flux:heading>
                 <form wire:submit.prevent="saveCompany" class="space-y-4">
                     <label for="companyLogo" class="cursor-pointer justify-center items-center relative">
                         @if ($companyLogo)
                             <img src="{{ $companyLogo->temporaryUrl() }}" alt="Company Logo Preview"
-                                 class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
+                                class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
                         @elseif ($companyPreviewLogoUrl)
                             <img src="{{ $companyPreviewLogoUrl }}" alt="Company Logo"
-                                 class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
+                                class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
                         @else
                             <img alt="Upload Image"
-                                 class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
+                                class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow">
                         @endif
                     </label>
                     <input id="companyLogo" type="file" wire:model="companyLogo" accept="image/*" class="hidden">
+                    
                     <flux:input :label="__('Company Title')" wire:model.defer="companyTitle" required />
                     <flux:textarea :label="__('Company Description')" wire:model.defer="companyDescription" rows="3" />
+                    
                     <flux:field>
                         <flux:label badge="Required">Website</flux:label>
                         <flux:input.group>
@@ -199,14 +201,17 @@
                         </flux:input.group>
                         <flux:error name="companyWebsite" />
                     </flux:field>
+
                     <flux:input :label="__('Phone')" wire:model.defer="companyPhone" type="text" />
                     <flux:input :label="__('Address')" wire:model.defer="companyAddress" type="text" />
+
                     <div class="flex justify-end gap-4 mt-4">
                         <flux:button wire:click="cancel">Cancel</flux:button>
                         <flux:button type="submit">{{ __('Add Company') }}</flux:button>
                     </div>
                 </form>
             </flux:modal>
+            
         </flux:fieldset>
 
         <!-- Delete Account Fieldset -->
