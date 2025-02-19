@@ -119,7 +119,7 @@
                     placeholder="Choose tags...">
                     @foreach ($allTags as $tag)
                         <flux:option value="{{ $tag->id }}">
-                            {{ $category->name }}
+                            {{ $tag->name }}
                         </flux:option>
                     @endforeach
                 </flux:select>
