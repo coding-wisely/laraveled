@@ -111,7 +111,22 @@
                     @endforeach
                 </flux:select>
             </flux:card>
+
+            <flux:card>
+                <!-- Tags -->
+                <flux:select badge="Required" wire:model="form.tags"
+                    description="The tags your project belongs to." label="Tags" multiple variant="listbox"
+                    placeholder="Choose tags...">
+                    @foreach ($allTags as $tag)
+                        <flux:option value="{{ $tag->id }}">
+                            {{ $category->name }}
+                        </flux:option>
+                    @endforeach
+                </flux:select>
+            </flux:card>
         </flux:card>
+
+        
         <!-- Submit Button -->
         <div class="flex justify-end">
             <flux:button type="submit" variant="primary">
