@@ -7,11 +7,19 @@
 <flux:card>
     <div class="flex flex-col h-full">
         <div class="flex flex-col items-start justify-start gap-1 space-y-1">
-            <flux:heading>
-                <flux:link wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
-                    {{ $project->title }}
-                </flux:link>
-            </flux:heading>
+        <flux:heading class="flex justify-between items-center w-full">
+            <flux:link wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
+                {{ $project->title }}
+            </flux:link>
+
+            @if ($project->bookmarks()->where('user_id', Auth::id())->exists())
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 5v14l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z" />
+                </svg>
+            @endif
+        </flux:heading>
+
             <x-average-rating :average-rating="$project->ratings()->avg('rating') ?? 0" :total-ratings="$project->ratings()->count()" :display-comment="false" />
             <flux:separator variant="subtle" class="mt-4" />
         </div>
