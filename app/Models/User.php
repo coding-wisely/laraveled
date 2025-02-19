@@ -92,6 +92,11 @@ class User extends Authenticatable implements FilamentUser, HasMedia
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+        $allowedEmails = [
+            'vladimir@codingwisely.com',
+            'namru.mail@gmail.com',
+        ];
+
+        return in_array($this->email, $allowedEmails, true);
     }
 }
