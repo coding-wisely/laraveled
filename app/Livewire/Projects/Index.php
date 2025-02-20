@@ -2,14 +2,11 @@
 
 namespace App\Livewire\Projects;
 
-use App\Models\Category;
+use App\Concerns\HandlesFilters;
 use App\Models\Project;
-use App\Models\Technology;
-use App\Models\User;
 use App\Services\SearchService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -17,11 +14,15 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class Index extends Component
 {
+    use HandlesFilters;
+
     public $category = '';
 
     public $technology = '';
 
     public $user = '';
+
+    public $tag = '';
 
     public $perPage = 10;
 
@@ -29,25 +30,29 @@ class Index extends Component
         'category' => '',
         'technology' => '',
         'user' => '',
+        'tag' => '',
     ];
 
     public $resultLimit = [
         'category' => 4,
         'technology' => 4,
         'user' => 4,
+        'tag' => 4,
     ];
+
     protected SearchService $searchService;
 
     public function __construct()
     {
         $this->searchService = app(SearchService::class);
     }
+
     public function loadMore()
     {
         $this->perPage += 10;
     }
 
-    protected $queryString = ['category', 'technology', 'user'];
+    protected $queryString = ['category', 'technology', 'user', 'tag'];
 
     /**
      * Custom function to update search query and load more results dynamically
@@ -63,12 +68,6 @@ class Index extends Component
                 $this->resultLimit[$type] += 5;
             }
         }
-    }
-
-    // this is for the project card badge filter
-    public function applyFilter($filter, $value)
-    {
-        $this->$filter = $value;
     }
 
     /**
@@ -95,6 +94,10 @@ class Index extends Component
             $query->whereHas('technologies', fn ($q) => $q->where('technologies.name', $this->technology));
         }
 
+        if ($this->tag) {
+            $query->whereHas('tags', fn ($q) => $q->where('tags.name', $this->tag));
+        }
+
         if ($this->user) {
             $query->whereHas('user', fn ($q) => $q->where('users.name', $this->user));
         }
@@ -106,6 +109,7 @@ class Index extends Component
             'categories' => $this->getFilteredResults('category'),
             'technologies' => $this->getFilteredResults('technology'),
             'users' => $this->getFilteredResults('user'),
+            'tags' => $this->getFilteredResults('tag'),
         ]);
     }
 }

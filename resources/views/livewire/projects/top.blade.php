@@ -5,8 +5,9 @@
             community!</flux:subheading>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 my-6">
 
+        <!-- Category Dropdown -->
         <flux:select wire:model.defer="category" wire:change="$refresh" searchable variant="listbox" clearable
             class="max-h-60 overflow-y-auto">
 
@@ -22,6 +23,7 @@
             @endforeach
         </flux:select>
 
+        <!-- Technology Dropdown -->
         <flux:select wire:model.defer="technology" wire:change="$refresh" searchable variant="listbox" clearable
             class="max-h-60 overflow-y-auto">
 
@@ -37,6 +39,23 @@
             @endforeach
         </flux:select>
 
+        <!-- Tag Dropdown -->
+        <flux:select wire:model.defer="tag" wire:change="$refresh" searchable variant="listbox" clearable
+            class="max-h-60 overflow-y-auto">
+
+            <x-slot name="search">
+                <flux:select.search wire:model.lazy="searchQuery.tag"
+                    wire:keyup.debounce.100ms="loadMoreResults('tag', $event.target.value)" class="px-4"
+                    placeholder="Search tags..." />
+            </x-slot>
+
+            <flux:option value="">All Tags</flux:option>
+            @foreach ($tags as $tag)
+                <flux:option value="{{ $tag->name }}">{{ $tag->name }}</flux:option>
+            @endforeach
+        </flux:select>
+
+        <!-- User Dropdown -->
         <flux:select wire:model.defer="user" wire:change="$refresh" searchable variant="listbox" clearable
             class="max-h-60 overflow-y-auto">
 
@@ -51,6 +70,7 @@
                 <flux:option value="{{ $user->name }}">{{ $user->name }}</flux:option>
             @endforeach
         </flux:select>
+
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-6">

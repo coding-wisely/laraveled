@@ -1,15 +1,17 @@
 <?php
+
 namespace App\Livewire\Projects;
 
+use App\Concerns\HandlesFilters;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
-
-
 
 #[Layout('layouts.app')]
 class MyProjects extends Component
 {
+    use HandlesFilters;
+
     public function render()
     {
         $projects = Auth::user()
