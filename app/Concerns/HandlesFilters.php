@@ -8,7 +8,7 @@ trait HandlesFilters
     {
         $referer = request()->header('Referer');
 
-        $isProjectsIndex = str_contains($referer, '/projects');
+        $isProjectsIndex = request()->routeIs('projects.index');
         $isProjectsTop = str_contains($referer, '/top');
 
         if ($isProjectsIndex || $isProjectsTop) {

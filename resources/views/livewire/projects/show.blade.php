@@ -112,7 +112,8 @@
                 <flux:heading level="2" class="mb-2">Categories</flux:heading>
                 <div class="flex flex-wrap gap-2">
                     @foreach ($project->categories as $category)
-                        <flux:badge>{{ $category->name }}</flux:badge>
+                        <flux:badge class="cursor-pointer" wire:click="applyOrRedirect('category', '{{ $category->name }}')">
+                        {{ $category->name }}</flux:badge>
                     @endforeach
                 </div>
             </flux:card>
@@ -122,7 +123,7 @@
                 <flux:heading level="2" class="mb-2">Technologies</flux:heading>
                 <div class="flex flex-wrap gap-2">
                     @foreach ($project->technologies as $technology)
-                        <flux:badge>{{ $technology->name }}</flux:badge>
+                        <flux:badge class="cursor-pointer"  wire:click="applyOrRedirect('technology', '{{ $technology->name }}')">{{ $technology->name }}</flux:badge>
                     @endforeach
                 </div>
             </flux:card>

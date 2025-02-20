@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Projects;
 
+use App\Concerns\HandlesFilters;
 use App\Models\Project;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -14,6 +15,8 @@ use Livewire\Component;
 #[Title('Project Details')]
 class Show extends Component
 {
+    use HandlesFilters;
+
     public $project;
 
     public function mount(Project $project)

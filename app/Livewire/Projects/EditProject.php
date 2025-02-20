@@ -93,7 +93,6 @@ class EditProject extends Component
             'form.technologies' => 'required|array',
             'form.categories' => 'required|array',
             'form.tags' => 'nullable|array',
-            'files' => 'required|array|max:3',
             'files.*' => [new FileSizeWithName(1024 * 3024)],
         ]);
 
