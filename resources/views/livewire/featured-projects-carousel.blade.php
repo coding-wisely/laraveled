@@ -8,10 +8,10 @@
             
             @foreach ($featuredProjects as $project)
                 <div class="w-full flex-shrink-0">
-                    <flux:card class="rounded-lg border overflow-hidden">
+                    <flux:card>
                         <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}"
                             class="w-full object-cover h-auto max-h-[500px]">
-                        <div class="p-6 space-y-4">
+                        <div class="p-2 space-y-4">
                             <div class="flex items-center justify-between">
                                 <flux:heading class="text-4xl font-semibold">{{ $project['title'] }}</flux:heading>
 
