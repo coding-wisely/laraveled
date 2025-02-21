@@ -141,7 +141,7 @@ class EditProject extends Component
             }
 
             if ($file instanceof TemporaryUploadedFile) {
-                $media = $this->project->addMediaFromDisk($file->getRealPath())
+                $media = $this->project->addMedia($file->getRealPath())
                     ->setName($file->getClientOriginalName())
                     ->toMediaCollection('projects');
                 $existingCount++;

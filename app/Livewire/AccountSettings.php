@@ -99,7 +99,7 @@ class AccountSettings extends Component
 
         if ($this->avatar instanceof TemporaryUploadedFile) {
             $user->clearMediaCollection('users');
-            $user->addMediaFromDisk($this->avatar->getRealPath())->toMediaCollection('users');
+            $user->addMedia($this->avatar->getRealPath())->toMediaCollection('users');
             $this->currentAvatar = $user->getFirstMediaUrl('users');
             $this->previewAvatarUrl = null;
         }
@@ -137,7 +137,7 @@ class AccountSettings extends Component
 
         if ($this->companyLogo instanceof TemporaryUploadedFile) {
             $company->clearMediaCollection('companies');
-            $company->addMediaFromDisk($this->companyLogo->getRealPath())->toMediaCollection('companies');
+            $company->addMedia($this->companyLogo->getRealPath())->toMediaCollection('companies');
         }
 
         $this->resetCompanyFields();
@@ -187,7 +187,7 @@ class AccountSettings extends Component
 
         if ($this->companyLogo instanceof TemporaryUploadedFile) {
             $company->clearMediaCollection('companies');
-            $company->addMediaFromDisk($this->companyLogo->getRealPath())->toMediaCollection('companies');
+            $company->addMedia($this->companyLogo->getRealPath())->toMediaCollection('companies');
         }
         $this->resetCompanyFields();
         $this->companies = Auth::user()->companies()->orderBy('id', 'desc')->get();
