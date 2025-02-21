@@ -16,6 +16,8 @@ use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 #[Layout('layouts.app')]
 class CreateProject extends Component
@@ -24,6 +26,10 @@ class CreateProject extends Component
 
     public CreateProjectForm $form;
 
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
     public function submit()
     {
         $this->validate();
@@ -56,7 +62,7 @@ class CreateProject extends Component
         // Handle file uploads
         $uploadedMedia = [];
         foreach ($this->form->files as $index => $file) {
-            $media = $project->addMediaFromDisk($file->getRealPath())
+            $media = $project->addMedia($file->getRealPath())
                 ->setName($file->getClientOriginalName())
                 ->toMediaCollection('projects');
 
