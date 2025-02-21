@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -73,7 +74,11 @@ class AccountSettings extends Component
         $this->github = $user->github;
         $this->linkedin = $user->linkedin;
         $this->twitter = $user->twitter;
-        $this->currentAvatar = $user->getFirstMediaUrl('users');
+        // $this->currentAvatar = $user->getFirstMediaUrl('users');
+        $mediaItem = $user->getFirstMedia('users');
+        $this->currentAvatar = $mediaItem ? Storage::disk('s3')->temporaryUrl(
+            $mediaItem->getPath(), now()->addMinutes(60)
+        ) : null;
         $this->companies = $user->companies()->orderBy('id', 'desc')->get();
     }
 
