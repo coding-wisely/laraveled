@@ -1,65 +1,73 @@
 <div x-data="carousel()" class="relative">
     <div class="overflow-hidden relative max-w-sm md:max-w-5xl mx-auto">
-        <div x-ref="slider" :class="{ 'transition-transform duration-300 ease-in-out': !noTransition }"
-            :style="{ transform: `translateX(-${activeSlide * 100}%)` }" @transitionend="handleTransitionEnd"
+        <div x-ref="slider"
+            :class="{ 'transition-transform duration-300 ease-in-out': !noTransition }"
+            :style="{ transform: `translateX(-${activeSlide * 100}%)` }"
+            @transitionend="handleTransitionEnd"
             class="flex">
-            <!-- First set of slides (original) -->
+            
             @foreach ($featuredProjects as $project)
                 <div class="w-full flex-shrink-0">
-                    <div class="rounded-lg border overflow-hidden">
+                    <flux:card>
                         <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}"
                             class="w-full object-cover h-auto max-h-[500px]">
-                        <div class="p-6 space-y-4">
+                        <div class="p-2 space-y-4">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-2xl font-semibold">{{ $project['title'] }}</h3>
-                                @if (isset($project['website']) && $project['website'])
-                                    <flux:link href="{{ $project['website'] }}" target="_blank"
-                                        class="text-red-500 hover:underline text-sm">
-                                        Visit Website
-                                    </flux:link>
-                                @endif
-                            </div>
-                            <p class="text-muted-foreground">{{ $project['short_description'] }}</p>
-                            <div class="flex gap-2 flex-wrap">
-                                @foreach ($project['tags'] as $tag)
-                                    <span
-                                        class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
-                                        {{ $tag }}
-                                    </span>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+                                <flux:heading class="text-4xl font-semibold">{{ $project['title'] }}</flux:heading>
 
-            <!-- Second set of slides (duplicate) -->
-            @foreach ($featuredProjects as $project)
-                <div class="w-full flex-shrink-0">
-                    <div class="rounded-lg border overflow-hidden">
-                        <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}"
-                            class="w-full object-cover h-auto max-h-[500px]">
-                        <div class="p-6 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-2xl font-semibold">{{ $project['title'] }}</h3>
                                 @if (isset($project['website']) && $project['website'])
                                     <flux:link href="{{ $project['website'] }}" target="_blank"
-                                        class="text-red-500 hover:underline text-sm">
+                                        class="text-sm">
                                         Visit Website
                                     </flux:link>
                                 @endif
                             </div>
-                            <p class="text-muted-foreground">{{ $project['short_description'] }}</p>
-                            <div class="flex gap-2 flex-wrap">
-                                @foreach ($project['tags'] as $tag)
-                                    <span
-                                        class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
-                                        {{ $tag }}
-                                    </span>
-                                @endforeach
+                            <p class="text-sm">{{ $project['short_description'] }}</p>
+                            <div class="flex flex-wrap gap-3 mt-3 justify-between">
+                                <!-- Categories -->
+                                @if (!empty($project['categories']))
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach ($project['categories'] as $category)
+                                            <flux:badge 
+                                                size="sm" 
+                                                class="cursor-pointer"
+                                                wire:click="applyOrRedirect('category', '{{ $category }}')">
+                                                {{ $category }}
+                                            </flux:badge>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                <!-- Technologies -->
+                                @if (!empty($project['technologies']))
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach ($project['technologies'] as $tech)
+                                            <flux:badge 
+                                                size="sm" 
+                                                class="cursor-pointer"
+                                                wire:click="applyOrRedirect('technology', '{{ $tech }}')">
+                                                {{ $tech }}
+                                            </flux:badge>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                <!-- Tags -->
+                                @if (!empty($project['tags']))
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach ($project['tags'] as $tag)
+                                            <flux:badge 
+                                                size="sm" 
+                                                class="cursor-pointer"
+                                                wire:click="applyOrRedirect('tag', '{{ $tag }}')">
+                                                {{ $tag }}
+                                            </flux:badge>
+                                        @endforeach
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                    </div>
+                    </flux:card>
                 </div>
             @endforeach
         </div>
@@ -67,7 +75,7 @@
 
     <!-- Previous Button -->
     <button @click="prevSlide()"
-        class="absolute -left-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full border flex items-center justify-center">
+        class="absolute -left-6 md:-left-12 top-1/2 -translate-y-1/2 h-4 w-4 md:h-8 md:w-8 rounded-full border flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -77,7 +85,7 @@
 
     <!-- Next Button -->
     <button @click="nextSlide()"
-        class="absolute -right-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full border flex items-center justify-center">
+        class="absolute -right-6 md:-right-12 top-1/2 -translate-y-1/2 h-4 w-4  md:h-8 md:w-8 rounded-full border flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -89,32 +97,14 @@
 <script>
     function carousel() {
         return {
-
             activeSlide: 0,
             total: {{ count($featuredProjects) }},
             noTransition: false,
 
             nextSlide() {
                 this.activeSlide++;
-            },
 
-            prevSlide() {
-                if (this.activeSlide === 0) {
-                    this.noTransition = true;
-                    this.activeSlide = this.total;
-                    this.$nextTick(() => {
-                        void this.$refs.slider.offsetWidth;
-                        this.noTransition = false;
-                        this.activeSlide--;
-                    });
-                } else {
-                    this.activeSlide--;
-                }
-            },
-
-            handleTransitionEnd() {
-
-                if (this.activeSlide === this.total) {
+                if (this.activeSlide >= this.total) {
                     this.noTransition = true;
                     this.activeSlide = 0;
                     this.$nextTick(() => {
@@ -122,6 +112,23 @@
                         this.noTransition = false;
                     });
                 }
+            },
+
+            prevSlide() {
+                if (this.activeSlide === 0) {
+                    this.noTransition = true;
+                    this.activeSlide = this.total - 1;
+                    this.$nextTick(() => {
+                        void this.$refs.slider.offsetWidth;
+                        this.noTransition = false;
+                    });
+                } else {
+                    this.activeSlide--;
+                }
+            },
+
+            handleTransitionEnd() {
+                this.noTransition = false;
             }
         }
     }

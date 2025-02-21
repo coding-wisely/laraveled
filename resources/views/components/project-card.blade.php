@@ -2,7 +2,6 @@
     /** @var \Illuminate\Database\Eloquent\Model */
     'project',
     'showAuthor' => false,
-    'enableFilters' => false,
 ])
 <flux:card>
     <div class="flex flex-col h-full">
@@ -45,63 +44,36 @@
             </flux:subheading>
         </div>
 
-        <div
-            class="mt-2 grid gap-4 
-        {{ $project->categories->count() === 1 || $project->tags->count() === 1 || $project->technologies->count() === 1 ? 'grid-cols-2' : 'grid-cols-1' }}">
+        <div class="mt-2 flex flex-wrap gap-1 justify-between">
+                @foreach ($project->categories as $category)
+                    <flux:badge 
+                        size="sm" 
+                        class="cursor-pointer"
+                        wire:click="applyOrRedirect('category', '{{ $category->name }}')">
+                        {{ $category->name }}
+                    </flux:badge>
+                @endforeach
 
-            <!-- Categories -->
-            @if ($project->categories->isNotEmpty())
-                <div class="flex flex-wrap gap-2 items-start justify-start">
-                    @foreach ($project->categories as $category)
-                        @if ($enableFilters)
-                            <flux:badge 
-                                size="sm" 
-                                class=" cursor-pointer"
-                                wire:click="applyFilter('category', '{{ $category->name }}')">
-                                {{ $category->name }}
-                            </flux:badge>
-                        @else
-                            <flux:badge size="sm">
-                                {{ $category->name }}
-                            </flux:badge>
-                        @endif
-                    @endforeach
-                </div>
-            @endif
+                @foreach ($project->tags as $tag)
+                    <flux:badge 
+                        size="sm" 
+                        class="cursor-pointer rounded"
+                        wire:click="applyOrRedirect('tag', '{{ $tag->name }}')">
+                        {{ $tag->name }}
+                    </flux:badge>
+                @endforeach
 
-            <!-- Tags -->
-            @if ($project->tags->isNotEmpty())
-                <div class="flex flex-wrap gap-2 items-start justify-end">
-                    @foreach ($project->tags as $tag)
-                        <flux:badge size="sm" class="bg-green-500 text-white px-2 py-1 rounded">
-                            {{ $tag->name }}
-                        </flux:badge>
-                    @endforeach
-                </div>
-            @endif
+                @foreach ($project->technologies as $technology)
+                    <flux:badge 
+                        size="sm" 
+                        class="cursor-pointer"
+                        wire:click="applyOrRedirect('technology', '{{ $technology->name }}')">
+                        {{ $technology->name }}
+                    </flux:badge>
+                @endforeach
+            </div>
 
-            <!-- Technologies -->
-                @if ($project->technologies->isNotEmpty())
-                    <div class="flex flex-wrap gap-2 items-start justify-end">
-                        @foreach ($project->technologies as $technology)
-                            @if ($enableFilters)
-                                <flux:badge 
-                                    size="sm" 
-                                    class="cursor-pointer"
-                                    wire:click="applyFilter('technology', '{{ $technology->name }}')">
-                                    {{ $technology->name }}
-                                </flux:badge>
-                            @else
-                                <flux:badge 
-                                    size="sm" 
-                                    class="rounded">
-                                    {{ $technology->name }}
-                                </flux:badge>
-                            @endif
-                        @endforeach
-                    </div>
-                @endif
-        </div>
+
 
 
         <div class="flex justify-between items-center mt-4">

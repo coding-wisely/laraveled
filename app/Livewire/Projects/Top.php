@@ -2,10 +2,8 @@
 
 namespace App\Livewire\Projects;
 
-use App\Models\Category;
+use App\Concerns\HandlesFilters;
 use App\Models\Project;
-use App\Models\Technology;
-use App\Models\User;
 use App\Services\SearchService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -13,12 +11,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class Top extends Component
 {
-    use WithPagination;
+    use HandlesFilters;
 
     public $category = '';
 
@@ -26,21 +23,25 @@ class Top extends Component
 
     public $user = '';
 
+    public $tag = '';
+
     public $perPage = 10;
 
     public $searchQuery = [
         'category' => '',
         'technology' => '',
         'user' => '',
+        'tag' => '',
     ];
 
     public $resultLimit = [
         'category' => 4,
         'technology' => 4,
         'user' => 4,
+        'tag' => 4,
     ];
 
-    protected $queryString = ['category', 'technology', 'user'];
+    protected $queryString = ['category', 'technology', 'user', 'tag'];
 
     protected SearchService $searchService;
 
@@ -60,12 +61,6 @@ class Top extends Component
                 $this->resultLimit[$type] += 5;
             }
         }
-    }
-
-    // this is for the project card badge filter
-    public function applyFilter($filter, $value)
-    {
-        $this->$filter = $value;
     }
 
     public function getFilteredResults(string $type)
@@ -97,15 +92,19 @@ class Top extends Component
             ->take(6);
 
         if ($this->category) {
-            $query->whereHas('categories', fn($q) => $q->where('categories.name', $this->category));
+            $query->whereHas('categories', fn ($q) => $q->where('categories.name', $this->category));
         }
 
         if ($this->technology) {
-            $query->whereHas('technologies', fn($q) => $q->where('technologies.name', $this->technology));
+            $query->whereHas('technologies', fn ($q) => $q->where('technologies.name', $this->technology));
+        }
+
+        if ($this->tag) {
+            $query->whereHas('tags', fn ($q) => $q->where('tags.name', $this->tag));
         }
 
         if ($this->user) {
-            $query->whereHas('user', fn($q) => $q->where('users.name', $this->user));
+            $query->whereHas('user', fn ($q) => $q->where('users.name', $this->user));
         }
 
         $projects = $query->get();

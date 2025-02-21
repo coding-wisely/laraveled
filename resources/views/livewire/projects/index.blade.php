@@ -5,7 +5,7 @@
         </flux:subheading>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 my-6">
 
         <!-- Category Dropdown -->
         <flux:select wire:model.defer="category" wire:change="$refresh" searchable variant="listbox" clearable
@@ -36,6 +36,22 @@
             <flux:option value="">All Technologies</flux:option>
             @foreach ($technologies as $technology)
                 <flux:option value="{{ $technology->name }}">{{ $technology->name }}</flux:option>
+            @endforeach
+        </flux:select>
+
+        <!-- Tag Dropdown -->
+        <flux:select wire:model.defer="tag" wire:change="$refresh" searchable variant="listbox" clearable
+            class="max-h-60 overflow-y-auto">
+
+            <x-slot name="search">
+                <flux:select.search wire:model.lazy="searchQuery.tag"
+                    wire:keyup.debounce.100ms="loadMoreResults('tag', $event.target.value)" class="px-4"
+                    placeholder="Search tags..." />
+            </x-slot>
+
+            <flux:option value="">All Tags</flux:option>
+            @foreach ($tags as $tag)
+                <flux:option value="{{ $tag->name }}">{{ $tag->name }}</flux:option>
             @endforeach
         </flux:select>
 

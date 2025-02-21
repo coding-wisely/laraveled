@@ -2,11 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Concerns\HandlesFilters;
 use App\Models\Project;
 use Livewire\Component;
 
 class FeaturedProjectsCarousel extends Component
 {
+    use HandlesFilters;
+
     public $featuredProjects;
 
     public function mount()
@@ -51,6 +54,7 @@ class FeaturedProjectsCarousel extends Component
                     'short_description' => $project->short_description,
                     'tags' => $project->tags()->pluck('name')->toArray(),
                     'technologies' => $project->technologies()->pluck('name')->toArray(),
+                    'categories' => $project->categories()->pluck('name')->toArray(),
                     'image' => $imageUrl,
                     'website' => $websiteUrl,
                 ];
