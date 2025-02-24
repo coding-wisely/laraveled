@@ -157,7 +157,9 @@
         </div>
         <!-- Description -->
         <flux:card class="text-sm">
-            {!! $project->description !!}
+            <p class="prose dark:prose-invert text-sm">
+                {!! $project->description !!}
+            </p>
         </flux:card>
     </div>
 
