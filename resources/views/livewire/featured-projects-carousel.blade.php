@@ -1,23 +1,25 @@
 <div x-data="carousel()" class="relative">
     <div class="overflow-hidden relative max-w-sm md:max-w-5xl mx-auto">
         <div x-ref="slider"
-            :class="{ 'transition-transform duration-300 ease-in-out': !noTransition }"
-            :style="{ transform: `translateX(-${activeSlide * 100}%)` }"
-            @transitionend="handleTransitionEnd"
-            class="flex">
-            
+             :class="{ 'transition-transform duration-300 ease-in-out': !noTransition }"
+             :style="{ transform: `translateX(-${activeSlide * 100}%)` }"
+             @transitionend="handleTransitionEnd"
+             class="flex">
+
             @foreach ($featuredProjects as $project)
                 <div class="w-full flex-shrink-0">
                     <flux:card>
-                        <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}"
-                            class="w-full object-cover h-auto max-h-[500px]">
+                        <a href="{{ route('projects.show', $project['uuid']) }}" wire:navigate>
+                            <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}"
+                                 class="w-full object-cover h-auto max-h-[500px]">
+                        </a>
                         <div class="p-2 space-y-4">
                             <div class="flex items-center justify-between">
-                                <flux:heading class="text-4xl font-semibold">{{ $project['title'] }}</flux:heading>
-
+                                <flux:link wire:navigate href="{{ route('projects.show', $project['uuid']) }}"
+                                           class="text-4xl font-semibold">{{ $project['title'] }}</flux:link>
                                 @if (isset($project['website']) && $project['website'])
                                     <flux:link href="{{ $project['website'] }}" target="_blank"
-                                        class="text-sm">
+                                               class="text-sm">
                                         Visit Website
                                     </flux:link>
                                 @endif
@@ -28,8 +30,8 @@
                                 @if (!empty($project['categories']))
                                     <div class="flex flex-wrap gap-2">
                                         @foreach ($project['categories'] as $category)
-                                            <flux:badge 
-                                                size="sm" 
+                                            <flux:badge
+                                                size="sm"
                                                 class="cursor-pointer"
                                                 wire:click="applyOrRedirect('category', '{{ $category }}')">
                                                 {{ $category }}
@@ -42,8 +44,8 @@
                                 @if (!empty($project['technologies']))
                                     <div class="flex flex-wrap gap-2">
                                         @foreach ($project['technologies'] as $tech)
-                                            <flux:badge 
-                                                size="sm" 
+                                            <flux:badge
+                                                size="sm"
                                                 class="cursor-pointer"
                                                 wire:click="applyOrRedirect('technology', '{{ $tech }}')">
                                                 {{ $tech }}
@@ -56,8 +58,8 @@
                                 @if (!empty($project['tags']))
                                     <div class="flex flex-wrap gap-2">
                                         @foreach ($project['tags'] as $tag)
-                                            <flux:badge 
-                                                size="sm" 
+                                            <flux:badge
+                                                size="sm"
                                                 class="cursor-pointer"
                                                 wire:click="applyOrRedirect('tag', '{{ $tag }}')">
                                                 {{ $tag }}
@@ -75,20 +77,20 @@
 
     <!-- Previous Button -->
     <button @click="prevSlide()"
-        class="absolute -left-6 md:-left-12 top-1/2 -translate-y-1/2 h-4 w-4 md:h-8 md:w-8 rounded-full border flex items-center justify-center">
+            class="absolute -left-6 md:-left-12 top-1/2 -translate-y-1/2 h-4 w-4 md:h-8 md:w-8 rounded-full border flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
         <span class="sr-only">Previous slide</span>
     </button>
 
     <!-- Next Button -->
     <button @click="nextSlide()"
-        class="absolute -right-6 md:-right-12 top-1/2 -translate-y-1/2 h-4 w-4  md:h-8 md:w-8 rounded-full border flex items-center justify-center">
+            class="absolute -right-6 md:-right-12 top-1/2 -translate-y-1/2 h-4 w-4  md:h-8 md:w-8 rounded-full border flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
         <span class="sr-only">Next slide</span>
     </button>

@@ -51,6 +51,7 @@ class FeaturedProjectsCarousel extends Component
 
                 return [
                     'title' => $project->title,
+                    'uuid'  => $project->uuid,
                     'short_description' => $project->short_description,
                     'tags' => $project->tags()->pluck('name')->toArray(),
                     'technologies' => $project->technologies()->pluck('name')->toArray(),
