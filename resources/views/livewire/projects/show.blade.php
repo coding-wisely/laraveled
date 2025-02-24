@@ -156,10 +156,8 @@
             </flux:card>
         </div>
         <!-- Description -->
-        <flux:card >
-            <div class="prose dark:prose-invert text-sm">
-                {!! $project->description !!}
-            </div>
+        <flux:card class="text-sm">
+            {!! $project->description !!}
         </flux:card>
     </div>
 
