@@ -1,6 +1,6 @@
 <?php
 return [
-    'disk_name' => 'minio',
+    'disk_name' => 's3',
 
     // ...
 ];

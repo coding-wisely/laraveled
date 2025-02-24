@@ -105,7 +105,11 @@ class AccountSettings extends Component
         if ($this->avatar instanceof TemporaryUploadedFile) {
             $user->clearMediaCollection('users');
             $user->addMedia($this->avatar->getRealPath())->toMediaCollection('users');
-            $this->currentAvatar = $user->getFirstMediaUrl('users');
+            // $this->currentAvatar = $user->getFirstMediaUrl('users');
+            $mediaItem = $user->getFirstMedia('users');
+            $this->currentAvatar = $mediaItem ? Storage::disk('s3')->temporaryUrl(
+                $mediaItem->getPath(), now()->addMinutes(60)
+            ) : null;
             $this->previewAvatarUrl = null;
         }
 
@@ -169,8 +173,11 @@ class AccountSettings extends Component
         $this->companyWebsite = $company->website;
         $this->companyPhone = $company->phone;
         $this->companyAddress = $company->address;
-        $this->companyPreviewLogoUrl = $company->getFirstMediaUrl('companies');
-
+        // $this->companyPreviewLogoUrl = $company->getFirstMediaUrl('companies');
+        $mediaItem = $company->getFirstMedia('companies');
+        $this->companyPreviewLogoUrl = $mediaItem ? Storage::disk('s3')->temporaryUrl(
+            $mediaItem->getPath(), now()->addMinutes(60)
+        ) : null;
     }
 
     public function editCompany()
