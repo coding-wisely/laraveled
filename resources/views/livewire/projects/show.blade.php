@@ -157,10 +157,11 @@
         </div>
         <!-- Description -->
         <flux:card class="text-sm">
-            <p class="prose dark:prose-invert text-sm">
+            <div class="prose dark:prose-invert text-sm max-w-none">
                 {!! $project->description !!}
-            </p>
+            </div>
         </flux:card>
+
     </div>
 
     <!-- Ratings Section -->
