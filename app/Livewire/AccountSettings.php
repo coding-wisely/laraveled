@@ -116,6 +116,8 @@ class AccountSettings extends Component
         $user->update($validated);
 
         $this->dispatch('profile-updated', name: $user->name);
+
+        return redirect()->route('account-settings');
     }
 
     public function saveCompany()
