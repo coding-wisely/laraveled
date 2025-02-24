@@ -156,11 +156,10 @@
             </flux:card>
         </div>
         <!-- Description -->
-        <flux:card>
-            <flux:heading level="2" class="mb-2">Description</flux:heading>
-            <p class="text-gray-700 leading-relaxed prose dark:prose-invert">
+        <flux:card >
+            <div class="prose dark:prose-invert text-sm">
                 {!! $project->description !!}
-            </p>
+            </div>
         </flux:card>
     </div>
 
