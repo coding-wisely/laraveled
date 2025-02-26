@@ -113,6 +113,7 @@ class Top extends Component
             'projects' => $projects,
             'categories' => $this->getFilteredResults('category'),
             'technologies' => $this->getFilteredResults('technology'),
+            'tags' => $this->getFilteredResults('tag'),
             'users' => $this->getFilteredResults('user'),
         ]);
     }
