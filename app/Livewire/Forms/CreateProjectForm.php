@@ -17,7 +17,7 @@ class CreateProjectForm extends Form
 
     public string $website_url;
 
-    public string $github_url;
+    public string $github_url ='';
 
     public array $technologies = [];
 
