@@ -39,9 +39,10 @@ class CreateProject extends Component
             $website = 'https://'.$website;
         }
 
-        $github = $this->form->github_url;
-        if ($github && ! (str_starts_with($github, 'http://') || str_starts_with($github, 'https://'))) {
-            $github = 'https://'.$github;
+        $github = trim((string) $this->form->github_url);
+
+        if (!empty($github) && !str_starts_with($github, 'http://') && !str_starts_with($github, 'https://')) {
+            $github = 'https://' . $github;
         }
 
         $project = Project::create([
