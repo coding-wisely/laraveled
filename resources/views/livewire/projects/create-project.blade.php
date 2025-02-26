@@ -77,7 +77,7 @@
                         <flux:input.group.prefix>https://</flux:input.group.prefix>
 
                         <flux:input wire:model="form.github_url" placeholder="Enter the GitHub repository URL"
-                            badge="Required" />
+                            />
                     </flux:input.group>
 
                     <flux:error name="form.github_url" />
