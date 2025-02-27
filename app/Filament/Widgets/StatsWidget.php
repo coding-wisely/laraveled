@@ -2,10 +2,12 @@
 
 namespace App\Filament\Widgets;
 
+use App\Enums\TrackableEnum;
 use App\Filament\Resources\CommentResource\Pages\ListComments;
 use App\Filament\Resources\ProjectResource\Pages\ListProjects;
 use App\Models\Comment;
 use App\Models\Project;
+use App\Models\Track;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -17,6 +19,7 @@ class StatsWidget extends BaseWidget
         $projectsCount = Project::count();
         $usersCount = User::count();
         $unapprovedCommentsCount = Comment::whereNull('approved')->count();
+        $totalWebsiteTracks = Track::where('action', TrackableEnum::WEBISTE_VISITED)->count();
 
         return [
             'projects' => Stat::make('Projects', $projectsCount)
@@ -35,6 +38,11 @@ class StatsWidget extends BaseWidget
                 ->descriptionIcon('heroicon-s-exclamation-circle')
                 ->color($unapprovedCommentsCount ? 'warning' : 'success')
                 ->url(ListComments::getUrl(['activeTab' => 'unapproved'])),
+
+            'websiteTracks' => Stat::make('Website Tracks', $totalWebsiteTracks)
+                ->description('Total website visits')
+                ->descriptionIcon('heroicon-o-globe-alt')
+                ->color('info'),
 
         ];
     }

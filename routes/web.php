@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\AccountSettings;
+use App\Livewire\ContactUs;
 use App\Livewire\Dashboard;
 use App\Livewire\Projects\CreateProject;
 use App\Livewire\Projects\Index as PublicProjects;
@@ -24,6 +25,8 @@ Route::get('/top/{category?}', Top::class)->name('projects.top'); // Public: Top
 
 Route::get('/profile/{userId}', UserProfile::class)->name('user.profile'); // public profile
 
+Route::get('/contact-us', ContactUs::class)->name('contact-us'); // Public: Contact Us
+
 // Authenticated routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/project/create', CreateProject::class)->name('projects.create'); // Auth: Create a project
@@ -38,9 +41,9 @@ Route::middleware(['auth'])->group(function () {
 
 });
 // Authentication-related overrides for production
-//if (app()->isProduction()) {
+// if (app()->isProduction()) {
 //    Route::get('register', fn () => view('landing'))->name('register');
 //    Route::get('login', fn () => view('landing'))->name('login');
-//}
+// }
 
 require __DIR__.'/auth.php';

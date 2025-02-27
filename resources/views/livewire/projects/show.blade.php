@@ -142,7 +142,9 @@
             <flux:card>
                 <flux:heading level="2" class="mb-2">Links</flux:heading>
                 <div class="flex flex-col space-y-2">
-                    <flux:link external="{{ true }}" href="{{ $project->website_url }}"
+                    <flux:link external="{{ true }}"
+                        href="{{ $project->website_url }}"
+                        wire:click="logClick()"
                         icon-trailing="arrow-right">
                         Visit Website
                     </flux:link>

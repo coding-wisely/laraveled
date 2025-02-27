@@ -74,6 +74,8 @@
                         Profile</flux:navmenu.item>
                     <flux:navmenu.item class="max-lg:hidden" icon="folder-open" href="{{ route('projects.my') }}">My
                         Projects</flux:navmenu.item>
+                    <flux:navmenu.item class="max-lg:hidden" icon="inbox" href="{{ route('contact-us') }}">Contact Us
+                    </flux:navmenu.item>
                     <livewire:logout-button />
                 </flux:navmenu>
 
@@ -107,8 +109,6 @@
             <flux:navlist.item icon="globe" href="{{ route('projects.index') }}">Discover Projects
             </flux:navlist.item>
             <flux:navlist.item icon="crown" href="{{ route('projects.top') }}">Top 6</flux:navlist.item>
-        </flux:navlist>
-        <flux:navlist variant="outline">
             <flux:navlist.item icon="bookmark" href="{{ route('bookmarks') }}">Bookmarks</flux:navlist.item>
             <flux:navlist.item icon="puzzle-piece" badge="{{ auth()->user()?->projects->count() }}"
                 href="{{ route('projects.my') }}">My Projects</flux:navlist.item>
@@ -118,6 +118,9 @@
             <flux:navlist variant="outline">
                 <flux:navlist.item  icon="cog-6-tooth" href="{{ route('account-settings') }}">
                     Profile
+                </flux:navlist.item>
+                <flux:navlist.item  icon="inbox" href="{{ route('contact-us') }}">
+                    Contact Us
                 </flux:navlist.item>
                 <livewire:logout-button />
             </flux:navlist>

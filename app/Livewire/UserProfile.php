@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Enums\TrackableEnum;
+use App\Models\Company;
 use App\Models\User;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -27,6 +29,16 @@ class UserProfile extends Component
             ->avg('rating');
 
         $this->companies = $this->user->companies;
+    }
+
+    public function logClick($companyId): void
+    {
+        $company = Company::find($companyId);
+        if ($company) {
+            $company->logTracks(TrackableEnum::WEBISTE_VISITED);
+        }
+
+        $this->projects->loadMissing('categories', 'technologies', 'tags');
     }
 
     public function render()

@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects;
 
 use App\Concerns\HandlesFilters;
+use App\Enums\TrackableEnum;
 use App\Models\Project;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -22,6 +23,11 @@ class Show extends Component
     public function mount(Project $project)
     {
         $this->project = $project;
+    }
+
+    public function logClick(): void
+    {
+        $this->project->logTracks(TrackableEnum::WEBISTE_VISITED);
     }
 
     public function render(): Factory|Application|View
