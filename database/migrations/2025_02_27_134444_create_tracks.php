@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tracks', function (Blueprint $table) {
             $table->id();
             $table->nullableMorphs('trackable');
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->integer('user_id')->nullable();
             $table->integer('action');
             $table->timestamps();
         });
