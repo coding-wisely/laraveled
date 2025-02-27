@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\IsTrackable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
@@ -10,7 +11,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Company extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia, IsTrackable;
 
     public function registerMediaConversions(?Media $media = null): void
     {

@@ -20,7 +20,7 @@
                                 <flux:link wire:navigate href="{{ route('projects.show', $project['uuid']) }}"
                                            class="text-4xl font-semibold">{{ $project['title'] }}</flux:link>
                                 @if (isset($project['website']) && $project['website'])
-                                    <flux:link href="{{ $project['website'] }}" target="_blank"
+                                    <flux:link href="{{ $project['website'] }}" target="_blank"  wire:click="logClick('{{ $project['uuid'] }}')" 
                                                class="text-sm">
                                         Visit Website
                                     </flux:link>

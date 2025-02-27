@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Concerns\HasBookmarks;
+use App\Concerns\IsTrackable;
 use CodingWisely\SlugGenerator\SlugGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ class Project extends Model implements HasMedia
     use HasBookmarks;
     use HasFactory;
     use InteractsWithMedia;
+    use IsTrackable;
     use SlugGenerator;
 
     public function registerMediaConversions(?Media $media = null): void

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Concerns\HandlesFilters;
+use App\Enums\TrackableEnum;
 use App\Models\Project;
 use Livewire\Component;
 
@@ -11,6 +12,15 @@ class FeaturedProjectsCarousel extends Component
     use HandlesFilters;
 
     public $featuredProjects;
+
+    public function logClick($uuid): void
+    {
+        $project = Project::where('uuid', $uuid)->first();
+
+        if ($project) {
+            $project->logTracks(TrackableEnum::WEBISTE_VISITED);
+        }
+    }
 
     public function mount()
     {
@@ -51,7 +61,7 @@ class FeaturedProjectsCarousel extends Component
 
                 return [
                     'title' => $project->title,
-                    'uuid'  => $project->uuid,
+                    'uuid' => $project->uuid,
                     'short_description' => $project->short_description,
                     'tags' => $project->tags()->pluck('name')->toArray(),
                     'technologies' => $project->technologies()->pluck('name')->toArray(),

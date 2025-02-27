@@ -83,12 +83,16 @@
                             {{ $company->phone ?? ''}}</p>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
                             {{ $company->address ?? '' }}</p>
-                        @if ($company->website)
-                            <flux:link href="{{ $company->website }}" target="_blank"
-                                class="mt-2 block">
-                                Visit Website
-                            </flux:link>
-                        @endif
+                            @if ($company->website)
+                                <flux:link 
+                                    href="{{ $company->website }}" 
+                                    target="_blank"  
+                                    wire:click="logClick({{ $company->id }})"
+                                    class="mt-2 block">
+                                    Visit Website
+                                </flux:link>
+                            @endif
+
                     </flux:card>
                 @endforeach
             </div>
