@@ -95,6 +95,7 @@ class User extends Authenticatable implements FilamentUser, HasMedia
         $allowedEmails = [
             'vladimir@codingwisely.com',
             'namru.mail@gmail.com',
+            'namrata@gmail.com',
         ];
 
         return in_array($this->email, $allowedEmails, true);
