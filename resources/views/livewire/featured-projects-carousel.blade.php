@@ -1,4 +1,4 @@
-<div x-data="carousel()" class="relative">
+<div x-data="carousel()" x-init="startRotation()" class="relative">
     <div class="overflow-hidden relative max-w-sm md:max-w-5xl mx-auto">
         <div x-ref="slider"
              :class="{ 'transition-transform duration-300 ease-in-out': !noTransition }"
@@ -10,8 +10,10 @@
                 <div class="w-full flex-shrink-0">
                     <flux:card>
                         <a href="{{ route('projects.show', $project['uuid']) }}" wire:navigate>
-                            <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}"
-                                 class="w-full object-cover h-auto max-h-[500px]">
+                            <div class="h-[500px] overflow-hidden">
+                                <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}"
+                                     class="w-full h-full object-cover">
+                            </div>
                         </a>
                         <div class="p-2 space-y-4">
                             <div class="flex items-center justify-between">
@@ -103,9 +105,14 @@
             total: {{ count($featuredProjects) }},
             noTransition: false,
 
+            startRotation() {
+                setInterval(() => {
+                    this.nextSlide();
+                }, 3000);
+            },
+
             nextSlide() {
                 this.activeSlide++;
-
                 if (this.activeSlide >= this.total) {
                     this.noTransition = true;
                     this.activeSlide = 0;
