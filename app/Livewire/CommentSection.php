@@ -33,13 +33,17 @@ class CommentSection extends Component
 
     public function loadComments()
     {
+        $project = Project::find($this->projectId);
+        $isOwner = Auth::check() && Auth::id() === $project->user_id;
+
         $this->comments = Comment::where('project_id', $this->projectId)
             ->whereNull('parent_id')
-            ->whereNotNull('approved')
+            ->when(! $isOwner, function ($query) {
+                $query->whereNotNull('approved');
+            })
             ->with(['user', 'children.user', 'children.children.user', 'parent.user'])
             ->orderBy('id', 'desc')
             ->get();
-
     }
 
     public function postComment(string $commentText)
@@ -50,9 +54,13 @@ class CommentSection extends Component
             'project_id' => $this->projectId,
         ]);
 
+        $isOwner = Auth::check() && Auth::id() === Project::whereId($this->projectId)->first()->user_id;
+
+        $text = $isOwner ? 'Your comment has been posted.' : 'Your comment has been posted. It will be visible once approved by the admin.';
+
         Flux::toast(
             heading: 'Comment posted',
-            text: 'Your comment has been posted.',
+            text: $text,
             variant: 'success',
         );
 
