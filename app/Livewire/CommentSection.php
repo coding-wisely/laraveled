@@ -35,7 +35,7 @@ class CommentSection extends Component
     {
         $this->comments = Comment::where('project_id', $this->projectId)
             ->whereNull('parent_id')
-            // ->whereNotNull('approved') need to uncomment this later once we are happy with the testing to show only approved ones
+            ->whereNotNull('approved')
             ->with(['user', 'children.user', 'children.children.user', 'parent.user'])
             ->orderBy('id', 'desc')
             ->get();
