@@ -7,6 +7,7 @@ use App\Models\Rating;
 use Filament\Notifications\Notification;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class Ratings extends Component
@@ -111,6 +112,13 @@ class Ratings extends Component
                 ->send()->sendToDatabase($ratingRecord->project->user);
         }
 
+    }
+
+    public function handleRedirectToLogin()
+    {
+        Session::put('url.intended', route('projects.show', $this->project->uuid));
+
+        return redirect()->route('login');
     }
 
     public function render()
