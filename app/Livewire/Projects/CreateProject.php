@@ -41,8 +41,8 @@ class CreateProject extends Component
 
         $github = trim((string) $this->form->github_url);
 
-        if (!empty($github) && !str_starts_with($github, 'http://') && !str_starts_with($github, 'https://')) {
-            $github = 'https://' . $github;
+        if (! empty($github) && ! str_starts_with($github, 'http://') && ! str_starts_with($github, 'https://')) {
+            $github = 'https://'.$github;
         }
 
         $project = Project::create([
@@ -86,7 +86,11 @@ class CreateProject extends Component
             variant: 'success',
         );
 
-        return redirect()->route('projects.index');
+        // After the project is created, before redirecting:
+        session()->flash('showConfetti', true);
+
+        return redirect()->route('projects.show', $project->uuid);
+
     }
 
     public function render(): Factory|Application|\Illuminate\Contracts\View\View|View
