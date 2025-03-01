@@ -10,6 +10,7 @@ use App\Livewire\Projects\Show as ProjectDetails;
 use App\Livewire\Projects\Top;
 use App\Livewire\Projects\UserProjects;
 use App\Livewire\UserProfile;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // Landing page
@@ -45,5 +46,10 @@ Route::middleware(['auth'])->group(function () {
 //    Route::get('register', fn () => view('landing'))->name('register');
 //    Route::get('login', fn () => view('landing'))->name('login');
 // }
+
+// i need a test enpoint to test if mailgun will send email
+Route::get('/test-mail', function () {
+     User::whereEmail('vladimir@codingwisely.com')->first()->sendEmailVerificationNotification();
+});
 
 require __DIR__.'/auth.php';
