@@ -39,5 +39,16 @@ return [
             'webhook_url' => env('DISCORD_WEBHOOK_URL'),
         ],
     ],
+    'twitter' => [
+        'consumer_key' => env('TWITTER_CONSUMER_KEY'),
+        'consumer_secret' => env('TWITTER_CONSUMER_SECRET'),
+        'access_token' => env('TWITTER_ACCESS_TOKEN'),
+        'access_token_secret' => env('TWITTER_ACCESS_TOKEN_SECRET'),
+    ],
+
+    'linkedin' => [
+        'access_token' => env('LINKEDIN_ACCESS_TOKEN', 'AQXpWKIyuh2NYwr_Gpi-8xrCIcEgXnDHX6nDPI73bf9YoGYixkWs6XsWLv-4Gs-w_pSgFQXKkcYsckIIFR74pWVHkZxzJemayHNWagCelExcEhIi4egoucT95dOMfem9m64j8nMZ890fRdf1DEaD0sdKkUJdrryEsWtlMKXurgeLlWxD1vSJL0vmRM8IaMVNscj0MqvoJY0Eh_2hQPuwbD_cYHLQjGc0Xn6knM89qesndiadR133Gz4c0SVvmqoEH_DhAnqwvdfk7FXGg6lh5lj4hZN7A34wNNVIZPkdYBeYKP7bTCVNZf-1HeFaCnOA5nzxJjmBrs6AwPA22XMnYUZ9x9NWmQ'),
+        'person_urn' => env('LINKEDIN_PERSON_URN'),
+    ],
 
 ];

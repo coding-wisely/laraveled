@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects;
 
 use App\Concerns\HandlesFilters;
+use App\Concerns\HandlesShares;
 use App\Models\Project;
 use App\Services\SearchService;
 use Illuminate\Contracts\View\Factory;
@@ -15,7 +16,7 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class Top extends Component
 {
-    use HandlesFilters;
+    use HandlesFilters, HandlesShares;
 
     public $category = '';
 
