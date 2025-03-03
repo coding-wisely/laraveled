@@ -5,10 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta property="og:title" content="{{$title ?? config('app.name', 'Laravel')}}">
+    <meta property="og:title" content="{{$title ?? config('app.name', 'Laraveled')}}">
     @if (isset($image))
     <meta property="og:image" content="{{$image}}">
     @endif
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" ccontent="{{$title ?? config('app.name', 'Laraveled')}}">
+    @if (isset($image))
+    <meta name="twitter:image" content="{{ $image }}">
+    @endif
+   
 
     <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
 
