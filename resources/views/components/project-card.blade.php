@@ -103,7 +103,7 @@
                     </flux:link>
                 </flux:subheading>
 
-                <x-social-share url="{{ route('projects.show', $project->uuid) }}" />
+            <x-social-share url="{{ $project->project_url }}" />
             </div>
         @endif
 

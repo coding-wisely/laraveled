@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Concerns\HasBookmarks;
 use App\Concerns\IsTrackable;
 use CodingWisely\SlugGenerator\SlugGenerator;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -74,5 +75,12 @@ class Project extends Model implements HasMedia
     public function coverImage(): ?Media
     {
         return $this->getFirstMedia('projects', fn ($media) => $media->is_cover) ?? $this->getFirstMedia('projects');
+    }
+
+    public function projectUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => route('projects.show', $this->uuid)
+        );
     }
 }
