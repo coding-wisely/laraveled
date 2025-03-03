@@ -86,7 +86,7 @@
                     <flux:icon name="chat-bubble-left" />
                     <a wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
                         <span class="absolute -top-0.5 right-2 items-center justify-center">
-                            <span class="text-[8px]">{{ $project->comments()->count() }}</span>
+                            <span class="text-[8px]"> {{ $project->comments()->whereNull('parent_id')->count() }}</span>
                         </span>
                     </a>
                 </div>
