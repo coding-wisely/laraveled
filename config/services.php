@@ -39,6 +39,18 @@ return [
             'webhook_url' => env('DISCORD_WEBHOOK_URL'),
         ],
     ],
+    'twitter' => [
+        'consumer_key' => env('TWITTER_CONSUMER_KEY'),
+        'consumer_secret' => env('TWITTER_CONSUMER_SECRET'),
+        'access_token' => env('TWITTER_ACCESS_TOKEN'),
+        'access_token_secret' => env('TWITTER_ACCESS_TOKEN_SECRET'),
+    ],
+
+    'linkedin' => [
+        'access_token' => env('LINKEDIN_ACCESS_TOKEN', 'LINKEDIN_ACCESS_TOKEN'),
+        'person_urn' => env('LINKEDIN_PERSON_URN'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

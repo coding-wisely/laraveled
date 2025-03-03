@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects;
 
 use App\Concerns\HandlesFilters;
+use App\Concerns\HandlesShares;
 use App\Enums\TrackableEnum;
 use App\Models\Project;
 use Illuminate\Contracts\View\Factory;
@@ -16,7 +17,7 @@ use Livewire\Component;
 #[Title('Project Details')]
 class Show extends Component
 {
-    use HandlesFilters;
+    use HandlesFilters, HandlesShares;
 
     public $project;
 
@@ -67,6 +68,6 @@ class Show extends Component
             'nextProject' => $nextProject,
             'startProject' => $startProjectId,
             'user' => $user,
-        ]);
+        ])->layout('layouts.app', ['title' => $this->project->title, 'image' => $this->project->coverImage()->getUrl()]);
     }
 }
