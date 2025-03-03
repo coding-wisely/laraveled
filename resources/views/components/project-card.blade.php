@@ -3,6 +3,7 @@
     'project',
     'showAuthor' => false,
 ])
+
 <flux:card>
     <div class="flex flex-col h-full">
         <div class="flex flex-col items-start justify-start gap-1 space-y-1">
@@ -22,6 +23,7 @@
             <x-average-rating :average-rating="$project->ratings()->avg('rating') ?? 0" :total-ratings="$project->ratings()->count()" :display-comment="false" />
             <flux:separator variant="subtle" class="mt-4" />
         </div>
+
         <!-- Photos -->
         <div class="pt-4">
             <a wire:navigate.hover href="{{ route('projects.show', $project->uuid) }}">
@@ -91,16 +93,19 @@
             </flux:subheading>
         </div>
 
-        <div class="flex justify-between items-center mt-4">
-            @if ($showAuthor)
-                <flux:subheading size="sm">
+        <!-- Author & Social Share -->
+        @if ($showAuthor)
+            <div class="flex justify-between items-center mt-4">
+                <flux:subheading size="sm" class="flex items-center space-x-2">
                     <span>{{ $project->created_at->diffForHumans() }}</span>
                     <flux:link href="{{ route('user.profile', $project->user->id) }}">
                         {{ $project->user->name }}
                     </flux:link>
                 </flux:subheading>
-            @endif
-        </div>
+
+                <x-social-share url="{{ route('projects.show', $project->uuid) }}" />
+            </div>
+        @endif
 
         @if ($project->user_id === Auth::id() && Route::currentRouteName() === 'projects.my')
             <flux:button href="{{ route('projects.edit', $project->id) }}" size="sm" class="mt-2">
