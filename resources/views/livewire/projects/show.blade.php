@@ -30,7 +30,7 @@
             piece.style.position = 'absolute';
             piece.style.left = (centerX - 10) + 'px';
             piece.style.top = (centerY - 10) + 'px';
-            piece.style.opacity = Math.random() * 0.8 + 0.2; 
+            piece.style.opacity = Math.random() * 0.8 + 0.2;
             piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
             const colors = ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd', '#d72638', '#1b998b'];
             piece.firstChild.style.color = colors[Math.floor(Math.random() * colors.length)];
@@ -140,10 +140,12 @@
             <flux:heading>{{ $project->title }}</flux:heading>
             <flux:subheading size="lg" class="text-gray-700">{!! $project->short_description !!}</flux:subheading>
         </div>
-
-        @if (Auth::check())
-            <livewire:projects.toggle-bookmark :project="$project" key="{{ $project->id }}" />
-        @endif
+        <div class="flex items-center gap-4">
+            @if (Auth::check())
+                <livewire:projects.toggle-bookmark :project="$project" key="{{ $project->id }}" />
+            @endif
+            <x-social-share url="{{ $project->project_url }}" />
+        </div>
     </div>
 
     <!-- Gallery Section -->
@@ -151,9 +153,9 @@
         <flux:card class="overflow-hidden">
             <div class="grid gap-6">
                 @php
-                    $allPhotos = $project->getMedia('projects');              
+                    $allPhotos = $project->getMedia('projects');
                     $coverImage = $project->coverImage();
-                    $photos = $coverImage 
+                    $photos = $coverImage
                         ? $allPhotos->reject(function($photo) use ($coverImage) {
                             return $photo->id == $coverImage->id;
                         })
