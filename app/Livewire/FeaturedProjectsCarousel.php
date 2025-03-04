@@ -26,6 +26,7 @@ class FeaturedProjectsCarousel extends Component
     {
         $featured = Project::with('tags', 'media')
             ->where('is_featured', true)
+            ->inRandomOrder()
             ->get();
 
         if ($featured->isEmpty()) {
