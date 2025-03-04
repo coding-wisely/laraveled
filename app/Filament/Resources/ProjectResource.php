@@ -86,7 +86,7 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-
+                Tables\Columns\ToggleColumn::make('is_featured'),
                 SpatieMediaLibraryImageColumn::make('media')
                     ->collection('projects')
                     ->circular()
@@ -115,7 +115,7 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('views')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ToggleColumn::make('is_featured'),
+
             ])
             ->filters([
                 //
