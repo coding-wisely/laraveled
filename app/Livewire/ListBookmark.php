@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Concerns\HandlesFilters;
+use App\Concerns\HandlesShares;
 use App\Models\Bookmark as ModelsBookmark;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
@@ -13,7 +14,7 @@ use Livewire\Component;
 #[Title('Bookmarks')]
 class ListBookmark extends Component
 {
-    use HandlesFilters;
+    use HandlesFilters, HandlesShares;
 
     public $bookmarks;
 

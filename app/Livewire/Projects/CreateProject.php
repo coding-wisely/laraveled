@@ -86,7 +86,6 @@ class CreateProject extends Component
             variant: 'success',
         );
 
-        // After the project is created, before redirecting:
         session()->flash('showConfetti', true);
 
         return redirect()->route('projects.show', $project->uuid);

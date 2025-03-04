@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects;
 
 use App\Concerns\HandlesFilters;
+use App\Concerns\HandlesShares;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -10,7 +11,7 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class MyProjects extends Component
 {
-    use HandlesFilters;
+    use HandlesFilters, HandlesShares;
 
     public function render()
     {
