@@ -68,6 +68,11 @@ class Show extends Component
             'nextProject' => $nextProject,
             'startProject' => $startProjectId,
             'user' => $user,
-        ])->layout('layouts.app', ['title' => $this->project->title, 'image' => $this->project->coverImage()->getUrl()]);
+        ])->layout('layouts.app', [
+            'title' => $this->project->title . ' has been Laraveled!!!',
+            'description' => $this->project->short_description,
+            'image' => $this->project->coverImage()->getUrl(),
+            'url' => route('projects.show', $this->project->uuid),
+        ]);
     }
 }

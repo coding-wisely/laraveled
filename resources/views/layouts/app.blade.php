@@ -5,19 +5,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta property="og:title" content="{{$title ?? config('app.name', 'Laraveled')}}">
-    @if (isset($image))
-    <meta property="og:image" content="{{$image}}">
-    @endif
+    <title>{{ $title ?? config('app.name', 'Laraveled.') }}</title>
+
+    <meta name="description"
+        content="Laraveled is a free platform where developers showcase and explore Laravel projects. Browse by industry, Laravel version, and tech stack.">
+    <meta name="keywords" content="laravel, showcase, projects, discover, tech stack, industry, version">
+    <meta name="author" content="Laraveled.com">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="{{$title ?? config('app.name', 'Laraveled – Showcase & Discover Laravel Projects')}}">
+    <meta property="og:description" content="Laraveled is a free platform where developers showcase and explore Laravel projects. Browse by industry, Laravel version, and tech stack.">
+    <meta property="og:url" content="{{ $url ?? route('home') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Laraveled.com">
+
+    <meta property="og:image" content="{{ $image ?? asset('laraveled-og.webp')}}">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" ccontent="{{$title ?? config('app.name', 'Laraveled')}}">
-    @if (isset($image))
-    <meta name="twitter:image" content="{{ $image }}">
-    @endif
-   
+    <meta name="twitter:title" ccontent="{{ $title ?? config('app.name', 'Laraveled is a free platform where developers showcase and explore Laravel projects.')}}">
+    <meta name="twitter:description" content="{{ $title ?? 'Laraveled is a free platform where developers showcase and explore Laravel projects.'}}">
+        <meta name="twitter:image" content="{{ $image ?? asset('laraveled-og.webp') }}">
+    <meta name="twitter:site" content="@CodingWisely">
+    <meta name="twitter:creator" content="@CodingWisely">
+    <meta name="twitter:card" content="summary_large_image">
 
-    <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -143,7 +154,17 @@
     </flux:main>
     @fluxScripts
     @livewireScripts
+    @guest
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-95N854CX0N"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
+            gtag('config', 'G-95N854CX0N');
+        </script>
+    @endguest
     @persist('toast')
         <flux:toast position="top right" class="pt-20" />
     @endpersist
