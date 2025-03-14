@@ -87,6 +87,8 @@
                 </flux:navbar.item>
             </flux:navbar>
 
+            <livewire:search-panel />
+
             <livewire:notifications-panel />
 
             <flux:dropdown position="bottom" align="end" class="max-lg:hidden">
